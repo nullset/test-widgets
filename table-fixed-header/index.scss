@@ -1,0 +1,28 @@
+table {
+  // table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+  th, td {
+    border: 1px solid #666;
+  }
+  tbody {
+    height: 400px;
+    overflow-y: auto;
+  }
+  thead tr {
+    background: lavender;
+    pointer-events: none;
+  }
+}
+
+.table-wrapper {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.row {
+  background: red;
+  > * {
+    background: yellow;
+  }
+}

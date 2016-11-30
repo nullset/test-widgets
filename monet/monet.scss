@@ -1,0 +1,41 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.monet-layout {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  > * {
+    box-sizing: border-box;
+  }
+  &-title-bar {
+    height: 25px;
+    border-top: 1px solid #ccc;
+  }
+  &-button-bar {
+    height: 30px;
+    background: #fafafa;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 4px 2px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 2;
+  }
+  &-primary {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    z-index: 1;
+  }
+  &-slides {
+    padding: 0 10px;
+    min-width: 130px;
+    max-width: 300px;
+    width: 300px;
+    background: #fafafa;
+  }
+  &-artboard {
+    
+  }
+}

@@ -1,0 +1,148 @@
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-family: Helvetica;
+  font-size: 12px;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.monet-layout {
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.monet-layout * {
+  box-sizing: border-box;
+}
+.monet-layout-title-bar {
+  height: 36px;
+  line-height: 36px;
+  border-top: 1px solid #ddd;
+  padding: 0 10px;
+}
+.monet-layout-button-bar {
+  height: 45px;
+  line-height: 45px;
+  border-top: 1px solid #ddd;
+  background: #fafafa;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+  padding: 0 10px;
+}
+.monet-layout-primary {
+  position: relative;
+  z-index: 1;
+  background: #fafafa;
+  height: calc(100vh - 36px - 45px);
+}
+.monet-layout-slides {
+  min-width: 150px;
+  max-width: 300px;
+  width: 23%;
+  counter-reset: slides;
+  overflow-y: auto;
+}
+.monet-layout-slides ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: table;
+  width: 100%;
+}
+.monet-layout-slides li {
+  display: table-row;
+}
+.monet-layout-slides li .slide-wrapper {
+  display: table-cell;
+}
+.monet-layout-slides li .slide {
+  border: 1px solid #ccc;
+  margin: 20px 0;
+  background: #fff;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.32);
+  /*height: 80px;*/
+  padding-bottom: 72.727%;
+}
+.monet-layout-slides li:before {
+  counter-increment: slides;
+  content: counter(slides);
+  display: table-cell;
+  padding: 10px;
+  width: 1px;
+}
+.monet-layout-slides li:after {
+  width: 10px;
+  display: table-cell;
+  content: "";
+}
+.monet-layout-slides li.is-active {
+  background: #e6e6e6;
+}
+.monet-layout-slides li.is-active .slide {
+  outline: 2px solid #4d9ddd;
+}
+.monet-layout-artboard {
+  flex: 1;
+}
+.monet-layout-editor {
+  flex: 1;
+}
+.monet-layout-canvas {
+  flex-grow: 1;
+  background: #a5a5a5;
+}
+.monet-layout-tools {
+  width: 260px;
+}
+.monet-layout-views {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-width: 1px 0 0 1px;
+  height: 150px;
+}
+.monet-layout-views-header {
+  margin: 10px 10px 5px;
+}
+.monet-layout-views-options {
+  overflow-y: auto;
+  flex-wrap: wrap;
+  flex: 1;
+  height: 50px;
+}
+.monet-layout-views-options ul {
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+}
+.monet-layout-views-options li {
+  /*flex: 1 0 120px;*/
+  width: 120px;
+}
+.monet-view-option {
+  margin: 0 10px;
+}
+.monet-view-option-image {
+  height: 80px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.32);
+}
+.monet-view-option-text {
+  font-size: 11px;
+  margin: 8px 0;
+  text-align: center;
+  max-height: 2.6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

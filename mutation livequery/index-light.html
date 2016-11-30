@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://www.w3.org/TR/2014/REC-html5-20141028/dom.html -->
+<html lang="en-US-x-Hixie"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <body>
+    <button id="start-me">START</button>
+    <div id="new-nodes"></div>
+
+
+<script src="jquery-1.12.4.min.js" charset="utf-8"></script>
+<script src="jquery.livequery.js" charset="utf-8"></script>
+<script type="text/javascript">
+  var start;
+  var end;
+  var newNodes = $('#new-nodes');
+  var times = [];
+  var maxNodes = 1;
+  
+  $('.new-node').livequery(function() {
+    debugger
+    var $node = $(this);
+    var i = $node.attr('data-i');
+    var count = $node.attr('data-count');
+    $node.text(count + '::' + i);
+    debugger
+    if (parseInt(i, 10) === maxNodes-1) {
+      end = (new Date()).getTime();
+      console.log(start, end, end - start);
+      times.push(end - start);
+      console.log(count, count === '9', count === 9);
+      if (count !== '9') {
+        // newNodes.html('');
+      }
+    }
+  });
+
+  $('#start-me').on('click', function() {
+    for (var count = 0; count < 2; count++) {
+      start = (new Date()).getTime();
+      for (var i = 0; i < maxNodes; i++) {
+        newNodes.append('<div class="new-node" data-count="'+ count +'" data-i="'+ i + '">Round: ' + count + '; New node ' + i + '</div>');
+      }
+    }
+  });
+    
+</script>
+
+  </body></html>

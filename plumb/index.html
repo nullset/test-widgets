@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+      }
+      .rule {
+        border-right: 1px solid red;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 200px;
+      }
+      .obj {
+        position: absolute;
+        top: 200px;
+        left: 200px;
+        width: 100px;
+        height: 100px;
+        background: rgba(0,255,0,0.5);
+      }
+      .svg-rule {
+        position: absolute;
+        left: 300px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="rule"></div>
+    <div class="obj"></div>
+    <div class="svg-rule" draggable="true">
+      <svg width="1" height="900" viewBox="0 0 1 900">
+        <line x1="0" y1="0" x2="0" y2="900" stroke="red" strokeWidth="1" />
+      </svg>
+    </div>
+  </body>
+</html>

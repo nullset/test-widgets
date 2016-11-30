@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://www.w3.org/TR/2014/REC-html5-20141028/dom.html -->
+<html lang="en-US-x-Hixie"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <body>
+    
+  <div style="display: flex; margin-bottom: 30px;">
+    <div style="margin-right: 20px;">
+      <button class="livequery">LIVEQUERY</button><br/>
+      <button class="mutation">MUTATE</button>
+    </div>
+    <button class="change-text">CHANGE TEXT</button>
+    <button class="change-attribute">CHANGE ATTRIBUTE</button>
+    <button class="change-node">CHANGE NODE</button>
+    <button class="change-all">CHANGE ALL</button>
+    
+  </div>
+  
+  <div id="some-id"></div>
+
+<script src="jquery-1.12.4.min.js" charset="utf-8"></script>
+<script src="jquery.livequery.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+  var colors = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","WhiteSmoke","Yellow","YellowGreen"];
+
+  function randomColor() {
+    return colors[Math.floor(Math.random()*colors.length)];
+  }
+
+
+  var start;
+  var end;
+  var times = [];
+  var max = 1000;
+  var debugOnChange = false;
+  
+  $(document).ready(function() {
+    
+    $('.mutation').click(function() {
+      var target = $('#some-id');
+      var config = {
+        childList: true,
+        attributes: true,
+        subtree: true
+      };
+
+      var observer = new MutationObserver(function(mutations) {
+        if (debugOnChange) {
+          debugger
+        }
+        debugger
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.tagName && node.classList.contains('new-node')) {
+                var $node = $(node);
+                $node.hover(function() {
+                  $node.css({background: randomColor()});
+                });
+                var i = node.getAttribute('data-i');
+                var count = node.getAttribute('data-count');
+                node.innerHTML = count + '::' + i;
+              }
+            });
+          }
+        });
+      });
+      
+      observer.observe(target[0], config);
+    
+      for (var count = 0; count < 10; count++) {
+        target.html('');
+        start = (new Date()).getTime();
+        for (var i = 0; i < max; i++) {
+          target.append('<div class="new-node" data-count="'+ count +'" data-i="'+ i + '">Round: ' + count + '; New node ' + i + '</div>');
+        }
+      }
+    });
+    
+    $('.livequery').click(function() {
+      var target = $('#some-id');
+      
+      $('.new-node').livequery(function() {
+        console.log('ADDED');
+        if (debugOnChange) {
+          debugger
+        }
+        var $node = $(this);
+        $node.hover(function() {
+          $node.css({background: randomColor()});
+        });
+        var i = this.getAttribute('data-i');
+        var count = this.getAttribute('data-count');
+        this.innerHTML = count + '::' + i;
+      });
+    
+      for (var count = 0; count < 10; count++) {
+        target.html('');
+        start = (new Date()).getTime();
+        for (var i = 0; i < max; i++) {
+          target.append('<div class="new-node" data-count="'+ count +'" data-i="'+ i + '">Round: ' + count + '; New node ' + i + '</div>');
+        }
+      }
+    }
+    // ,
+    // function() {
+    //   console.log('REMOVED');
+    //   debugger
+    // }
+  );
+    
+    
+    $('.change-attribute').click(function() {
+      debugOnChange = true;
+      $('.new-node').first().css('background', 'yellow');
+    })
+
+    $('.change-text').click(function() {
+      debugOnChange = true;
+      $('.new-node').first().text('change text');
+    })
+
+    $('.change-node').click(function() {
+      debugOnChange = true;
+      $('.new-node').first().replaceWith('<a class="new-node">blah</a>');
+    })
+
+    $('.change-all').click(function() {
+      debugOnChange = true;
+      $('.new-node').each(function() {
+        $(this).text('change text').css('background', randomColor())
+      });
+    });
+  });
+  
+</script>
+
+  </body></html>

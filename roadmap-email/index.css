@@ -1,0 +1,124 @@
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  background: #f2f2f2;
+  color: #666;
+  text-align: center;
+}
+body > .shadow {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  margin: 20px auto;
+  text-align: left;
+}
+body > .shadow > table {
+  width: 660px;
+}
+body > .shadow > table > tbody > tr > td {
+  background: #fff;
+  padding: 20px 10px;
+}
+body > .shadow > table > tbody > tr > td:first-child {
+  padding-left: 20px;
+}
+body > .shadow > table > tbody > tr > td:last-child {
+  padding-right: 20px;
+}
+body > .shadow > table > tbody > tr.header td:first-child {
+  width: 235px;
+}
+body > .shadow > table > tbody > tr.header-shadow td {
+  background: url("h-shadow.png") repeat-x;
+  height: 6px;
+  line-height: 0;
+  padding: 0;
+}
+body > .shadow > table > tbody > tr.footer {
+  text-align: center;
+}
+body > .shadow > table > tbody > tr.footer > td {
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+  font-size: 11px;
+  background: #fbfbfb;
+}
+
+table {
+  font-family: "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  border-collapse: collapse;
+  color: #666;
+}
+table table {
+  width: 100%;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.divider {
+  width: 18px !important;
+  padding: 0 !important;
+  font-size: 30px;
+  color: #ccc;
+}
+.divider img {
+  display: inline-block;
+}
+
+.media {
+  margin-bottom: 10px;
+}
+.media td {
+  padding: 0;
+}
+.media-object {
+  vertical-align: top;
+  width: 30px;
+}
+.media-object .media-image {
+  background-color: #f2f2f2;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.media-object img {
+  min-width: 30px;
+  min-height: 30px;
+  object-fit: cover;
+}
+.media .media-content {
+  padding-left: 10px;
+}
+.media .user-headline {
+  font-style: italic;
+}
+
+.btn-row {
+  padding-top: 1em;
+}
+
+.btn-primary {
+  border: 1px solid #4d9ddd;
+  color: #4d9ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  padding: 0 10px;
+}

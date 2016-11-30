@@ -1,0 +1,5 @@
+1. How does the user re-order slides?
+2. How much bootstrap (other than buttons) are we using?
+3. Can we make SVG sprites rather than font-awesome?
+4. How are we dragging (native drag/drop or jquery-ui)?
+5. What is stored in the slides thumbnail?

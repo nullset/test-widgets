@@ -1,0 +1,19 @@
+body * {
+  box-sizing: border-box; }
+
+.float {
+  float: left;
+  max-width: 66%; }
+
+.flex-row {
+  border: 1px solid red;
+  background: #fc0;
+  display: flex; }
+  .flex-row > * {
+    background: rgba(0, 0, 255, 0.5); }
+  .flex-row .wrap {
+    min-width: 0;
+    flex: 0 1 auto;
+    background: none;
+    overflow: hidden;
+    text-overflow: ellipsis; }

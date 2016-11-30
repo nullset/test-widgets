@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://www.w3.org/TR/2014/REC-html5-20141028/dom.html -->
+<html lang="en-US-x-Hixie"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style media="screen">
+    .row {
+      display: flex;
+    }
+    .row > * {
+      flex: 1;
+    }
+  </style>
+  <body>
+    <button id="mutation" data-start="#some-id" data-end="#other-id">Start</button>
+    <button id="lq"  data-start="#live-id" data-end="#live-other-id">Start</button>
+    <div class="row">
+      <div id="some-id" style="background: aqua;"></div>
+      <div id="other-id" style="background: yellow"></div>
+      <div id="live-id" style="background: aqua;"></div>
+      <div id="live-other-id" style="background: yellow;"></div>
+    </div>
+
+<script src="jquery-1.12.4.min.js" charset="utf-8"></script>
+<script src="jquery.livequery.js" charset="utf-8"></script>
+<script type="text/javascript">
+  var start;
+  var end;
+  var times = [];
+  var target;
+  var other;
+  var config = { attributes: true, childList: true, characterData: true };
+  
+  $('button').on('click', function() {  
+    target = $($(this).attr('data-start'));
+    other =  $($(this).attr('data-end'));
+    target.html('');
+    other.html('');
+    var time = Date.now();
+    for (var count = 0; count < 10; count++) {
+      start = (new Date()).getTime();
+      for (var i = 0; i < 100; i++) {
+        target.append('<div class="new-node" data-count="'+ count +'" data-i="'+ i + '">TIME: ' + time + '; Round: ' + count + '; New node ' + i + '</div>');
+      }
+    }
+  });
+  
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.classList.contains('new-node')) {
+            var i = node.getAttribute('data-i');
+            var count = node.getAttribute('data-count');
+            other.append('<div>' + node.innerHTML + '</div>')
+          }
+        });
+      }
+    });
+  });
+  
+  observer.observe(document.querySelector('#some-id'), config);
+  
+  
+  $('#live-id').livequery(function() {
+    debugger
+  });
+
+  
+</script>
+
+  </body></html>
