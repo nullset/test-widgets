@@ -1097,6 +1097,12 @@
 		"oS": 1,
 		"uL": 1
 		},
+	"\/table-fixed-header\/_table.kit": {
+		"ft": 2048,
+		"oA": 1,
+		"oAP": "\/table-fixed-header\/_table.html",
+		"oF": 0
+		},
 	"\/table-fixed-header\/index.css": {
 		"aP": 0,
 		"bl": 0,
@@ -1110,6 +1116,12 @@
 	"\/table-fixed-header\/index.html": {
 		"ft": 8192,
 		"oA": 2,
+		"oAP": "\/table-fixed-header\/index.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index.kit": {
+		"ft": 2048,
+		"oA": 0,
 		"oAP": "\/table-fixed-header\/index.html",
 		"oF": 0
 		},

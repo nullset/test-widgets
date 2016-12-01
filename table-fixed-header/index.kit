@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="index.css" media="screen" title="no title">
+  </head>
+  <body>
+    
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    
+    <div class="table-wrapper wrapper">
+      <!-- @include table -->
+    </div>
+    
+    <div class="scrolling-tbody wrapper">
+      <!-- @include table -->
+    </div>
+    
+    <div class="scrolling-tbody-2 wrapper">
+      <!-- @include table -->
+    </div>
+    
+    <div class="caption-table wrapper">
+      <!-- @include table -->
+    </div>
+  
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+  
+    <script src="jquery-3.1.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var $tables = $('.table-wrapper table');
+      
+      $tables.each(function(i, table) {
+        var parent = table.parentElement;
+        var theadTR = table.querySelector('thead tr:first-child');
+        // var spacer = $(table).find('thead tr:first-child').prepend('<tr><td colspan="' + $(theadTR).find('th').length + '">XXX</td></tr>')
+        
+        // NOTE : spacer must be *prependend* not appended, otherwise there will be a 1px jank on scroll (appears to be a rendering engine bug).
+        var spacer = $(theadTR).clone()
+        $(table).find('thead').prepend(spacer);
+        spacer.css('visibility', 'hidden')
+      
+        theadTR.querySelectorAll('th').forEach(function(th) {
+          th.style.width = window.getComputedStyle(th).width;
+        });
+      
+        var scrollParents = $(table)
+          .parents()
+          .toArray()
+          .filter(function(parent, i, array) {
+            var overflowY = $(parent).css('overflow-y');
+            if (overflowY !== 'visible') {
+              return parent;
+            }
+          });
+        scrollParents.push(document);
+          
+        if (scrollParents.length > 1) {
+          scrollParents.forEach(function(elem) {
+            elem.onscroll = function(event) {
+              theadTR.style.position = 'fixed';
+              
+                var scrollOffset = scrollParents.reduce(function(acc, parent) {
+                  if (typeof parent.scrollingElement !== 'undefined') {
+                    return parent.scrollingElement.scrollTop;
+                  } else {
+                    return parent.scrollTop;
+                  }
+                }, 0);
+                theadTR.style.top = scrollParents[0].offsetTop - scrollOffset + 'px';
+            }
+          });
+        } else {
+          
+        }
+      
+      });
+      
+      
+      // --------------------------------
+      
+      var sc = document.querySelector('.scrolling-tbody');
+      var thead = sc.querySelector('thead');
+      
+      sc.onscroll = function(event) {
+        // requestAnimationFrame(function() {
+        console.log(event.target.scrollTop);
+          var transformation = 'translateY(' + event.target.scrollTop + 'px)'
+          // $thead.css({webkitTransform: transformation, transform: transformation});
+          thead.style.transform = transformation;
+        // });
+        // console.log(event.target.scrollTop);
+      }
+      
+      // var sc2 = document.querySelector('.scrolling-tbody-2');
+      // var $thead = $('.scrolling-tbody-2 thead');
+      // var $tbody = $('.scrolling-tbody tbody');
+      // sc2.onmousewheel = function(event) {
+      //   if (event.deltaY) {
+      //     // requestAnimationFrame(function() {
+      //       var currentValue = parseInt($thead[0].style.transform.replace(/\D/g,''), 10);
+      //       if (isNaN(currentValue)) {
+      //         currentValue = 0;
+      //       }
+      //       console.log(currentValue, event.deltaY);
+      //       var value = currentValue + event.deltaY;
+      //       var transformation = 'translateY(' + value + 'px)';
+      //       var negTransformation = 'translateY(' + -value + 'px)'
+      //       $thead.css({webkitTransform: transformation, transform: transformation});
+      //       $tbody.css({webkitTransform: negTransformation, transform: negTransformation});
+      //       event.preventDefault();
+      //     // });
+      //     // console.log(event.target.scrollTop);
+      //   }
+      // }
+      
+      
+      // -------------------------------------
+      console.info('--- caption table')
+      var $captionTable = $('.caption-table');
+      var $thead = $captionTable.find('thead');
+      var $caption = $('<div></div>');
+      var $newTable = $('<table></table>');
+      $caption.append($newTable.append($thead.clone()));
+      $captionTable.before($caption);
+
+
+
+      $('table thead').find('th').each(function(i, th) {
+        $(th).click(function() {
+          alert()
+        })
+      })
+
+    </script>
+  </body>
+</html>

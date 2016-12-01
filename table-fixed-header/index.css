@@ -7,14 +7,45 @@ table {
     height: 400px;
     overflow-y: auto; }
   table thead tr {
-    background: lavender;
-    pointer-events: none; }
+    background: lavender; }
 
 .table-wrapper {
   height: 400px;
   overflow-y: auto; }
 
+.wrapper {
+  margin-bottom: 100px; }
+
 .row {
   background: red; }
   .row > * {
     background: yellow; }
+
+.scrolling-tbody {
+  overflow: auto;
+  height: 400px; }
+  .scrolling-tbody thead {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    will-change: -webkit-transform;
+    will-change: transform; }
+    .scrolling-tbody thead th {
+      position: relative;
+      border-bottom: 1px solid green; }
+      .scrolling-tbody thead th:before {
+        content: "";
+        position: absolute;
+        border-left: 1px solid red;
+        top: 0;
+        bottom: 0; }
+      .scrolling-tbody thead th:before {
+        left: -1px; }
+      .scrolling-tbody thead th:after {
+        right: -1px; }
+
+.caption-table {
+  overflow: auto;
+  height: 400px; }
+  .caption-table caption {
+    position: absolute;
+    margin-top: -10px; }

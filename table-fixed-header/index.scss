@@ -11,7 +11,7 @@ table {
   }
   thead tr {
     background: lavender;
-    pointer-events: none;
+    // pointer-events: none;
   }
 }
 
@@ -20,9 +20,66 @@ table {
   overflow-y: auto;
 }
 
+.wrapper {
+  margin-bottom: 100px;
+}
+
 .row {
   background: red;
   > * {
     background: yellow;
+  }
+}
+
+
+
+.scrolling-tbody {
+  // -- COOL EFFECT
+  // tbody {
+  //   display: block;
+  //   tr {
+  //     display: flex;
+  //   }
+  //   td {
+  //     display: block;
+  //   }
+  // }
+
+  overflow: auto;
+  height: 400px;
+  thead {
+    // transition: transform 0.1s;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    will-change: -webkit-transform;
+    will-change: transform;
+    // position: relative;
+    // z-index: 100;
+    th {
+      position: relative;
+      border-bottom: 1px solid green;
+      &:before {
+        content: "";
+        position: absolute;
+        border-left: 1px solid red;
+        top: 0;
+        bottom: 0;
+      }
+      &:before {
+        left: -1px;
+      }
+      &:after {
+        right: -1px;
+      }
+    }
+  }
+}
+
+.caption-table {
+  overflow: auto;
+  height: 400px;
+  caption {
+    position: absolute;
+    margin-top: -10px;
   }
 }
