@@ -7,6 +7,7 @@
   </head>
   <body>
     
+    <!-- <p>a</p>
     <p>a</p>
     <p>a</p>
     <p>a</p>
@@ -19,24 +20,23 @@
     <p>a</p>
     <p>a</p>
     <p>a</p>
-    <p>a</p>
-    <p>a</p>
+    <p>a</p> -->
     
-    <div class="table-wrapper wrapper">
+    <!-- <div class="table-wrapper wrapper">
       <!-- @include table -->
-    </div>
+    </div> -->
     
     <div class="scrolling-tbody wrapper">
       <!-- @include table -->
     </div>
     
-    <div class="scrolling-tbody-2 wrapper">
+    <!-- <div class="scrolling-tbody-2 wrapper">
       <!-- @include table -->
     </div>
     
     <div class="caption-table wrapper">
       <!-- @include table -->
-    </div>
+    </div> -->
   
     <p>a</p>
     <p>a</p>
@@ -134,19 +134,42 @@
       
       // --------------------------------
       
-      var sc = document.querySelector('.scrolling-tbody');
-      var thead = sc.querySelector('thead');
+      // var sc = document.querySelector('.scrolling-tbody');
+      // var thead = sc.querySelectorAll('thead tr > *');
+      // 
+      // $(sc).on('scroll', function(event) {
+      //   // requestAnimationFrame(function() {
+      //   console.log(event.target.scrollTop);
+      //     var transformation = 'translateY(' + event.target.scrollTop + 'px)'
+      //     // $thead.css({webkitTransform: transformation, transform: transformation});
+      //     thead.forEach(function(th) {
+      //       th.style.transform = transformation;
+      //     });
+      //     // thead.style.transform = transformation;
+      //   // });
+      //   // console.log(event.target.scrollTop);
+      // });
       
-      sc.onscroll = function(event) {
+      
+      // ------------------------------
+      var $sc = $('.scrolling-tbody');
+      var $offsetElems = $sc.find('thead tr > *');
+      
+      $sc.on('scroll', function(event) {
         // requestAnimationFrame(function() {
-        console.log(event.target.scrollTop);
-          var transformation = 'translateY(' + event.target.scrollTop + 'px)'
+        var transformation = 'translateY(' + event.target.scrollTop + 'px)'
           // $thead.css({webkitTransform: transformation, transform: transformation});
-          thead.style.transform = transformation;
+          $offsetElems.each(function(i, elem) {
+            elem.style.transform = transformation;
+          });
+          // thead.style.transform = transformation;
         // });
         // console.log(event.target.scrollTop);
-      }
-      
+      });
+      // ------------------------------
+
+
+
       // var sc2 = document.querySelector('.scrolling-tbody-2');
       // var $thead = $('.scrolling-tbody-2 thead');
       // var $tbody = $('.scrolling-tbody tbody');

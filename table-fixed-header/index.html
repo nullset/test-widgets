@@ -1196,7 +1196,7 @@
       
     </div>
     
-    <div class="scrolling-tbody-2 wrapper">
+    <!-- <div class="scrolling-tbody-2 wrapper">
       <table>
         <thead>
           <tr>
@@ -2368,7 +2368,7 @@
         </tbody>
       </table>
       
-    </div>
+    </div> -->
   
     <p>a</p>
     <p>a</p>
@@ -2417,6 +2417,24 @@
     <script type="text/javascript">
       var $tables = $('.table-wrapper table');
       
+      function setThWidth(thead) {
+        
+      }
+      
+      $(window).resize(function(){
+        $tables.each(function(i, table) {
+          $spacer = $(table).find('thead tr:first-child');
+          $spacerThs = $spacer.find('th');
+          
+          $thead = $(table).find('thead tr:last-child');
+          $thead[0].style.width = window.getComputedStyle($spacer[0]).width;
+
+          $thead.find('th').each(function(i, elem) {
+            elem.style.width = window.getComputedStyle($spacerThs[i]).width;
+          });
+        });
+      });
+      
       $tables.each(function(i, table) {
         var parent = table.parentElement;
         var theadTR = table.querySelector('thead tr:first-child');
@@ -2425,7 +2443,7 @@
         // NOTE : spacer must be *prependend* not appended, otherwise there will be a 1px jank on scroll (appears to be a rendering engine bug).
         var spacer = $(theadTR).clone()
         $(table).find('thead').prepend(spacer);
-        spacer.css('visibility', 'hidden')
+        // spacer.css('visibility', 'hidden')
       
         theadTR.querySelectorAll('th').forEach(function(th) {
           th.style.width = window.getComputedStyle(th).width;
@@ -2446,6 +2464,8 @@
           scrollParents.forEach(function(elem) {
             elem.onscroll = function(event) {
               theadTR.style.position = 'fixed';
+              theadTR.style.opacity = '0.5';
+              theadTR.style.color = 'red';
               
                 var scrollOffset = scrollParents.reduce(function(acc, parent) {
                   if (typeof parent.scrollingElement !== 'undefined') {
@@ -2454,7 +2474,7 @@
                     return parent.scrollTop;
                   }
                 }, 0);
-                theadTR.style.top = scrollParents[0].offsetTop - scrollOffset + 'px';
+                theadTR.style.top = scrollParents[0].offsetTop - scrollOffset - 50 + 'px';
             }
           });
         } else {
@@ -2466,19 +2486,42 @@
       
       // --------------------------------
       
-      var sc = document.querySelector('.scrolling-tbody');
-      var thead = sc.querySelector('thead');
+      // var sc = document.querySelector('.scrolling-tbody');
+      // var thead = sc.querySelectorAll('thead tr > *');
+      // 
+      // $(sc).on('scroll', function(event) {
+      //   // requestAnimationFrame(function() {
+      //   console.log(event.target.scrollTop);
+      //     var transformation = 'translateY(' + event.target.scrollTop + 'px)'
+      //     // $thead.css({webkitTransform: transformation, transform: transformation});
+      //     thead.forEach(function(th) {
+      //       th.style.transform = transformation;
+      //     });
+      //     // thead.style.transform = transformation;
+      //   // });
+      //   // console.log(event.target.scrollTop);
+      // });
       
-      sc.onscroll = function(event) {
+      
+      // ------------------------------
+      var $sc = $('.scrolling-tbody');
+      var $offsetElems = $sc.find('thead tr > *');
+      
+      $sc.on('scroll', function(event) {
         // requestAnimationFrame(function() {
-        console.log(event.target.scrollTop);
-          var transformation = 'translateY(' + event.target.scrollTop + 'px)'
+        var transformation = 'translateY(' + event.target.scrollTop + 'px)'
           // $thead.css({webkitTransform: transformation, transform: transformation});
-          thead.style.transform = transformation;
+          $offsetElems.each(function(i, elem) {
+            elem.style.transform = transformation;
+          });
+          // thead.style.transform = transformation;
         // });
         // console.log(event.target.scrollTop);
-      }
-      
+      });
+      // ------------------------------
+
+
+
       // var sc2 = document.querySelector('.scrolling-tbody-2');
       // var $thead = $('.scrolling-tbody-2 thead');
       // var $tbody = $('.scrolling-tbody tbody');
