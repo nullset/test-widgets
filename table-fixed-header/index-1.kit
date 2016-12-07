@@ -7,7 +7,6 @@
   </head>
   <body>
     
-    <!-- <p>a</p>
     <p>a</p>
     <p>a</p>
     <p>a</p>
@@ -20,23 +19,24 @@
     <p>a</p>
     <p>a</p>
     <p>a</p>
-    <p>a</p> -->
+    <p>a</p>
+    <p>a</p>
     
-    <!-- <div class="table-wrapper wrapper">
+    <div class="table-wrapper wrapper first-shot">
       <!-- @include table -->
-    </div> -->
+    </div>
     
     <div class="scrolling-tbody wrapper">
       <!-- @include table -->
     </div>
     
-    <!-- <div class="scrolling-tbody-2 wrapper">
+    <div class="scrolling-tbody-2 wrapper">
       <!-- @include table -->
     </div>
     
     <div class="caption-table wrapper">
       <!-- @include table -->
-    </div> -->
+    </div>
   
     <p>a</p>
     <p>a</p>
@@ -83,7 +83,22 @@
   
     <script src="jquery-3.1.1.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-      var $tables = $('.table-wrapper table');
+      
+      // Create the measurement node
+      var scrollDiv = document.createElement("div");
+      scrollDiv.className = "scrollbar-measure";
+      document.body.appendChild(scrollDiv);
+
+      // Get the scrollbar width
+      window.scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+      console.warn(scrollbarWidth); // Mac:  15
+
+      // Delete the DIV 
+      document.body.removeChild(scrollDiv);
+    
+    
+    
+      var $tables = $('.first-shot table');
       
       $tables.each(function(i, table) {
         var parent = table.parentElement;
@@ -91,12 +106,16 @@
         // var spacer = $(table).find('thead tr:first-child').prepend('<tr><td colspan="' + $(theadTR).find('th').length + '">XXX</td></tr>')
         
         // NOTE : spacer must be *prependend* not appended, otherwise there will be a 1px jank on scroll (appears to be a rendering engine bug).
-        var spacer = $(theadTR).clone()
+        var spacer = $(theadTR).clone();
         $(table).find('thead').prepend(spacer);
-        spacer.css('visibility', 'hidden')
+        spacer.css('visibility', 'hidden');
+        $(theadTR).addClass('blah').width($(parent).width() - window.scrollbarWidth);
       
         theadTR.querySelectorAll('th').forEach(function(th) {
-          th.style.width = window.getComputedStyle(th).width;
+          // th.style.width = window.getComputedStyle(th).width;
+          $clip = $('<div class="clip" />');
+          $clip.width(window.getComputedStyle(th).width);
+          $(th).wrapInner($clip);
         });
       
         var scrollParents = $(table)
@@ -117,12 +136,13 @@
               
                 var scrollOffset = scrollParents.reduce(function(acc, parent) {
                   if (typeof parent.scrollingElement !== 'undefined') {
-                    return parent.scrollingElement.scrollTop;
+                    return {top: parent.scrollingElement.scrollTop, left: parent.scrollingElement.scrollLeft};
                   } else {
-                    return parent.scrollTop;
+                    return {top: acc.top + parent.scrollTop, left: acc.left + parent.scrollLeft};
                   }
-                }, 0);
-                theadTR.style.top = scrollParents[0].offsetTop - scrollOffset + 'px';
+                }, {top: 0, left: 0});
+                theadTR.style.top = scrollParents[0].offsetTop - scrollOffset.top + 'px';
+                theadTR.style.left = scrollParents[0].offsetTop - scrollOffset.left + 'px';
             }
           });
         } else {

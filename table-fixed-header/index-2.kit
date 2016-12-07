@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="index.css" media="screen" title="no title">
+  </head>
+  <body>
+    
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    
+    <div class="scrolling-index-2 table-wrapper">
+      <!-- @include table -->
+    </div>
+    
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+    <p>a</p>
+  
+    <script src="jquery-3.1.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var $tables = $('.table-wrapper table');
+      
+      $tables.each(function(i, table) {
+        $elem = $(table);
+        $clone = $elem.clone(true, true);
+        $clone.find('tbody').remove();
+        
+        $elemThead = $elem.find('thead');
+        $elemThead.find('th').each(function(index, th) {
+          $clone.find('thead th:nth-child(' + (index + 1) + ')')
+            .width($(th).width());
+        });
+        $clone.find('thead').css({position: 'relative', marginBottom: -$elemThead.height()});
+        
+        $caption = $('<caption></caption>');
+        $caption.append($clone);
+        $elem.prepend($caption);
+      });
+      
+    </script>
+  </body>
+</html>

@@ -31,6 +31,37 @@ table {
   }
 }
 
+.first-shot {
+  // .blah {
+  //   display: flex;
+  //   th {
+  //     display: block;
+  //   }
+  //   th:not(:nth-child(1)) {
+  //     margin-left: -1px;
+  //   }
+  // }
+
+  // .blah {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   th {
+  //     background: lime;
+  //     display: inline-block;
+  //   }
+  // }
+  
+  .blah {
+    overflow: hidden;
+  }
+}
+.scrollbar-measure {
+	width: 100px;
+	height: 100px;
+	overflow: scroll;
+	position: absolute;
+	top: -9999px;
+}
 
 
 .scrolling-tbody {
@@ -86,5 +117,16 @@ table {
   caption {
     position: absolute;
     margin-top: -10px;
+  }
+}
+
+
+
+.scrolling-index-2 {
+  overflow: auto;
+  height: 400px;
+  caption {
+    transform: translate3d(0,0,0);
+    position: absolute;
   }
 }

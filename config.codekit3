@@ -1103,6 +1103,18 @@
 		"oAP": "\/table-fixed-header\/_table.html",
 		"oF": 0
 		},
+	"\/table-fixed-header\/index-1.kit": {
+		"ft": 2048,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/index-1.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index-2.kit": {
+		"ft": 2048,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/index-2.html",
+		"oF": 0
+		},
 	"\/table-fixed-header\/index.css": {
 		"aP": 0,
 		"bl": 0,
@@ -1112,18 +1124,6 @@
 		"oAP": "\/table-fixed-header\/index-min.css",
 		"oF": 0,
 		"oS": 0
-		},
-	"\/table-fixed-header\/index.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/table-fixed-header\/index.html",
-		"oF": 0
-		},
-	"\/table-fixed-header\/index.kit": {
-		"ft": 2048,
-		"oA": 0,
-		"oAP": "\/table-fixed-header\/index.html",
-		"oF": 0
 		},
 	"\/table-fixed-header\/index.scss": {
 		"aP": 0,

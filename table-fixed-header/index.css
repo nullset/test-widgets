@@ -21,6 +21,16 @@ table {
   .row > * {
     background: yellow; }
 
+.first-shot .blah {
+  overflow: hidden; }
+
+.scrollbar-measure {
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+  position: absolute;
+  top: -9999px; }
+
 .scrolling-tbody {
   overflow: auto;
   height: 400px; }
@@ -55,3 +65,10 @@ table {
   .caption-table caption {
     position: absolute;
     margin-top: -10px; }
+
+.scrolling-index-2 {
+  overflow: auto;
+  height: 400px; }
+  .scrolling-index-2 caption {
+    transform: translate3d(0, 0, 0);
+    position: absolute; }
