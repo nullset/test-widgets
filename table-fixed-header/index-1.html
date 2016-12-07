@@ -2467,14 +2467,19 @@
               theadTR.style.position = 'fixed';
               
                 var scrollOffset = scrollParents.reduce(function(acc, parent) {
-                  if (typeof parent.scrollingElement !== 'undefined') {
-                    return {top: parent.scrollingElement.scrollTop, left: parent.scrollingElement.scrollLeft};
-                  } else {
+                  if (typeof parent.scrollingElement === 'undefined') {
+                    console.log(parent.scrollLeft, elem.scrollLeft);
+                    // return {top: acc.top + parent.scrollTop, left: acc.left + parent.scrollLeft};
                     return {top: acc.top + parent.scrollTop, left: acc.left + parent.scrollLeft};
+                  } else {
+                    console.log('-----', parent.scrollLeft, elem.scrollLeft);
+                    return {top: parent.scrollingElement.scrollTop, left: elem.scrollLeft};
                   }
                 }, {top: 0, left: 0});
                 theadTR.style.top = scrollParents[0].offsetTop - scrollOffset.top + 'px';
-                theadTR.style.left = scrollParents[0].offsetTop - scrollOffset.left + 'px';
+                // theadTR.style.left = scrollParents[0].offsetTop - scrollOffset.left + 'px';
+                theadTR.querySelector('th .clip').style.marginLeft = -scrollOffset.left + 'px';
+                  // th.style.marginLeft = -scrollOffset.left + 'px';
             }
           });
         } else {
