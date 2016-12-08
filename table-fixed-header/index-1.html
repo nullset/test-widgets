@@ -7,6 +7,7 @@
   </head>
   <body>
     
+    <!-- <p>a</p>
     <p>a</p>
     <p>a</p>
     <p>a</p>
@@ -19,10 +20,9 @@
     <p>a</p>
     <p>a</p>
     <p>a</p>
-    <p>a</p>
-    <p>a</p>
+    <p>a</p> -->
     
-    <div class="table-wrapper wrapper first-shot">
+    <!-- <div class="table-wrapper wrapper first-shot">
       <table>
         <thead>
           <tr>
@@ -607,7 +607,7 @@
         </tbody>
       </table>
       
-    </div>
+    </div> -->
     
     <div class="scrolling-tbody wrapper">
       <table>
@@ -2511,17 +2511,58 @@
       // ------------------------------
       var $sc = $('.scrolling-tbody');
       var $offsetElems = $sc.find('thead tr > *');
-      
-      $sc.on('scroll', function(event) {
+      var $scTable = $sc.find('table');
+
+      $sc.on('wheel mousewheel', function(event) {
+        event.preventDefault();
+        console.log('delta Y', event.originalEvent.deltaY);
+        
+        
         // requestAnimationFrame(function() {
-        var transformation = 'translateY(' + event.target.scrollTop + 'px)'
-          // $thead.css({webkitTransform: transformation, transform: transformation});
-          $offsetElems.each(function(i, elem) {
-            elem.style.transform = transformation;
+        var existingX = typeof $sc.data('scroll-x') === 'undefined' ? 0 : parseInt($sc.data('scroll-x'), 10);
+        var existingY = typeof $sc.data('scroll-y') === 'undefined' ? 0 : parseInt($sc.data('scroll-y'), 10);
+        var newX = existingX + event.originalEvent.deltaX;
+        var newY = existingY + event.originalEvent.deltaY;
+        if (newX < 0) {
+          newX = 0;
+        }
+        if (newY < 0) {
+          newY = 0;
+        }
+        
+        if (newX > $scTable.width() - $sc.width() + ($sc[0].offsetWidth - $sc[0].clientWidth)) {
+          newX = existingX;
+        }
+        if (newY > $scTable.height() - $sc.height() + ($sc[0].offsetHeight - $sc[0].clientHeight)) {
+          newY = existingY;
+        }
+        
+        $sc.data('scroll-x', newX).data('scroll-y', newY);
+        $sc.scrollLeft(newX);
+        $sc.scrollTop(newY);
+        var transformation = 'translateY(' + (newY) + 'px)';
+        $offsetElems.each(function(i, elem) {
+          $(elem).css({
+            '-webkit-transform': transformation,
+            '-moz-transform': transformation,
+            '-ms-transform': transformation,
+            '-o-transform': transformation,
+            transform: transformation
           });
-          // thead.style.transform = transformation;
-        // });
-        // console.log(event.target.scrollTop);
+        });
+      });
+      
+      $sc.on('mousedown', function(e) {
+        $sc.data('mouse', {down: true, x: e.pageX - this.offsetLeft, y: e.pageY - this.offsetTop});
+      });
+      $sc.on('mouseup', function(e) {
+        $sc.data('mouse', undefined);
+      });
+      $sc.on('scroll', function(event) {
+        if ($sc.data('mouse')) {
+          $sc.scrollTop($sc.data('mouse').y);
+          $sc.scrollLeft($sc.data('mouse').x);
+        }
       });
       // ------------------------------
 

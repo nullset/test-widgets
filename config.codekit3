@@ -1103,10 +1103,22 @@
 		"oAP": "\/table-fixed-header\/_table.html",
 		"oF": 0
 		},
+	"\/table-fixed-header\/index-1.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/table-fixed-header\/index-1.html",
+		"oF": 0
+		},
 	"\/table-fixed-header\/index-1.kit": {
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-1.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index-2.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/table-fixed-header\/index-2.html",
 		"oF": 0
 		},
 	"\/table-fixed-header\/index-2.kit": {
