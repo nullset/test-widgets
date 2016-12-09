@@ -2513,6 +2513,19 @@
       var $offsetElems = $sc.find('thead tr > *');
       var $scTable = $sc.find('table');
       
+      function positionHeader($elems, scrollY) {
+        var transformation = 'translateY(' + scrollY + 'px)';
+        $elems.each(function(i, elem) {
+          $(elem).css({
+            '-webkit-transform': transformation,
+            '-moz-transform': transformation,
+            '-ms-transform': transformation,
+            '-o-transform': transformation,
+            transform: transformation
+          });
+        });
+      }
+      
       $sc.on('wheel mousewheel', function(event) {
         event.preventDefault();
         console.log('delta Y', event.originalEvent.deltaY);
@@ -2540,16 +2553,17 @@
         $sc.data({'scroll-x': newX, 'scroll-y': newY});
         $sc.scrollLeft(newX);
         $sc.scrollTop(newY);
-        var transformation = 'translateY(' + (newY) + 'px)';
-        $offsetElems.each(function(i, elem) {
-          $(elem).css({
-            '-webkit-transform': transformation,
-            '-moz-transform': transformation,
-            '-ms-transform': transformation,
-            '-o-transform': transformation,
-            transform: transformation
-          });
-        });
+        positionHeader($offsetElems, newY);
+        // var transformation = 'translateY(' + (newY) + 'px)';
+        // $offsetElems.each(function(i, elem) {
+        //   $(elem).css({
+        //     '-webkit-transform': transformation,
+        //     '-moz-transform': transformation,
+        //     '-ms-transform': transformation,
+        //     '-o-transform': transformation,
+        //     transform: transformation
+        //   });
+        // });
       });
       
       // $sc.on('mousedown', function(e) {
@@ -2563,16 +2577,17 @@
         // $sc.data('scroll-x', )
         $sc.data({'scroll-x': $sc.scrollLeft(), 'scroll-y': $sc.scrollTop()});
         
-        var transformation = 'translateY(' + ($sc.scrollTop()) + 'px)';
-        $offsetElems.each(function(i, elem) {
-          $(elem).css({
-            '-webkit-transform': transformation,
-            '-moz-transform': transformation,
-            '-ms-transform': transformation,
-            '-o-transform': transformation,
-            transform: transformation
-          });
-        });
+        positionHeader($offsetElems, $sc.scrollTop());
+        // var transformation = 'translateY(' + ($sc.scrollTop()) + 'px)';
+        // $offsetElems.each(function(i, elem) {
+        //   $(elem).css({
+        //     '-webkit-transform': transformation,
+        //     '-moz-transform': transformation,
+        //     '-ms-transform': transformation,
+        //     '-o-transform': transformation,
+        //     transform: transformation
+        //   });
+        // });
 
 
 
