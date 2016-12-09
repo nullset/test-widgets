@@ -2559,9 +2559,33 @@
         $sc.data('mouse', undefined);
       });
       $sc.on('scroll', function(event) {
-        if ($sc.data('mouse')) {
-          $sc.scrollTop($sc.data('mouse').y);
-          $sc.scrollLeft($sc.data('mouse').x);
+        if ($sc.data('mouse') && $sc.data('mouse').down) {
+          console.log($sc.scrollTop());
+          
+          var transformation = 'translateY(' + ($sc.scrollTop()) + 'px)';
+          $offsetElems.each(function(i, elem) {
+            $(elem).css({
+              '-webkit-transform': transformation,
+              '-moz-transform': transformation,
+              '-ms-transform': transformation,
+              '-o-transform': transformation,
+              transform: transformation
+            });
+          });
+
+          // $sc.scrollTop($sc.scrollTop() + $sc.height())
+          
+          // scrollHeight = 0;
+          // $sc.find("> *").each(function(i, elem) {
+          //   scrollHeight += $(elem).outerHeight();
+          // });
+          // 
+          // console.log('scroll', scrollHeight);
+          // console.log($sc.data('mouse').y);
+          // // $sc.scrollTop(($sc.data('mouse').y / scrollHeight) * scrollHeight);
+          // 
+          // // alert(($sc.data('mouse').y * scrollHeight) / 100)
+          // $sc.scrollLeft($sc.data('mouse').x);
         }
       });
       // ------------------------------
