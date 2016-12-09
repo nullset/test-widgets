@@ -2512,7 +2512,7 @@
       var $sc = $('.scrolling-tbody');
       var $offsetElems = $sc.find('thead tr > *');
       var $scTable = $sc.find('table');
-
+      
       $sc.on('wheel mousewheel', function(event) {
         event.preventDefault();
         console.log('delta Y', event.originalEvent.deltaY);
@@ -2537,7 +2537,7 @@
           newY = existingY;
         }
         
-        $sc.data('scroll-x', newX).data('scroll-y', newY);
+        $sc.data({'scroll-x': newX, 'scroll-y': newY});
         $sc.scrollLeft(newX);
         $sc.scrollTop(newY);
         var transformation = 'translateY(' + (newY) + 'px)';
@@ -2552,26 +2552,31 @@
         });
       });
       
-      $sc.on('mousedown', function(e) {
-        $sc.data('mouse', {down: true, x: e.pageX - this.offsetLeft, y: e.pageY - this.offsetTop});
-      });
-      $sc.on('mouseup', function(e) {
-        $sc.data('mouse', undefined);
-      });
+      // $sc.on('mousedown', function(e) {
+      //   $sc.data('mouse', {down: true, x: e.pageX - this.offsetLeft, y: e.pageY - this.offsetTop});
+      // });
+      // $sc.on('mouseup', function(e) {
+      //   $sc.data('mouse', undefined);
+      // });
       $sc.on('scroll', function(event) {
-        if ($sc.data('mouse') && $sc.data('mouse').down) {
-          console.log($sc.scrollTop());
-          
-          var transformation = 'translateY(' + ($sc.scrollTop()) + 'px)';
-          $offsetElems.each(function(i, elem) {
-            $(elem).css({
-              '-webkit-transform': transformation,
-              '-moz-transform': transformation,
-              '-ms-transform': transformation,
-              '-o-transform': transformation,
-              transform: transformation
-            });
+        console.log($sc.scrollTop());
+        // $sc.data('scroll-x', )
+        $sc.data({'scroll-x': $sc.scrollLeft(), 'scroll-y': $sc.scrollTop()});
+        
+        var transformation = 'translateY(' + ($sc.scrollTop()) + 'px)';
+        $offsetElems.each(function(i, elem) {
+          $(elem).css({
+            '-webkit-transform': transformation,
+            '-moz-transform': transformation,
+            '-ms-transform': transformation,
+            '-o-transform': transformation,
+            transform: transformation
           });
+        });
+
+
+
+        // if ($sc.data('mouse') && $sc.data('mouse').down) {
 
           // $sc.scrollTop($sc.scrollTop() + $sc.height())
           
@@ -2586,7 +2591,7 @@
           // 
           // // alert(($sc.data('mouse').y * scrollHeight) / 100)
           // $sc.scrollLeft($sc.data('mouse').x);
-        }
+        // }
       });
       // ------------------------------
 
