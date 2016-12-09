@@ -182,7 +182,12 @@
       var $scTable = $sc.find('table');
       
       function positionHeader($elems, scrollY) {
-        var transformation = 'translateY(' + scrollY + 'px)';
+        var transformation;
+        if (/firefox/i.test(navigator.userAgent)) {
+          transformation = 'translate(-1px, ' + (scrollY - 1) + 'px)';
+        } else {
+          transformation = 'translateY(' + scrollY + 'px)';
+        }
         $elems.each(function(i, elem) {
           $(elem).css({
             '-webkit-transform': transformation,
