@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="index.css" media="screen" title="no title">
+    <link rel="stylesheet" href="index-3.css" media="screen" title="no title">
   </head>
   <body>
     
@@ -16,7 +16,7 @@
     <p>a</p>
     <p>a</p>
     
-    <div class="scrolling-tbody wrapper">
+    <div class="scrolling-tbody table-wrapper">
       <table>
         <thead>
           <tr>
@@ -591,12 +591,12 @@
             <td class="td">cell 6</td>
           </tr>
           <tr>
-            <td class="td">cell 1</td>
+            <td class="td">cell 1 LAST</td>
             <td class="td">cell 2</td>
             <td class="td">cell 3</td>
             <td class="td">cell 4</td>
             <td class="td">cell 5 which is long</td>
-            <td class="td">cell 6</td>
+            <td class="td">cell 6 LAST</td>
           </tr>
         </tbody>
       </table>
@@ -654,11 +654,17 @@
       var $scTable = $sc.find('table');
       
       function positionHeader($elems, scrollY) {
-        var transformation;
+        var transformation, shadow, shadowOffset;
         if (/firefox/i.test(navigator.userAgent)) {
           transformation = 'translate(-1px, ' + (scrollY - 1) + 'px)';
         } else {
           transformation = 'translateY(' + scrollY + 'px)';
+        }
+        if (scrollY === 0) {
+          shadow = 'none';
+        } else if (scrollY <= 50) {
+          shadowOffset = Math.ceil(scrollY)/10;
+          shadow = '0 ' + shadowOffset + 'px ' + shadowOffset + 'px rgba(0,0,0,0.3)';
         }
         $elems.each(function(i, elem) {
           $(elem).css({
@@ -666,7 +672,8 @@
             '-moz-transform': transformation,
             '-ms-transform': transformation,
             '-o-transform': transformation,
-            transform: transformation
+            transform: transformation,
+            'box-shadow': shadow
           });
         });
       }
