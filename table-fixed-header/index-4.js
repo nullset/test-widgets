@@ -37,9 +37,25 @@
           positionHeader($offsetElems, newY);
         });
 
+        // $sc.on('mousedown', function(event) {
+        //   $sc.data({mousedown: true, 'click-offset-y': event.offsetY, 'click-offset-x': event.offsetX});
+        // });
         $sc.on('scroll', function(event) {
-          $sc.data({'scroll-x': $sc.scrollLeft(), 'scroll-y': $sc.scrollTop()});
-          positionHeader($offsetElems, $sc.scrollTop());
+          // // $sc.scrollTop($sc.scrollTop());
+          // event.preventDefault();
+          // 
+          // if ($sc.data('mousedown') === true) {
+          //   // need to account for presence of scrollbar too
+          //   console.log($sc.data('click-offset-y'), $sc.height(), $scTable.height());
+          //   
+          //   $sc.scrollTop(($sc.data('click-offset-y')/$sc.height()) * ($scTable.height() - $sc.height()));
+          //   // $sc.scrollTop($sc.data('click-offset-y'));
+          //   // $sc.scrollLeft($sc.data('click-offset-x'));
+          // }
+          // if ($sc.data('mousedown') !== true) {
+            $sc.data({'scroll-x': $sc.scrollLeft(), 'scroll-y': $sc.scrollTop()});
+            positionHeader($offsetElems, $sc.scrollTop());
+          // }
         });
       });
  
