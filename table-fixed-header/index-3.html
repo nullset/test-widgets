@@ -20,27 +20,28 @@
       <table>
         <thead>
           <tr>
-            <th class="th">column 1 which is superextralongdontyouknowit</th>
-            <th class="th">column 2</th>
-            <th class="th">column 3</th>
-            <th class="th">column 4</th>
-            <th class="th">column 5 which is long</th>
-            <th class="th">column 6</th>
+            <th class="th" data-text="column 1 which is superextralongdontyouknowit">column 1 which is superextralongdontyouknowit</th>
+            <th class="th" data-text="column 2">column 2</th>
+            <th class="th" data-text="column 3">column 3</th>
+            <th class="th" data-text="column 4">column 4</th>
+            <th class="th" data-text="column 5 which is long">column 5 which is long</th>
+            <th class="th" data-text="column 6">column 6</th>
           </tr>
         </thead>
       
         <tbody>
           <tr>
             <td class="td">ZERO - cell 1</td>
-            <td class="td">cell 2</td>
-            <td class="td">cell 3</td>
+            <td class="td"><div style="background: red; position: relative;">cell 2</div></td>
+            <td class="td"><div style="background: red; position: relative;">
+              <div style="position: relative; z-index: 1000;">cell 3</div></div></td>
             <td class="td">cell 4</td>
             <td class="td">cell 5 which is long</td>
             <td class="td">cell 6</td>
           </tr>
           <tr>
             <td class="td">cell 1</td>
-            <td class="td">cell 2</td>
+            <td class="boo">BOO cell 2</td>
             <td class="td">cell 3</td>
             <td class="td">cell 4</td>
             <td class="td">cell 5 which is long</td>
@@ -592,7 +593,7 @@
           </tr>
           <tr>
             <td class="td">cell 1 LAST</td>
-            <td class="td">cell 2</td>
+            <td class="td"><div style="background: red; position: relative;">cell 2</div></td>
             <td class="td">cell 3</td>
             <td class="td">cell 4</td>
             <td class="td">cell 5 which is long</td>

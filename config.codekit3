@@ -7,7 +7,7 @@
 		"uuidString": "3DB4FE91-4143-45ED-BFF4-BE178367F24D"
 		}
 	],
-"creatorBuild": "25444",
+"creatorBuild": "25479",
 "files": {
 	"\/.gitignore": {
 		"ft": 8192,
@@ -22,6 +22,16 @@
 		"ma": 0,
 		"oA": 2,
 		"oAP": "\/css\/index-3-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/css\/index-5.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/css\/index-5-min.css",
 		"oF": 0,
 		"oS": 0
 		},
@@ -1216,6 +1226,103 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/table-fixed-header\/index-5-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/min\/index-5-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/table-fixed-header\/index-5.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/table-fixed-header\/index-5-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/table-fixed-header\/index-5.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/table-fixed-header\/index-5.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index-5.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "\/table-fixed-header\/index-5-min.js",
+		"oF": 3,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/table-fixed-header\/index-5.kit": {
+		"ft": 2048,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/index-5.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index-5.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/index-5.css",
+		"oF": 2,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/table-fixed-header\/index-6.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/table-fixed-header\/index-6-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/table-fixed-header\/index-6.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/table-fixed-header\/index-6.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index-6.js": {
+		"ft": 64,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/min\/index-6-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/table-fixed-header\/index-6.kit": {
+		"ft": 2048,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/index-6.html",
+		"oF": 0
+		},
+	"\/table-fixed-header\/index-6.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/index-6.css",
+		"oF": 2,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/table-fixed-header\/index.css": {
 		"aP": 0,
 		"bl": 0,
@@ -1247,6 +1354,21 @@
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
+		},
+	"\/table-fixed-header\/min\/index-5-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/table-fixed-header\/min\/min\/index-5-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/temp\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/temp\/index.html",
+		"oF": 0
 		},
 	"\/web-worker\/index.html": {
 		"ft": 8192,
@@ -1766,6 +1888,10 @@
 			"active": 0,
 			"optionString": "{'properties': 'always'}"
 			},
+		"capitalized-comments": {
+			"active": 0,
+			"optionString": "'always', {'ignoreInlineComments': false, 'ignoreConsecutiveComments': false}"
+			},
 		"class-methods-use-this": {
 			"active": 0,
 			"optionString": "{'exceptMethods': []}"
@@ -1929,6 +2055,10 @@
 		"max-statements": {
 			"active": 0,
 			"optionString": "{'max': 10}, {'ignoreTopLevelFunctions': true}"
+			},
+		"max-statements-per-line": {
+			"active": 0,
+			"optionString": "{'max': 1}"
 			},
 		"multiline-ternary": {
 			"active": 0,
@@ -2294,6 +2424,10 @@
 			"active": 0,
 			"optionString": "'except-parens'"
 			},
+		"no-return-await": {
+			"active": 0,
+			"optionString": ""
+			},
 		"no-script-url": {
 			"active": 0,
 			"optionString": ""
@@ -2525,6 +2659,10 @@
 		"radix": {
 			"active": 0,
 			"optionString": "'always'"
+			},
+		"require-await": {
+			"active": 0,
+			"optionString": ""
 			},
 		"require-jsdoc": {
 			"active": 0,
@@ -3358,6 +3496,10 @@
 			},
 		"space-colon": {
 			"active": 1,
+			"flagValue": -1
+			},
+		"support-ie8": {
+			"active": 0,
 			"flagValue": -1
 			},
 		"toplevel": {

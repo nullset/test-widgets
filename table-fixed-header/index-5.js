@@ -2,18 +2,19 @@
  
     $.fn.scrollTable = function() {
 
-      function positionHeader($elems, scrollY) {
+      function positionHeader($elems, tableHeight, elemHeight, borderTopWidth, scrollY) {
         var transformation, shadow, shadowOffset;
         if (/firefox/i.test(navigator.userAgent)) {
-          transformation = 'translate(-1px, ' + (scrollY - 1) + 'px)';
+          // transformation = 'translate(-1px, ' + (scrollY - 1) + 'px)';
+          transformation = 'translate(-1px, ' + (scrollY - tableHeight + elemHeight + borderTopWidth) + 'px)';
         } else {
-          transformation = 'translateY(' + scrollY + 'px)';
+          transformation = 'translateY(' + (scrollY - tableHeight + elemHeight + borderTopWidth) + 'px)';
         }
         if (scrollY === 0) {
           shadow = 'none';
         } else if (scrollY <= 50) {
-          shadowOffset = (Math.ceil(scrollY)/10) + 'px';
-          shadow = '0 ' + shadowOffset + ' ' + shadowOffset + ' -1px rgba(0,0,0,0.3)';
+          shadowOffset = Math.ceil(scrollY)/10;
+          shadow = '0 ' + shadowOffset + 'px ' + shadowOffset + 'px rgba(0,0,0,0.3)';
         }
         $elems.each(function(i, elem) {
           $(elem).css({
@@ -50,12 +51,15 @@
         $sc.data({'scroll-x': newX, 'scroll-y': newY});
         $sc.scrollLeft(newX);
         $sc.scrollTop(newY);
-        positionHeader($offsetElems, newY);
+        // positionHeader($offsetElems, newY);
+        borderTopWidth = parseInt(window.getComputedStyle($offsetElems[0]).borderTopWidth, 10);
+        positionHeader($offsetElems, $scTable.outerHeight(), $offsetElems.outerHeight(), borderTopWidth, newY);
+
       }
 
       this.each(function() {
         var $sc = $(this);
-        $sc.addClass('sticky-table-wrapper');
+        $sc.addClass('.sticky-table-wrapper');
         if (typeof $sc.data('scroll-x') === 'undefined') {
           $sc.data('scroll-x', 0);
         }
@@ -66,8 +70,13 @@
         if ($sc.find('thead').length === 0 || $sc.find('tbody').length === 0) {
           console.error($sc, "must be called on a <div> that includes a table with both a <thead> and a <tbody> element.")
         }
-        var $offsetElems = $sc.find('thead tr > *');
         var $scTable = $sc.find('table');
+
+        var $tfootRow = $scTable.find('thead > tr').clone(true, true);
+        // $scTable.append($('<tfoot></tfoot>')$tfoot);
+        var $tfoot = $('<tfoot></tfoot>');
+        $scTable.append($tfoot.append($tfootRow));
+        var $offsetElems = $tfoot.find('tr > *');
         
         // TODO : Would be good to have better touch handling for iOS/Android
         // element.addEventListener("touchstart", touchStart, false);
