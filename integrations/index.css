@@ -1,3 +1,11 @@
+body select {
+  height: 30px;
+  font-size: inherit;
+}
+body button {
+  font-size: inherit;
+  min-height: 30px;
+}
 body .integration {
   border: 1px solid #d8d8d8;
   box-sizing: border-box;
@@ -11,6 +19,9 @@ body .integration-header {
   justify-content: space-between;
   border-bottom: 1px solid #d8d8d8;
   padding: 10px 20px;
+}
+body .integration-meta {
+  text-align: right;
 }
 body .integration-nav {
   display: flex;
@@ -29,13 +40,13 @@ body .integration-nav li:nth-child(n+2) {
 }
 body .integration-nav li a {
   padding: 10px 20px;
-  display: block;
   text-decoration: none;
+  display: flex;
+  justify-content: center;
 }
 body .integration-nav li .integration-nav-number {
-  display: inline-block;
-  height: 1em;
-  width: 1em;
+  height: 1.5em;
+  width: 1.5em;
   background: red;
   position: relative;
   border-radius: 50%;
@@ -47,22 +58,16 @@ body .integration-nav li .integration-nav-number:before {
   counter-increment: integration-nav;
   content: counter(integration-nav);
 }
-body .integration-nav li .integration-nav-text {
-  white-space: nowrap;
-}
-body .integration-mappings-header,
-body .integration-mapping2 {
+body .integration-mappings-header {
   display: flex;
 }
-body .integration-mappings-header > *,
-body .integration-mapping2 > * {
+body .integration-mappings-header > * {
   flex: 1 0 50%;
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
 }
-body .integration-mappings-header > *:nth-child(n+2),
-body .integration-mapping2 > *:nth-child(n+2) {
+body .integration-mappings-header > *:nth-child(n+2) {
   border-left: 1px solid #d8d8d8;
 }
 body .integration-mappings-header {
@@ -78,6 +83,18 @@ body .integration-mapping .integration-field-mapping {
   background: #f2f2f2;
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
+  color: #9b9b9b;
+}
+body .integration-mapping .integration-field-mapping button,
+body .integration-mapping .integration-field-mapping a {
+  color: #9b9b9b;
+  text-decoration: none;
+}
+body .integration-mapping .integration-field-mapping a:hover {
+  text-decoration: underline;
+}
+body .integration-mapping .integration-field-mapping a.integration-add-feature-field .fa {
+  margin-left: 5px;
 }
 body .integration-row {
   padding-top: 10px;
@@ -96,8 +113,8 @@ body .integration-row:before {
 }
 body .integration-row-left,
 body .integration-row-right {
-  flex: 1 0 calc(50% - 25px);
-  width: calc(50% - 25px);
+  width: calc(50% - 50px);
+  flex: 1 0 calc(50% - 75px);
   display: flex;
   justify-content: space-between;
 }
@@ -107,25 +124,47 @@ body .integration-row-left {
 body .integration-row-left select {
   order: -1;
 }
+body .integration-row-left > *:last-child {
+  flex-grow: 1;
+}
+body .integration-row-left > *:last-child:first-child {
+  margin-left: 30px;
+}
 body .integration-row-center {
   text-align: center;
-  width: 50px;
+  width: 100px;
   position: relative;
   z-index: 2;
 }
-body .integration-row button.toggle-visibility,
-body .integration-row button.delete {
+body .integration-row button {
   border: none;
-  background: red;
+  background: none;
+  min-width: 30px;
+  cursor: pointer;
+  font-size: smaller;
 }
-body .integration-row button.toggle-visibility:before {
-  font-family: FontAwesome;
-  content: "\F054";
-}
-body .integration-row button.toggle-visibility.is-open {
+body .integration-row button.button-toggle-visibility.is-open i.fa {
   transform: rotate(90deg);
 }
-body .integration-row button.delete:before {
-  font-family: FontAwesome;
-  content: "\F056";
+body .integration-row button.button-switch-direction {
+  width: 50px;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  background: #fff;
+  color: #0073cf;
+}
+body .integration-row button.button-switch-direction i {
+  transform: scale(1);
+  transition: transform 0.1s;
+}
+body .integration-row button.button-switch-direction:hover i,
+body .integration-row button.button-switch-direction:focus i {
+  transform: scale(1.5);
+}
+body .integration-row button.button-delete {
+  transition: color 0.1s;
+}
+body .integration-row button.button-delete:hover,
+body .integration-row button.button-delete:focus {
+  color: red;
 }
