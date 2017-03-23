@@ -7,13 +7,79 @@
 		"uuidString": "3DB4FE91-4143-45ED-BFF4-BE178367F24D"
 		}
 	],
-"creatorBuild": "25479",
+"creatorBuild": "25704",
 "files": {
 	"\/.gitignore": {
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/.gitignore",
 		"oF": 0
+		},
+	"\/100vh\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/100vh\/index-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/100vh\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/100vh\/index.html",
+		"oF": 0
+		},
+	"\/100vh\/index.less": {
+		"aP": 0,
+		"bl": 0,
+		"dJ": 0,
+		"ft": 1,
+		"ie": 1,
+		"iI": 0,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/100vh\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"rU": 0,
+		"sI": 0,
+		"sM": 0,
+		"sU": 0
+		},
+	"\/before\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/before\/index-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/before\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/before\/index.html",
+		"oF": 0
+		},
+	"\/before\/index.less": {
+		"aP": 0,
+		"bl": 0,
+		"dJ": 0,
+		"ft": 1,
+		"ie": 1,
+		"iI": 0,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/before\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"rU": 0,
+		"sI": 0,
+		"sM": 0,
+		"sU": 0
 		},
 	"\/css\/index-3.css": {
 		"aP": 0,
@@ -173,11 +239,83 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/iframe-100vh\/iframe.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/iframe-100vh\/iframe.html",
+		"oF": 0
+		},
+	"\/iframe-100vh\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/iframe-100vh\/index-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/iframe-100vh\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/iframe-100vh\/index.html",
+		"oF": 0
+		},
+	"\/iframe-100vh\/index.less": {
+		"aP": 0,
+		"bl": 0,
+		"dJ": 0,
+		"ft": 1,
+		"ie": 1,
+		"iI": 0,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/iframe-100vh\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"rU": 0,
+		"sI": 0,
+		"sM": 0,
+		"sU": 0
+		},
 	"\/iframe\/index.html": {
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/iframe\/index.html",
 		"oF": 0
+		},
+	"\/integrations\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/integrations\/index-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/integrations\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/integrations\/index.html",
+		"oF": 0
+		},
+	"\/integrations\/index.less": {
+		"aP": 0,
+		"bl": 0,
+		"dJ": 0,
+		"ft": 1,
+		"ie": 1,
+		"iI": 0,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/integrations\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"rU": 0,
+		"sI": 0,
+		"sM": 0,
+		"sU": 0
 		},
 	"\/monet 2\/bootstrap\/css\/bootstrap-responsive.css": {
 		"aP": 0,
@@ -222,18 +360,22 @@
 	"\/monet 2\/bootstrap\/img\/glyphicons-halflings-white.png": {
 		"ft": 32768,
 		"iS": 8777,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/monet 2\/bootstrap\/img\/glyphicons-halflings-white.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/monet 2\/bootstrap\/img\/glyphicons-halflings.png": {
 		"ft": 32768,
 		"iS": 12799,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/monet 2\/bootstrap\/img\/glyphicons-halflings.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/monet 2\/bootstrap\/js\/bootstrap.js": {
 		"ft": 64,
@@ -871,10 +1013,12 @@
 	"\/mutation livequery\/index_files\/content-venn.png": {
 		"ft": 32768,
 		"iS": 46003,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index_files\/content-venn.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/mutation livequery\/index_files\/content-venn.svg": {
 		"ft": 2097152,
@@ -889,18 +1033,22 @@
 	"\/mutation livequery\/index_files\/fingerprint.png": {
 		"ft": 32768,
 		"iS": 2093,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index_files\/fingerprint.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/mutation livequery\/index_files\/im.png": {
 		"ft": 32768,
 		"iS": 23770,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index_files\/im.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/mutation livequery\/index_files\/link-fixup.js": {
 		"ft": 64,
@@ -1013,18 +1161,22 @@
 	"\/roadmap-email\/divider.png": {
 		"ft": 32768,
 		"iS": 100,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/divider.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/roadmap-email\/h-shadow.png": {
 		"ft": 32768,
 		"iS": 105,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/h-shadow.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/roadmap-email\/index.css": {
 		"aP": 0,
@@ -1077,10 +1229,12 @@
 	"\/roadmap-email\/roadmap.png": {
 		"ft": 32768,
 		"iS": 7444,
+		"l": 1,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/roadmap.png",
 		"oF": 0,
-		"opt": 0
+		"opt": 0,
+		"q": 100
 		},
 	"\/staging\/.sass-cache\/9d1ec9d9b90610f4eb1a97eba0668d2ed6894048\/staging.scssc": {
 		"ft": 8192,
@@ -2092,6 +2246,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"no-await-in-loop": {
+			"active": 0,
+			"optionString": ""
+			},
 		"no-bitwise": {
 			"active": 0,
 			"optionString": "{'allow': ['~'], 'int32Hint': true}"
@@ -2110,6 +2268,10 @@
 			},
 		"no-class-assign": {
 			"active": 1,
+			"optionString": ""
+			},
+		"no-compare-neg-zero": {
+			"active": 0,
 			"optionString": ""
 			},
 		"no-cond-assign": {
@@ -2309,6 +2471,10 @@
 			"optionString": "{'grouping': false, 'allowCall': false }"
 			},
 		"no-mixed-spaces-and-tabs": {
+			"active": 0,
+			"optionString": ""
+			},
+		"no-multi-assign": {
 			"active": 0,
 			"optionString": ""
 			},
@@ -2588,6 +2754,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"nonblock-statement-body-position": {
+			"active": 0,
+			"optionString": "'beside'"
+			},
 		"object-curly-newline": {
 			"active": 0,
 			"optionString": "{'ObjectExpression': {'multiline': true}, 'ObjectPattern': {'multiline': true}}"
@@ -2632,9 +2802,17 @@
 			"active": 0,
 			"optionString": "{'destructuring': 'any', 'ignoreReadBeforeAssign': false}"
 			},
+		"prefer-destructuring": {
+			"active": 0,
+			"optionString": "{'array': true, 'object': true}, {'enforceForRenamedProperties': false}"
+			},
 		"prefer-numeric-literals": {
 			"active": 0,
 			"optionString": ""
+			},
+		"prefer-promise-reject-errors": {
+			"active": 0,
+			"optionString": "{'allowEmptyReject': false}"
 			},
 		"prefer-rest-params": {
 			"active": 0,
@@ -2729,6 +2907,10 @@
 			"optionString": ""
 			},
 		"template-curly-spacing": {
+			"active": 0,
+			"optionString": "'never'"
+			},
+		"template-tag-spacing": {
 			"active": 0,
 			"optionString": "'never'"
 			},
@@ -3175,7 +3357,8 @@
 		"autoOutputPathRelativePath": "",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0
+		"autoOutputPathStyle": 0,
+		"quality": 100
 		},
 	"languageDefaultsJS": {
 		"autoOutputAction": 0,
@@ -3268,7 +3451,9 @@
 		"autoOutputPathRelativePath": "",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0
+		"autoOutputPathStyle": 0,
+		"enableLossy": 1,
+		"quality": 100
 		},
 	"languageDefaultsPUG": {
 		"autoOutputAction": 0,

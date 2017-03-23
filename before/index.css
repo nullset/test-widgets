@@ -1,0 +1,7 @@
+body {
+  background: red;
+}
+.before:before,
+select:before {
+  content: "BEFORE!";
+}
