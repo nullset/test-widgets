@@ -59,7 +59,8 @@ body {
       display: flex;
       > * {
         flex: 1 0 50%;
-        padding: @defaultPadding;
+        padding-top: 10px;
+        padding-bottom: 10px;
         text-align: center;
         &:nth-child(n+2) {
           border-left: 1px solid @borderColor;
@@ -98,9 +99,9 @@ body {
         z-index: 1;
       }
 
-      // background: linear-gradient(135deg, red, blue);
       &-left, &-right {
         flex: 1 0 ~"calc(50% - 25px)";
+        width: ~"calc(50% - 25px)"; // Fix for IE11 not respecting flex-basis that is a calculated value.
         display: flex;
         justify-content: space-between;
       }
