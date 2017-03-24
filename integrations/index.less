@@ -53,26 +53,49 @@ body {
           display: flex;
           justify-content: center;
           align-items: center;
-        }
-        .integration-nav-number {
-          // display: inline-block;
-          height: 1.5em;
-          width: 1.5em;
-          background: red;
-          position: relative;
-          border-radius: 50%;
-          padding: .2em;
-          font-weight: bold;
-          color: #fff;
-          flex-shrink: 0;
-          margin-right: 0.5em;
-          &:before {
-            counter-increment: integration-nav;
-            content: counter(integration-nav);
+          color: currentColor;
+          .integration-nav-number {
+            // display: inline-block;
+            height: 17px;
+            width: 17px;
+            line-height: 17px;
+            position: relative;
+            border-radius: 50%;
+            border: 1px solid currentColor;
+            // padding: .1em;
+            font-weight: bold;
+            // color: #fff;
+            flex-shrink: 0;
+            margin-right: 0.5em;
+            font-size: .7em;
+            &:before {
+              counter-increment: integration-nav;
+              content: counter(integration-nav);
+              position: absolute;
+              top: -1px;
+              bottom: -1px;
+              left: -1px;
+              right: -1px;
+            }
           }
-        }
-        .integration-nav-text {
-          // white-space: nowrap;
+          &.complete, &.current {
+            .integration-nav-number {
+              background: @ahaBlue;
+              border-color: @ahaBlue;
+              color: #fff;
+            }
+          }
+          &.complete {
+            .integration-nav-number {
+              &:before {
+                font-family: FontAwesome;
+                content: '\f00c';
+              }              
+            }
+          }
+          &.current {
+            border-bottom: 2px solid @ahaBlue;
+          }
         }
       }
     }
@@ -98,6 +121,7 @@ body {
       border-radius: 0.5em;
       margin: 10px;
       .integration-field-mapping {
+        display: none;
         border-top: 1px solid @borderColor;
         background: #f2f2f2;
         border-bottom-left-radius: 0.5em;
@@ -116,6 +140,11 @@ body {
               margin-left: 5px;
             }
           }
+        }
+      }
+      &.is-open {
+        .integration-field-mapping {
+          display: block;
         }
       }
     }

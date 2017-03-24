@@ -46,22 +46,41 @@ body .integration-nav li a {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: currentColor;
 }
-body .integration-nav li .integration-nav-number {
-  height: 1.5em;
-  width: 1.5em;
-  background: red;
+body .integration-nav li a .integration-nav-number {
+  height: 17px;
+  width: 17px;
+  line-height: 17px;
   position: relative;
   border-radius: 50%;
-  padding: .2em;
+  border: 1px solid currentColor;
   font-weight: bold;
-  color: #fff;
   flex-shrink: 0;
   margin-right: 0.5em;
+  font-size: .7em;
 }
-body .integration-nav li .integration-nav-number:before {
+body .integration-nav li a .integration-nav-number:before {
   counter-increment: integration-nav;
   content: counter(integration-nav);
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+}
+body .integration-nav li a.complete .integration-nav-number,
+body .integration-nav li a.current .integration-nav-number {
+  background: #0073cf;
+  border-color: #0073cf;
+  color: #fff;
+}
+body .integration-nav li a.complete .integration-nav-number:before {
+  font-family: FontAwesome;
+  content: '\f00c';
+}
+body .integration-nav li a.current {
+  border-bottom: 2px solid #0073cf;
 }
 body .integration-mappings-header {
   display: flex;
@@ -84,6 +103,7 @@ body .integration-mapping {
   margin: 10px;
 }
 body .integration-mapping .integration-field-mapping {
+  display: none;
   border-top: 1px solid #d8d8d8;
   background: #f2f2f2;
   border-bottom-left-radius: 0.5em;
@@ -99,6 +119,9 @@ body .integration-mapping .integration-field-mapping a:hover {
 }
 body .integration-mapping .integration-field-mapping a.integration-add-feature-field .fa {
   margin-left: 5px;
+}
+body .integration-mapping.is-open .integration-field-mapping {
+  display: block;
 }
 body .integration-row {
   padding-top: 10px;
