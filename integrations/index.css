@@ -1,6 +1,8 @@
 body select {
   height: 30px;
   font-size: inherit;
+  background: #fff;
+  border-color: #d8d8d8;
 }
 body button {
   font-size: inherit;
@@ -43,6 +45,7 @@ body .integration-nav li a {
   text-decoration: none;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 body .integration-nav li .integration-nav-number {
   height: 1.5em;
@@ -53,6 +56,8 @@ body .integration-nav li .integration-nav-number {
   padding: .2em;
   font-weight: bold;
   color: #fff;
+  flex-shrink: 0;
+  margin-right: 0.5em;
 }
 body .integration-nav li .integration-nav-number:before {
   counter-increment: integration-nav;
@@ -85,7 +90,6 @@ body .integration-mapping .integration-field-mapping {
   border-bottom-right-radius: 0.5em;
   color: #9b9b9b;
 }
-body .integration-mapping .integration-field-mapping button,
 body .integration-mapping .integration-field-mapping a {
   color: #9b9b9b;
   text-decoration: none;
@@ -130,6 +134,9 @@ body .integration-row-left > *:last-child {
 body .integration-row-left > *:last-child:first-child {
   margin-left: 30px;
 }
+body .integration-row-right > *:first-child {
+  flex-grow: 1;
+}
 body .integration-row-center {
   text-align: center;
   width: 100px;
@@ -142,6 +149,7 @@ body .integration-row button {
   min-width: 30px;
   cursor: pointer;
   font-size: smaller;
+  color: #9b9b9b;
 }
 body .integration-row button.button-toggle-visibility.is-open i.fa {
   transform: rotate(90deg);

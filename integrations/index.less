@@ -8,6 +8,8 @@ body {
   select {
     height: 30px;
     font-size: inherit;
+    background: #fff;
+    border-color: @borderColor;
   }
   button {
     font-size: inherit;
@@ -50,7 +52,7 @@ body {
           text-decoration: none;
           display: flex;
           justify-content: center;
-          // align-content: center;
+          align-items: center;
         }
         .integration-nav-number {
           // display: inline-block;
@@ -62,6 +64,8 @@ body {
           padding: .2em;
           font-weight: bold;
           color: #fff;
+          flex-shrink: 0;
+          margin-right: 0.5em;
           &:before {
             counter-increment: integration-nav;
             content: counter(integration-nav);
@@ -99,7 +103,7 @@ body {
         border-bottom-left-radius: 0.5em;
         border-bottom-right-radius: 0.5em;
         color: #9b9b9b;
-        button, a {
+        a {
           color: #9b9b9b;
           text-decoration: none;
         }
@@ -148,6 +152,11 @@ body {
           }          
         }
       }
+      &-right {
+        > *:first-child {
+          flex-grow: 1;
+        }
+      }
       &-center {
         text-align: center;
         width: 100px;
@@ -160,6 +169,7 @@ body {
         min-width: @buttonMinWidth;
         cursor: pointer;
         font-size: smaller;
+        color: #9b9b9b;
         &.button-toggle-visibility {
           &.is-open {
             i.fa {
