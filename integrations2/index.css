@@ -177,7 +177,7 @@ body .integration-row-controls {
   flex-shrink: 0;
 }
 body .integration-row-controls input[type="checkbox"]:not(:checked) + span {
-  visibility: hidden;
+  display: none;
 }
 body .integration-row-left,
 body .integration-row-right {
