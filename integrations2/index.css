@@ -1,0 +1,245 @@
+body select {
+  height: 30px;
+  font-size: inherit;
+  background: #fff;
+  border-color: #d8d8d8;
+}
+body button {
+  font-size: inherit;
+  min-height: 30px;
+}
+body .integration {
+  border: 1px solid #d8d8d8;
+  box-sizing: border-box;
+}
+body .integration * {
+  box-sizing: border-box;
+}
+body .integration-header {
+  background: #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 10px 20px;
+}
+body .integration-meta {
+  text-align: right;
+}
+body .integration-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: integration-nav;
+  border-bottom: 1px solid #d8d8d8;
+}
+body .integration-nav li {
+  flex: 1 0 20%;
+  text-align: center;
+}
+body .integration-nav li:nth-child(n+2) {
+  border-left: 1px solid #d8d8d8;
+}
+body .integration-nav li a {
+  padding: 10px 20px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: currentColor;
+}
+body .integration-nav li a .integration-nav-number {
+  height: 17px;
+  width: 17px;
+  line-height: 17px;
+  position: relative;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-right: 0.5em;
+  font-size: .7em;
+}
+body .integration-nav li a .integration-nav-number:before {
+  counter-increment: integration-nav;
+  content: counter(integration-nav);
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+}
+body .integration-nav li a.complete .integration-nav-number,
+body .integration-nav li a.current .integration-nav-number {
+  background: #0073cf;
+  border-color: #0073cf;
+  color: #fff;
+}
+body .integration-nav li a.complete .integration-nav-number:before {
+  font-family: FontAwesome;
+  content: '\f00c';
+}
+body .integration-nav li a.current {
+  border-bottom: 2px solid #0073cf;
+}
+body .integration-mappings-header {
+  display: flex;
+}
+body .integration-mappings-header > * {
+  flex: 1 0 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+body .integration-mappings-header > *:nth-child(n+2) {
+  border-left: 1px solid #d8d8d8;
+}
+body .integration-mappings-header {
+  border-bottom: 1px solid #d8d8d8;
+}
+body .integration-mapping {
+  margin: 10px;
+}
+body .integration-mapping:last-child .integration-row:before {
+  display: none;
+}
+body .integration-mapping.is-open .integration-options {
+  display: block;
+}
+body .integration-options {
+  background: #fff;
+  position: relative;
+  z-index: 10;
+  border: 1px dashed #d8d8d8;
+  margin-left: 160px;
+  margin-right: 160px;
+}
+body .integration-options:after {
+  content: "";
+  position: absolute;
+  border-left: 1px solid #d8d8d8;
+  left: 50%;
+  top: 100%;
+  bottom: -20px;
+  z-index: 1;
+}
+body .integration-options .integration-row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+body .integration-options .integration-row:before {
+  display: none;
+}
+body .integration-options .integration-row:nth-child(n+2) {
+  border-top: 1px dashed #d8d8d8;
+}
+body .integration-options .integration-row-left > *:last-child:first-child {
+  margin-left: 0;
+}
+body .integration-options .integration-row-right > *:last-child:first-child {
+  margin-right: 0;
+}
+body .integration-options .drag-options.is-empty {
+  color: #a5a5a5;
+  border: 1px dashed #bfbfbf;
+  background: #f5f5f5;
+  padding: 5px;
+}
+body .integration-options .drag-options.is-empty:before {
+  content: "drag a field here";
+}
+body .integration-option {
+  border: 1px solid #d8d8d8;
+  padding: 5px;
+}
+body .integration-option + .integration-option {
+  margin-top: 5px;
+}
+body .integration-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  position: relative;
+}
+body .integration-row:before {
+  content: "";
+  position: absolute;
+  border-left: 1px solid #d8d8d8;
+  left: 50%;
+  top: 10px;
+  bottom: -20px;
+  z-index: 1;
+}
+body .integration-row-controls {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  flex-shrink: 0;
+}
+body .integration-row-controls input[type="checkbox"]:not(:checked) + span {
+  visibility: hidden;
+}
+body .integration-row-left,
+body .integration-row-right {
+  width: calc(50% - 50px);
+  flex: 1 0 calc(50% - 75px);
+  display: flex;
+  justify-content: space-between;
+}
+body .integration-row-left {
+  flex-direction: row-reverse;
+}
+body .integration-row-left select {
+  order: -1;
+}
+body .integration-row-left > *:last-child {
+  flex-grow: 1;
+}
+body .integration-row-left > *:last-child:first-child {
+  margin-left: 160px;
+}
+body .integration-row-right > *:first-child {
+  flex-grow: 1;
+}
+body .integration-row-right > *:first-child:last-child {
+  margin-right: 160px;
+}
+body .integration-row-center {
+  text-align: center;
+  width: 100px;
+  position: relative;
+  z-index: 2;
+}
+body .integration-row button {
+  border: none;
+  background: none;
+  min-width: 30px;
+  cursor: pointer;
+  font-size: smaller;
+  color: #9b9b9b;
+}
+body .integration-row button.button-toggle-visibility.is-open i.fa {
+  transform: rotate(90deg);
+}
+body .integration-row button.button-switch-direction {
+  width: 50px;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  background: #fff;
+  color: #0073cf;
+}
+body .integration-row button.button-switch-direction i {
+  transform: scale(1);
+  transition: transform 0.1s;
+}
+body .integration-row button.button-switch-direction:hover i,
+body .integration-row button.button-switch-direction:focus i {
+  transform: scale(1.5);
+}
+body .integration-row button.button-delete {
+  transition: color 0.1s;
+}
+body .integration-row button.button-delete:hover,
+body .integration-row button.button-delete:focus {
+  color: red;
+}

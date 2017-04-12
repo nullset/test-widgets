@@ -7,7 +7,7 @@
 		"uuidString": "3DB4FE91-4143-45ED-BFF4-BE178367F24D"
 		}
 	],
-"creatorBuild": "25704",
+"creatorBuild": "25813",
 "files": {
 	"\/.gitignore": {
 		"ft": 8192,
@@ -343,6 +343,65 @@
 		"sM": 0,
 		"sU": 0
 		},
+	"\/integrations2\/_select_field.html": {
+		"ft": 8192,
+		"oA": 1,
+		"oAP": "\/integrations2\/_select_field.html",
+		"oF": 0
+		},
+	"\/integrations2\/exchange-2.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/integrations2\/exchange-2.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
+	"\/integrations2\/exchange.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/integrations2\/exchange.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
+	"\/integrations2\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/integrations2\/index-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/integrations2\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/integrations2\/index.html",
+		"oF": 0
+		},
+	"\/integrations2\/index.less": {
+		"aP": 0,
+		"bl": 0,
+		"dJ": 0,
+		"ft": 1,
+		"ie": 1,
+		"iI": 0,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/integrations2\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"rU": 0,
+		"sI": 0,
+		"sM": 0,
+		"sU": 0
+		},
 	"\/monet 2\/bootstrap\/css\/bootstrap-responsive.css": {
 		"aP": 0,
 		"bl": 0,
@@ -386,21 +445,23 @@
 	"\/monet 2\/bootstrap\/img\/glyphicons-halflings-white.png": {
 		"ft": 32768,
 		"iS": 8777,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/monet 2\/bootstrap\/img\/glyphicons-halflings-white.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/monet 2\/bootstrap\/img\/glyphicons-halflings.png": {
 		"ft": 32768,
 		"iS": 12799,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/monet 2\/bootstrap\/img\/glyphicons-halflings.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/monet 2\/bootstrap\/js\/bootstrap.js": {
@@ -1039,11 +1100,12 @@
 	"\/mutation livequery\/index_files\/content-venn.png": {
 		"ft": 32768,
 		"iS": 46003,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index_files\/content-venn.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/mutation livequery\/index_files\/content-venn.svg": {
@@ -1059,21 +1121,23 @@
 	"\/mutation livequery\/index_files\/fingerprint.png": {
 		"ft": 32768,
 		"iS": 2093,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index_files\/fingerprint.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/mutation livequery\/index_files\/im.png": {
 		"ft": 32768,
 		"iS": 23770,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index_files\/im.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/mutation livequery\/index_files\/link-fixup.js": {
@@ -1187,21 +1251,23 @@
 	"\/roadmap-email\/divider.png": {
 		"ft": 32768,
 		"iS": 100,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/divider.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/roadmap-email\/h-shadow.png": {
 		"ft": 32768,
 		"iS": 105,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/h-shadow.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/roadmap-email\/index.css": {
@@ -1255,11 +1321,12 @@
 	"\/roadmap-email\/roadmap.png": {
 		"ft": 32768,
 		"iS": 7444,
-		"l": 1,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/roadmap.png",
 		"oF": 0,
+		"oIPL": 0,
 		"opt": 0,
+		"oT": 1,
 		"q": 100
 		},
 	"\/staging\/.sass-cache\/9d1ec9d9b90610f4eb1a97eba0668d2ed6894048\/staging.scssc": {
@@ -2584,6 +2651,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"no-prototype-builtins": {
+			"active": 0,
+			"optionString": ""
+			},
 		"no-redeclare": {
 			"active": 1,
 			"optionString": "{'builtinGlobals': false}"
@@ -3408,14 +3479,6 @@
 		"orderOutput": 0,
 		"outputStyle": 1
 		},
-	"languageDefaultsJSX": {
-		"autoOutputAction": 0,
-		"autoOutputPathFilenamePattern": "*.js",
-		"autoOutputPathRelativePath": "",
-		"autoOutputPathReplace1": "jsx",
-		"autoOutputPathReplace2": "js",
-		"autoOutputPathStyle": 0
-		},
 	"languageDefaultsKIT": {
 		"autoOutputAction": 0,
 		"autoOutputPathFilenamePattern": "*.html",
@@ -3478,7 +3541,7 @@
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
-		"enableLossy": 1,
+		"optimizerType": 1,
 		"quality": 100
 		},
 	"languageDefaultsPUG": {
