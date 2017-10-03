@@ -1,0 +1,30 @@
+table {
+  border-collapse: collapse; }
+  table thead th {
+    background: red; }
+  table tbody tr:nth-child(2n) {
+    background: gray; }
+  table tbody td {
+    padding: 50px; }
+  table .corner {
+    z-index: 2 !important; }
+  table .blah-td > .blah {
+    background: rgba(120, 120, 0, 0.3); }
+
+.sticky-table-wrapper {
+  overflow: auto; }
+  .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
+    position: relative; }
+    .sticky-table-wrapper thead .sticky .sticky-table-header, .sticky-table-wrapper tbody .sticky .sticky-table-header {
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: inherit;
+      z-index: 1; }
+
+#blah-wrapper {
+  height: 300px; }

@@ -3,7 +3,7 @@
 @switchButtonSize: 50px;
 @ahaBlue: #0073cf;
 @buttonMinWidth: 30px;
-@controlWidth: 160px;
+@controlWidth: 90px;
 
 body {
   select {
@@ -23,6 +23,15 @@ body {
     box-sizing: border-box;
     * {
       box-sizing: border-box;
+    }
+    label.based-on-template {
+      input[type="checkbox"] {
+        &:not(:checked) {
+          + span {
+            display: none;
+          }
+        }
+      }      
     }
     &-header {
       background: #f2f2f2;
@@ -202,13 +211,6 @@ body {
         align-items: center;
         width: @controlWidth;
         flex-shrink: 0;
-        input[type="checkbox"] {
-          &:not(:checked) {
-            + span {
-              display: none;
-            }
-          }
-        }
       }
       &-left, &-right {
         width: ~"calc(50% - 50px)"; // Fix for IE11 not respecting flex-basis that is a calculated value.

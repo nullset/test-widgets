@@ -1,0 +1,5 @@
+table {
+  border-collapse: collapse; }
+
+table:nth-child(1) {
+  width: 500px; }

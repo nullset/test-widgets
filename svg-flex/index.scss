@@ -1,0 +1,21 @@
+.flex-row {
+  display: flex;
+  align-items: center;
+  // flex-direction: column;
+}
+img {
+  height: 20px;
+  position: relative;
+  // min-width: 1px;
+  // width: auto;
+  // max-width: 100%;
+  // flex-grow: 0;
+  // flex-shrink: 0;
+  border: 1px solid red;
+  // padding-bottom: 1em;
+  // width: 12px;
+}
+.grow {
+  flex-grow: 1;
+  background: yellowgreen;
+}

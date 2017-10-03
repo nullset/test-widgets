@@ -1,0 +1,80 @@
+table {
+  border-collapse: collapse;
+  // margin-bottom: 40px;
+  thead {
+    th {
+      background: red;
+      // position: sticky;
+      // top: 0px;  
+    }
+  }
+  tbody {
+    tr {
+      &:nth-child(2n) {
+        background: gray;        
+      }
+    }
+    td {
+      padding: 50px;
+    }
+  }
+  // tr {
+  //   > *:nth-child(1) {
+  //     background: rgba(0, 255, 0, 0.3) ;
+  //     // position: sticky;
+  //     // left: 0;
+  //     z-index: 1;  
+  //   }
+  // }
+  .corner {
+    // position: sticky;
+    // left :0;
+    // top: 0;
+    z-index: 2 !important;
+  }
+  .blah-td {
+    // padding: 0;
+    // position: sticky;
+    // top: 0;
+  > .blah {
+      // padding: 50;
+      background: rgba(120,120,0, 0.3);
+    }
+  }
+}
+
+
+
+.sticky-table-wrapper {
+  overflow: auto;
+  thead, tbody {
+    // tr {
+    //   position: relative;
+    //   z-index: 100;
+    // }
+    // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
+    // (as, from the rendering engine perspective, it is no longer a part of the table).
+    // We need to add these borders back via some css generated elements.
+    .sticky {
+      position: relative;
+      .sticky-table-header {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: inherit;
+        z-index: 1;
+        // border-top: 1px solid #ddd;
+        // border-bottom: 1px solid #ddd;
+        // margin-top: -1px;
+        // margin-bottom: -1px;
+      }
+    }
+  }
+}
+
+#blah-wrapper {
+  height: 300px;
+}

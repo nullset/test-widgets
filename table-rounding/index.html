@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <table>
+      <caption></caption>
+      <tr class="big">
+        <td colspan="4">big</td>
+      </tr>
+      <tr class="row">
+        <td>one</td>
+        <td>two</td>
+        <td>three</td>
+        <td>four</td>
+      </tr>
+      <tr class="big">
+        <td colspan="4">big</td>
+      </tr>
+    </table>
+
+    <div id="newTable"></div>
+  </div>
+  
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+  <script>
+    function totalWidth(tableWidth, width) {
+      if (tableWidth !== width) {
+        console.log(`%cTotal width: ${width}`, "color: red; font-size: 14px");
+    } else 
+      console.log(`%cTotal width: ${width}`, "color: green; font-size: 14px");
+  }
+
+    const table = document.querySelector('table');
+    const tableWidth = table.clientWidth;
+    console.log(`%ctable width = ${tableWidth}`, "color: orange; font-size: 14px");
+
+    console.log("%cnative.clientWidth", "color: purple; font-size: 14px");
+    let clientWidths = 0;
+    document.querySelectorAll('.row td').forEach((td, i) => {
+      let width = td.clientWidth;
+      console.log(i, width);
+      clientWidths = clientWidths + width;
+    })
+    totalWidth(tableWidth, clientWidths);
+
+    console.log("%c$.outerWidth()", "color: purple; font-size: 14px");
+    let outerWidths = 0;
+    $('.row td').each((i, elem) => {
+      let width = $(elem).outerWidth()
+      console.log(i, width);
+      outerWidths = outerWidths + width;
+    })
+    totalWidth(tableWidth, outerWidths);
+
+    console.log("%cnative.getBoundingClientRect().width", "color: purple; font-size: 14px");
+    let rects = 0;
+    document.querySelectorAll('.row td').forEach((td, i) => {
+      let width = td.getBoundingClientRect().width
+      console.log(i, width);
+      rects = rects + width;
+    })
+    totalWidth(tableWidth, rects);
+
+    console.log(`%cbig row width: ${document.querySelector('.big td').clientWidth}`, "color: orange; font-size: 14px");
+
+    const $newTable = $('#newTable')
+    $(table).find('tr').each((i, elem) => {
+      const $row = $(elem);
+      let $newRow = $(`<div class="tr ${$row.attr('class')}" style="position: relative"></div>`);
+      $row.find('td').each((i, td) => {
+        const $td = $(td);
+        const $newCell = $(`<div class="td" style="display: inline-block; width: ${$(td).outerWidth()}px; height: ${$(td).outerHeight()}px">${$td.html()}</div>`);
+        $newRow.append($newCell);
+      });
+      $newTable.append($newRow);
+    })
+
+</script>
+</body>
+</html>

@@ -15,6 +15,9 @@ body .integration {
 body .integration * {
   box-sizing: border-box;
 }
+body .integration label.based-on-template input[type="checkbox"]:not(:checked) + span {
+  display: none;
+}
 body .integration-header {
   background: #f2f2f2;
   display: flex;
@@ -111,8 +114,8 @@ body .integration-options {
   position: relative;
   z-index: 10;
   border: 1px dashed #d8d8d8;
-  margin-left: 160px;
-  margin-right: 160px;
+  margin-left: 90px;
+  margin-right: 90px;
 }
 body .integration-options:after {
   content: "";
@@ -173,11 +176,8 @@ body .integration-row:before {
 body .integration-row-controls {
   display: flex;
   align-items: center;
-  width: 160px;
+  width: 90px;
   flex-shrink: 0;
-}
-body .integration-row-controls input[type="checkbox"]:not(:checked) + span {
-  display: none;
 }
 body .integration-row-left,
 body .integration-row-right {
@@ -196,13 +196,13 @@ body .integration-row-left > *:last-child {
   flex-grow: 1;
 }
 body .integration-row-left > *:last-child:first-child {
-  margin-left: 160px;
+  margin-left: 90px;
 }
 body .integration-row-right > *:first-child {
   flex-grow: 1;
 }
 body .integration-row-right > *:first-child:last-child {
-  margin-right: 160px;
+  margin-right: 90px;
 }
 body .integration-row-center {
   text-align: center;
