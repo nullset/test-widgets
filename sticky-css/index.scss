@@ -3,7 +3,9 @@ table {
   // margin-bottom: 40px;
   thead {
     th {
-      background: red;
+      background: limegreen;
+      padding-top: 10px;
+      padding-bottom: 10px;
       // position: sticky;
       // top: 0px;  
     }
@@ -36,7 +38,7 @@ table {
     // padding: 0;
     // position: sticky;
     // top: 0;
-  > .blah {
+  .blah {
       // padding: 50;
       background: rgba(120,120,0, 0.3);
     }
@@ -70,6 +72,11 @@ table {
         // border-bottom: 1px solid #ddd;
         // margin-top: -1px;
         // margin-bottom: -1px;
+        .sticky-table-positioned {
+          height: 100%;
+          width: 100%;
+          box-sizing: border-box;
+        }
       }
     }
   }

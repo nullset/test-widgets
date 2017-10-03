@@ -1,14 +1,16 @@
 table {
   border-collapse: collapse; }
   table thead th {
-    background: red; }
+    background: limegreen;
+    padding-top: 10px;
+    padding-bottom: 10px; }
   table tbody tr:nth-child(2n) {
     background: gray; }
   table tbody td {
     padding: 50px; }
   table .corner {
     z-index: 2 !important; }
-  table .blah-td > .blah {
+  table .blah-td .blah {
     background: rgba(120, 120, 0, 0.3); }
 
 .sticky-table-wrapper {
@@ -25,6 +27,11 @@ table {
       right: 0;
       padding: inherit;
       z-index: 1; }
+      .sticky-table-wrapper thead .sticky .sticky-table-header .sticky-table-positioned, .sticky-table-wrapper tbody .sticky .sticky-table-header .sticky-table-positioned {
+        height: 100%;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box; }
 
 #blah-wrapper {
   height: 300px; }
