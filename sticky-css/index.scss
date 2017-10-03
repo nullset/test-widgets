@@ -6,6 +6,7 @@ table {
       background: limegreen;
       padding-top: 10px;
       padding-bottom: 10px;
+      border: 1px solid;
       // position: sticky;
       // top: 0px;  
     }
@@ -84,4 +85,5 @@ table {
 
 #blah-wrapper {
   height: 300px;
+  overflow: auto;
 }
