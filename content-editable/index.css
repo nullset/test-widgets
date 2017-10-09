@@ -1,0 +1,12 @@
+*[contenteditable='true'] {
+  border: 1px solid lightblue;
+  position: relative; }
+  *[contenteditable='true']:focus {
+    outline: none; }
+  *[contenteditable='true'] > span {
+    background: lime;
+    display: inline-block; }
+    *[contenteditable='true'] > span:last-child, *[contenteditable='true'] > span:first-child {
+      background: red; }
+      *[contenteditable='true'] > span:last-child:before, *[contenteditable='true'] > span:first-child:before {
+        content: "*"; }

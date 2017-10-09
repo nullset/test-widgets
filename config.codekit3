@@ -164,6 +164,57 @@
 		"oF": 0,
 		"oS": 3
 		},
+	"\/content-editable\/Archive.zip": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/content-editable\/Archive.zip",
+		"oF": 0
+		},
+	"\/content-editable\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/content-editable\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/content-editable\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/content-editable\/index.html",
+		"oF": 0
+		},
+	"\/content-editable\/index.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/content-editable\/min\/index-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/content-editable\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/content-editable\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/content-editable\/test.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/content-editable\/test.html",
+		"oF": 0
+		},
 	"\/css-grid\/index.css": {
 		"aP": 0,
 		"bl": 0,
@@ -277,12 +328,6 @@
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/flat\/index.html",
-		"oF": 0
-		},
-	"\/flat\/node_modules": {
-		"ft": 65536,
-		"oA": 2,
-		"oAP": "\/build\/flat\/node_modules",
 		"oF": 0
 		},
 	"\/flat\/package.json": {
@@ -1545,6 +1590,16 @@
 		"sC": 1,
 		"tS": 1
 		},
+	"\/sticky-css\/min\/sticky-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/min\/min\/sticky-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
 	"\/sticky-css\/sticky.js": {
 		"ft": 64,
 		"ma": 0,
@@ -1886,12 +1941,6 @@
 		"sC": 1,
 		"tS": 1
 		},
-	"\/table-rounding\/node_modules": {
-		"ft": 65536,
-		"oA": 2,
-		"oAP": "\/build\/table-rounding\/node_modules",
-		"oF": 0
-		},
 	"\/table-rounding\/package.json": {
 		"ft": 524288,
 		"oA": 1,
@@ -2021,7 +2070,7 @@
 	},
 "projectAttributes": {
 	"creationDate": 502136121,
-	"displayValue": "test",
+	"displayValue": "test-widgets",
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "brackets_green"
 	},

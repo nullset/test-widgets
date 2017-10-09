@@ -1,0 +1,17 @@
+*[contenteditable='true'] {
+  border: 1px solid lightblue;
+  position: relative;
+  &:focus {
+    outline: none;
+  }
+  > span {
+    background: lime;
+    display: inline-block;
+    &:last-child, &:first-child {
+      background: red;
+      &:before {
+        content: "*";
+      }
+    }
+  }
+}

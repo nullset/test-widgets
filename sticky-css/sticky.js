@@ -60,10 +60,22 @@
           var $positioned = $('<div class="sticky-table-positioned"></div>');
           var styles = window.getComputedStyle(elem);
           //  $positioned.css({background: styles.backgroundColor});
+
+          $clone.css({
+            top: `-${styles.borderTopWidth}`,
+            right: `-${styles.borderRightWidth}`,
+            bottom: `-${styles.borderBottomWidth}`,
+            left: `-${styles.borderLeftWidth}`,
+          })
+
           $positioned.css({
             background: styles.backgroundColor,
             // boxShadow: `0 0 0 1px ${styles.backgroundColor}`,
             padding: styles.padding,
+            borderTop: styles.borderTop,
+            borderRight:  styles.borderRight,
+            borderBottom:  styles.borderBottom,
+            borderLeft:  styles.borderLeft,
           });
           $th.css({ padding: 0 })
           //  $positioned.attr('style', styles.cssText)
