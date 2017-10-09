@@ -53,8 +53,24 @@
         $sc.data('scroll-y', 0);
       }
 
+      function backgroundColor(styles, elem) {
+        let color;
+        if (styles.backgroundColor.replace(/\s/g, '') === 'rgba(0,0,0,0)') {
+          const rowColor = getComputedStyle(elem.parentNode).backgroundColor;
+          if (rowColor.replace(/\s/g, '') === 'rgba(0,0,0,0)') {
+            return '#fff';
+          } else {
+            return rowColor;
+          }
+        } else {
+          return styles.backgroundColor;
+        }
+      }
+
+
       function generatePlaceholderTH(elem) {
         var $th = $(elem);
+        
         if ($th.find('.sticky-table-header').length === 0) {
           var $clone = $('<div class="sticky-table-header"></div>');
           var $positioned = $('<div class="sticky-table-positioned"></div>');
@@ -68,14 +84,27 @@
             left: `-${styles.borderLeftWidth}`,
           })
 
+
+          console.log(styles.backgroundColor)
           $positioned.css({
-            background: styles.backgroundColor,
+            background: backgroundColor(styles, elem),
             // boxShadow: `0 0 0 1px ${styles.backgroundColor}`,
-            padding: styles.padding,
-            borderTop: styles.borderTop,
-            borderRight:  styles.borderRight,
-            borderBottom:  styles.borderBottom,
-            borderLeft:  styles.borderLeft,
+            paddingTop: styles.paddingTop,
+            paddingRight: styles.paddingRight,
+            paddingBottom: styles.paddingBottom,
+            paddingLeft: styles.paddingLeft,
+            borderTopWidth: styles.borderTopWidth,
+            borderRightWidth:  styles.borderRightWidth,
+            borderBottomWidth:  styles.borderBottomWidth,
+            borderLeftWidth:  styles.borderLeftWidth,
+            borderTopStyle: styles.borderTopStyle,
+            borderRightStyle:  styles.borderRightStyle,
+            borderBottomStyle:  styles.borderBottomStyle,
+            borderLeftStyle:  styles.borderLeftStyle,
+            borderTopColor: styles.borderTopColor,
+            borderRightColor:  styles.borderRightColor,
+            borderBottomColor:  styles.borderBottomColor,
+            borderLeftColor:  styles.borderLeftColor,
           });
           $th.css({ padding: 0 })
           //  $positioned.attr('style', styles.cssText)

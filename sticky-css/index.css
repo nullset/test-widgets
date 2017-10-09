@@ -17,7 +17,8 @@ table {
 .sticky-table-wrapper {
   overflow: auto; }
   .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
-    position: relative; }
+    position: relative;
+    visibility: hidden; }
     .sticky-table-wrapper thead .sticky .sticky-table-header, .sticky-table-wrapper tbody .sticky .sticky-table-header {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
@@ -29,10 +30,14 @@ table {
       padding: inherit;
       z-index: 1; }
       .sticky-table-wrapper thead .sticky .sticky-table-header .sticky-table-positioned, .sticky-table-wrapper tbody .sticky .sticky-table-header .sticky-table-positioned {
-        height: 100%;
-        width: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         -webkit-box-sizing: border-box;
-                box-sizing: border-box; }
+                box-sizing: border-box;
+        visibility: visible; }
 
 #blah-wrapper {
   height: 300px;
