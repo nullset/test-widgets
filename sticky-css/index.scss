@@ -1,8 +1,8 @@
 table {
   // border-collapse: collapse;
-  border-collapse: separate;
-  border-spacing: 0px;
-  box-sizing: border-box;
+  border-collapse: separate !important;
+  border-spacing: 0px !important;
+  box-sizing: border-box !important;
   // margin-bottom: 40px;
   th, td {
     &:not(:first-child) {
