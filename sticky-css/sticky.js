@@ -78,10 +78,11 @@
           //  $positioned.css({background: styles.backgroundColor});
 
           $clone.css({
-            top: `-${styles.borderTopWidth}`,
-            right: `-${styles.borderRightWidth}`,
-            bottom: `-${styles.borderBottomWidth}`,
-            left: `-${styles.borderLeftWidth}`,
+            // top: `-${styles.borderTopWidth}`,
+            // right: `-${styles.borderRightWidth}`,
+            // bottom: `-${styles.borderBottomWidth}`,
+            // left: `-${styles.borderLeftWidth}`,
+            height: styles.height
           })
 
 
@@ -106,7 +107,7 @@
             borderBottomColor:  styles.borderBottomColor,
             borderLeftColor:  styles.borderLeftColor,
           });
-          $th.css({ padding: 0 })
+          // $th.css({ padding: 0, border: 0 });
           //  $positioned.attr('style', styles.cssText)
           var innerHTML = $th.html();
 
@@ -116,14 +117,15 @@
             $th.html(innerHTML);
           }
 
-          $th.append($clone.html($positioned.html(innerHTML)));
+          // $th.append($clone.html($positioned.html(innerHTML)));
         }
       }
 
       $sc.find('.sticky').each(function () {
         generatePlaceholderTH(this);
       });
-      var $offsetElems = $sc.find('.sticky .sticky-table-positioned');
+      // var $offsetElems = $sc.find('.sticky .sticky-table-positioned');
+      var $offsetElems = $sc.find('.sticky');
       var $scTable = $sc.find('table');
       $sc.data('max-x', $scTable.width() - $sc.width());
       $sc.data('max-y', $scTable.height() - $sc.height());

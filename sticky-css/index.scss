@@ -1,6 +1,14 @@
 table {
-  border-collapse: collapse;
+  // border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0px;
+  box-sizing: border-box;
   // margin-bottom: 40px;
+  th, td {
+    &:not(:first-child) {
+      border-left: 0 !important;
+    }
+  }
   thead {
     th {
       background: limegreen;
@@ -60,7 +68,20 @@ table {
     // We need to add these borders back via some css generated elements.
     .sticky {
       position: relative;
-      visibility: hidden;
+      // visibility: hidden;
+      // &:before {
+      //   content: "";
+      //   border-top: 1px solid;
+      //   border-left: 1px solid;
+      //   border-bottom: 1px solid;
+      //   border-right: 1px solid;
+      //   position: absolute;
+      //   top: 0;
+      //   right: -1px;
+      //   left: 0;
+      //   bottom: -1px;
+      //   // transform: translateY(-1px);
+      // }
       .sticky-table-header {
         box-sizing: border-box;
         position: absolute;
