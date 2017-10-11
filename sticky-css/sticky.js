@@ -68,63 +68,63 @@
       }
 
 
-      function generatePlaceholderTH(elem) {
-        var $th = $(elem);
+      // function generatePlaceholderTH(elem) {
+      //   var $th = $(elem);
         
-        if ($th.find('.sticky-table-header').length === 0) {
-          var $clone = $('<div class="sticky-table-header"></div>');
-          var $positioned = $('<div class="sticky-table-positioned"></div>');
-          var styles = window.getComputedStyle(elem);
-          //  $positioned.css({background: styles.backgroundColor});
+      //   if ($th.find('.sticky-table-header').length === 0) {
+      //     var $clone = $('<div class="sticky-table-header"></div>');
+      //     var $positioned = $('<div class="sticky-table-positioned"></div>');
+      //     var styles = window.getComputedStyle(elem);
+      //     //  $positioned.css({background: styles.backgroundColor});
 
-          $clone.css({
-            // top: `-${styles.borderTopWidth}`,
-            // right: `-${styles.borderRightWidth}`,
-            // bottom: `-${styles.borderBottomWidth}`,
-            // left: `-${styles.borderLeftWidth}`,
-            height: styles.height
-          })
+      //     $clone.css({
+      //       // top: `-${styles.borderTopWidth}`,
+      //       // right: `-${styles.borderRightWidth}`,
+      //       // bottom: `-${styles.borderBottomWidth}`,
+      //       // left: `-${styles.borderLeftWidth}`,
+      //       height: styles.height
+      //     })
 
 
-          console.log(styles.backgroundColor)
-          $positioned.css({
-            background: backgroundColor(styles, elem),
-            // boxShadow: `0 0 0 1px ${styles.backgroundColor}`,
-            paddingTop: styles.paddingTop,
-            paddingRight: styles.paddingRight,
-            paddingBottom: styles.paddingBottom,
-            paddingLeft: styles.paddingLeft,
-            borderTopWidth: styles.borderTopWidth,
-            borderRightWidth:  styles.borderRightWidth,
-            borderBottomWidth:  styles.borderBottomWidth,
-            borderLeftWidth:  styles.borderLeftWidth,
-            borderTopStyle: styles.borderTopStyle,
-            borderRightStyle:  styles.borderRightStyle,
-            borderBottomStyle:  styles.borderBottomStyle,
-            borderLeftStyle:  styles.borderLeftStyle,
-            borderTopColor: styles.borderTopColor,
-            borderRightColor:  styles.borderRightColor,
-            borderBottomColor:  styles.borderBottomColor,
-            borderLeftColor:  styles.borderLeftColor,
-          });
-          // $th.css({ padding: 0, border: 0 });
-          //  $positioned.attr('style', styles.cssText)
-          var innerHTML = $th.html();
+      //     console.log(styles.backgroundColor)
+      //     $positioned.css({
+      //       background: backgroundColor(styles, elem),
+      //       // boxShadow: `0 0 0 1px ${styles.backgroundColor}`,
+      //       paddingTop: styles.paddingTop,
+      //       paddingRight: styles.paddingRight,
+      //       paddingBottom: styles.paddingBottom,
+      //       paddingLeft: styles.paddingLeft,
+      //       borderTopWidth: styles.borderTopWidth,
+      //       borderRightWidth:  styles.borderRightWidth,
+      //       borderBottomWidth:  styles.borderBottomWidth,
+      //       borderLeftWidth:  styles.borderLeftWidth,
+      //       borderTopStyle: styles.borderTopStyle,
+      //       borderRightStyle:  styles.borderRightStyle,
+      //       borderBottomStyle:  styles.borderBottomStyle,
+      //       borderLeftStyle:  styles.borderLeftStyle,
+      //       borderTopColor: styles.borderTopColor,
+      //       borderRightColor:  styles.borderRightColor,
+      //       borderBottomColor:  styles.borderBottomColor,
+      //       borderLeftColor:  styles.borderLeftColor,
+      //     });
+      //     // $th.css({ padding: 0, border: 0 });
+      //     //  $positioned.attr('style', styles.cssText)
+      //     var innerHTML = $th.html();
 
-          // Fix for IE miscalculating height of empty <th>
-          if (innerHTML.length === 0) {
-            innerHTML = '&nbsp;';
-            $th.html(innerHTML);
-          }
+      //     // Fix for IE miscalculating height of empty <th>
+      //     if (innerHTML.length === 0) {
+      //       innerHTML = '&nbsp;';
+      //       $th.html(innerHTML);
+      //     }
 
-          // $th.append($clone.html($positioned.html(innerHTML)));
-        }
-      }
+      //     // $th.append($clone.html($positioned.html(innerHTML)));
+      //   }
+      // }
 
-      $sc.find('.sticky').each(function () {
-        generatePlaceholderTH(this);
-      });
-      // var $offsetElems = $sc.find('.sticky .sticky-table-positioned');
+      // $sc.find('.sticky').each(function () {
+      //   generatePlaceholderTH(this);
+      // });
+      // // var $offsetElems = $sc.find('.sticky .sticky-table-positioned');
       var $offsetElems = $sc.find('.sticky');
       var $scTable = $sc.find('table');
       $sc.data('max-x', $scTable.width() - $sc.width());

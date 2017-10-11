@@ -22,11 +22,12 @@ table {
   tbody {
     tr {
       &:nth-child(2n) {
-        background: gray;        
+        background: gray;  
       }
     }
     td {
       padding: 50px;
+      border: 1px solid blue;
     }
   }
   // tr {

@@ -13,7 +13,8 @@ table {
   table tbody tr:nth-child(2n) {
     background: gray; }
   table tbody td {
-    padding: 50px; }
+    padding: 50px;
+    border: 1px solid blue; }
   table .corner {
     z-index: 2 !important; }
   table .blah-td .blah {
