@@ -140,7 +140,10 @@
       // the new position, positioning the element, and finially scrolls the containing element.
 
       function wheelHandler($sc, $scTable, event) {
-        if ($scTable.height() > $sc.height() || $scTable.width() > $sc.width()) {
+        const scBox = $sc[0].getBoundingClientRect();
+        const scTableBox = $scTable[0].getBoundingClientRect();
+        console.log(scBox, scTableBox)
+        if (scTableBox.height > scBox.height || scTableBox.width > scBox.width) {
           if (
             ($sc.scrollTop() > 0 && $scTable.height() > ($sc.scrollTop() + $sc.height())) || ($sc.scrollTop() === 0 && event.originalEvent.deltaY > 0)
             ||

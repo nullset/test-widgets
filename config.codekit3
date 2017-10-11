@@ -209,6 +209,16 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/content-editable\/min\/index-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/content-editable\/min\/min\/index-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
 	"\/content-editable\/test.html": {
 		"ft": 8192,
 		"oA": 2,
