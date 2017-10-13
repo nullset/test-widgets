@@ -1,17 +1,12 @@
 table {
-  border-collapse: separate !important;
-  border-spacing: 0px !important;
-  -webkit-box-sizing: border-box !important;
-          box-sizing: border-box !important; }
-  table th:not(:first-child), table td:not(:first-child) {
-    border-left: 0 !important; }
+  border-collapse: collapse; }
   table thead th {
     background: limegreen;
     padding-top: 10px;
     padding-bottom: 10px;
     border: 1px solid; }
   table tbody tr:nth-child(2n) {
-    background: gray; }
+    background: lightcyan; }
   table tbody td {
     padding: 50px;
     border: 1px solid blue; }
@@ -22,27 +17,23 @@ table {
 
 .sticky-table-wrapper {
   overflow: auto; }
+  .sticky-table-wrapper table {
+    border-collapse: separate !important;
+    border-spacing: 0px !important;
+    -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important; }
+  .sticky-table-wrapper thead:not(:first-child) th, .sticky-table-wrapper thead:not(:first-child) td {
+    border-top-width: 0; }
+  .sticky-table-wrapper thead tr:not(:first-child) th, .sticky-table-wrapper thead tr:not(:first-child) td {
+    border-top-width: 0; }
+  .sticky-table-wrapper thead + tbody th, .sticky-table-wrapper thead + tbody td {
+    border-top-width: 0; }
+  .sticky-table-wrapper tbody:first-child tr:not(:first-child) th, .sticky-table-wrapper tbody:first-child tr:not(:first-child) td {
+    border-top-width: 0; }
+  .sticky-table-wrapper th:not(:first-child), .sticky-table-wrapper td:not(:first-child) {
+    border-left: 0; }
   .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
     position: relative; }
-    .sticky-table-wrapper thead .sticky .sticky-table-header, .sticky-table-wrapper tbody .sticky .sticky-table-header {
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: inherit;
-      z-index: 1; }
-      .sticky-table-wrapper thead .sticky .sticky-table-header .sticky-table-positioned, .sticky-table-wrapper tbody .sticky .sticky-table-header .sticky-table-positioned {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-        visibility: visible; }
 
 #blah-wrapper {
   height: 300px;

@@ -1,14 +1,6 @@
 table {
-  // border-collapse: collapse;
-  border-collapse: separate !important;
-  border-spacing: 0px !important;
-  box-sizing: border-box !important;
+  border-collapse: collapse;
   // margin-bottom: 40px;
-  th, td {
-    &:not(:first-child) {
-      border-left: 0 !important;
-    }
-  }
   thead {
     th {
       background: limegreen;
@@ -22,7 +14,7 @@ table {
   tbody {
     tr {
       &:nth-child(2n) {
-        background: gray;  
+        background: lightcyan;  
       }
     }
     td {
@@ -59,6 +51,46 @@ table {
 
 .sticky-table-wrapper {
   overflow: auto;
+  table {
+    border-collapse: separate !important;
+    border-spacing: 0px !important;
+    box-sizing: border-box !important;  
+  }
+  thead {
+    // If there is more than one <thead>, ensure that cells within secondary <thead> do not have top border.
+    &:not(:first-child) {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+    // If there is more than one <tr> within a <thead>, ensure that cells within secondary <tr> do not have top border.
+    tr:not(:first-child) {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+    // If a table has a <thead> followed by a <tbody>, ensure that cells within <tbody> do not have a top border.
+    + tbody {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+  }
+  tbody:first-child {
+    // If a table does *not* start with a <thead>, ensure that cells within the <tbody> secondary <tr> do not have a top border.
+    tr:not(:first-child) {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+  }
+  th, td {
+    // Ensure that non-first child <th> and <td> do not have a left border.
+    &:not(:first-child) {
+      border-left: 0;
+    }
+  }
+
   thead, tbody {
     // tr {
     //   position: relative;
@@ -83,31 +115,31 @@ table {
       //   bottom: -1px;
       //   // transform: translateY(-1px);
       // }
-      .sticky-table-header {
-        box-sizing: border-box;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: inherit;
-        z-index: 1;
-        // border-top: 1px solid #ddd;
-        // border-bottom: 1px solid #ddd;
-        // margin-top: -1px;
-        // margin-bottom: -1px;
-        .sticky-table-positioned {
-          // height: 100%;
-          // width: 100%;
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          box-sizing: border-box;
-          visibility: visible;
-        }
-      }
+      // .sticky-table-header {
+      //   box-sizing: border-box;
+      //   position: absolute;
+      //   top: 0;
+      //   bottom: 0;
+      //   left: 0;
+      //   right: 0;
+      //   padding: inherit;
+      //   z-index: 1;
+      //   // border-top: 1px solid #ddd;
+      //   // border-bottom: 1px solid #ddd;
+      //   // margin-top: -1px;
+      //   // margin-bottom: -1px;
+      //   .sticky-table-positioned {
+      //     // height: 100%;
+      //     // width: 100%;
+      //     position: absolute;
+      //     top: 0;
+      //     right: 0;
+      //     bottom: 0;
+      //     left: 0;
+      //     box-sizing: border-box;
+      //     visibility: visible;
+      //   }
+      // }
     }
   }
 }
