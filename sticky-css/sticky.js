@@ -3,42 +3,6 @@
 
   $.fn.stickyTable = function (args) {
 
-    function positionHeader($elems, scrollX, scrollY) {
-      var transformation, shadow, shadowOffset;
-      $elems.css({
-        //  top: scrollY + 'px',
-        //  bottom: -scrollY + 'px',
-        //  left: scrollX + 'px',
-        //  right: -scrollX + 'px'
-        transform: `translate(${scrollX}px, ${scrollY}px)`
-      });
-    }
-
-    function calculatePosition($sc, $scTable, $offsetElems, changeX, changeY) {
-      var existingX = $sc.data('scroll-x');
-      var existingY = $sc.data('scroll-y');
-      var maxX = $sc.data('max-x');
-      var maxY = $sc.data('max-y');
-      var newX = existingX + changeX;
-      var newY = existingY + changeY;
-
-      if (newX < 0) {
-        newX = 0;
-      } else if (newX > maxX) {
-        newX = maxX;
-      }
-      if (newY < 0) {
-        newY = 0;
-      } else if (newY > maxY) {
-        newY = maxY;
-      }
-
-      $sc.data({ 'scroll-x': newX, 'scroll-y': newY });
-      $sc.scrollLeft(newX);
-      $sc.scrollTop(newY);
-      positionHeader($offsetElems, newX, newY);
-    }
-
     this.each(function () {
       var $sc = $(this);
       if ($sc.find('thead').length === 0 || $sc.find('tbody').length === 0) {
@@ -127,8 +91,14 @@
       // // var $offsetElems = $sc.find('.sticky .sticky-table-positioned');
       var $offsetElems = $sc.find('.sticky');
       var $scTable = $sc.find('table');
-      $sc.data('max-x', $scTable.width() - $sc.width());
-      $sc.data('max-y', $scTable.height() - $sc.height());
+
+      var table = $scTable[0];
+      var wrapper = $sc[0];
+      var tableBox = table.getBoundingClientRect();
+      var wrapperBox = wrapper.getBoundingClientRect();
+      $sc.data('max-x', tableBox.width - wrapper.clientWidth);
+      $sc.data('max-y', tableBox.height - wrapper.clientHeight);
+      console.log('max-y', $sc.data('max-y'));
 
 
 
@@ -144,7 +114,7 @@
       function wheelHandler($sc, $scTable, event) {
         const scBox = $sc[0].getBoundingClientRect();
         const scTableBox = $scTable[0].getBoundingClientRect();
-        console.log(scBox, scTableBox)
+        // console.log(scBox, scTableBox)
         if (scTableBox.height > scBox.height || scTableBox.width > scBox.width) {
           if (
             ($sc.scrollTop() > 0 && $scTable.height() > ($sc.scrollTop() + $sc.height())) || ($sc.scrollTop() === 0 && event.originalEvent.deltaY > 0)
@@ -157,6 +127,44 @@
         }
       }
 
+      function positionHeader($elems, scrollX, scrollY) {
+        var transformation, shadow, shadowOffset;
+        $elems.css({
+          //  top: scrollY + 'px',
+          //  bottom: -scrollY + 'px',
+          //  left: scrollX + 'px',
+          //  right: -scrollX + 'px'
+          transform: `translate(${scrollX}px, ${scrollY}px)`
+        });
+      }
+  
+      function calculatePosition($sc, $scTable, $offsetElems, changeX, changeY) {
+        var existingX = $sc.data('scroll-x');
+        var existingY = $sc.data('scroll-y');
+        var maxX = $sc.data('max-x');
+        var maxY = $sc.data('max-y');
+        var newX = existingX + changeX;
+        var newY = existingY + changeY;
+        console.log('newY', newY, maxY)
+  
+        if (newX < 0) {
+          newX = 0;
+        } else if (newX > maxX) {
+          newX = maxX;
+        }
+        if (newY < 0) {
+          newY = 0;
+        } else if (newY > maxY) {
+          newY = maxY;
+          console.log('newY reset', newY, maxY)
+        }
+  
+        $sc.data({ 'scroll-x': newX, 'scroll-y': newY });
+        $sc.scrollLeft(newX);
+        $sc.scrollTop(newY);
+        positionHeader($offsetElems, newX, newY);
+      }
+        
       $sc.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
         wheelHandler($sc, $scTable, event);
       });
