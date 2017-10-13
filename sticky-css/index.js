@@ -1,4 +1,2 @@
 var $table = $('#blah-wrapper');
-requestAnimationFrame(() => {
-  $table.stickyTable();
-})
+$table.stickyTable();

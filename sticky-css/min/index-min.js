@@ -1,1 +1,1 @@
-"use strict";var $table=$("#blah-wrapper");requestAnimationFrame(function(){$table.stickyTable()});
+"use strict";var $table=$("#blah-wrapper");$table.stickyTable();
