@@ -14,14 +14,21 @@
       positionStickyElements($stickyElems);
 
       $wrapper.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
+        console.log('wheel fired');
+        $wrapper.data('disableScrollEvent', true);
         wheelHandler($table, $wrapper, $stickyElems, event);
       });
 
-      // $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', function (event) {
-      //   requestAnimationFrame(() => {
-
-      //   });
-      // });
+      $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', function (event) {
+        if ($wrapper.data('disableScrollEvent')) {
+          event.preventDefault();
+          $wrapper.data('disableScrollEvent', false);
+        } else {
+          requestAnimationFrame(() => {
+            scrollHandler($wrapper, $stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
+          });
+        }
+      });
       
 
       return {$table, $wrapper};
@@ -73,12 +80,20 @@
         ) {
           event.preventDefault();
           const {newX, newY} = calculatePosition({currentPosition: $wrapper.data(), deltaX, deltaY});
-          $wrapper.data({scrollX: newX, scrollY: newY });
           $wrapper.scrollLeft(newX);
           $wrapper.scrollTop(newY);
-          positionStickyElements($stickyElems, newX, newY);    
+          updateScrollPosition($wrapper, $stickyElems, newX, newY);
         }
       }
+    }
+
+    function scrollHandler($wrapper, $stickyElems, offsetX, offsetY) {
+      updateScrollPosition($wrapper, $stickyElems, offsetX, offsetY);
+    }
+
+    function updateScrollPosition($wrapper, $stickyElems, offsetX, offsetY) {
+      $wrapper.data({scrollX: offsetX, scrollY: offsetY });
+      positionStickyElements($stickyElems, offsetX, offsetY);
     }
 
     function positionStickyElements($elems, offsetX = 0, offsetY = 0) {
@@ -102,11 +117,6 @@
         newY = maxY;
       }
       return {newX, newY};
-    }
-
-    function scrollHandler($offsetElems, $sc) {
-      $sc.data({scrollX: $sc.scrollLeft(), scrollY: $sc.scrollTop() });
-      positionHeader($offsetElems, $sc.scrollTop());
     }
 
 
