@@ -5,8 +5,8 @@
 
     this.each(function () {
       var $sc = $(this);
-      if ($sc.find('thead').length === 0 || $sc.find('tbody').length === 0) {
-        console.error($sc, "must be called on a <div> that includes a table with both a <thead> and a <tbody> element.");
+      if ($sc.find('tbody').length === 0) {
+        console.error($sc, "must be called on a <div> that includes a table with a <tbody> element.");
         return;
       }
       $sc.addClass('sticky-table-wrapper');
