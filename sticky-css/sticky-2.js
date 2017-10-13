@@ -3,34 +3,32 @@
 
   $.fn.stickyTable = function (args) {
     this.each(() => {
-      const {$table, $wrapper} = init(this);
-    });
-
-    function init($table) {
+      const $table = this;
       const tableStyles = window.getComputedStyle($table[0]);
       const $wrapper = wrapTable($table, tableStyles);
       const $stickyElems = $table.find('th.sticky, td.sticky');
 
+      // Variable that tracks whether "wheel" event was called.
+      // Prevents both "wheel" and "scroll" events being triggered simultaneously.
+      let wheelEventTriggered = false;
+
       positionStickyElements($stickyElems);
 
       $wrapper.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
-        console.log('wheel fired');
-        $wrapper.data('disableScrollEvent', true);
+        wheelEventTriggered = true;
         wheelHandler($table, $wrapper, $stickyElems, event);
       });
 
-      $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', function (event) {
-        if ($wrapper.data('disableScrollEvent')) {
-          event.preventDefault();
-          $wrapper.data('disableScrollEvent', false);
+      $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', () => {
+        if (wheelEventTriggered) {
+          wheelEventTriggered = false;
         } else {
           scrollHandler($wrapper, $stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
         }
-      });
-      
+      })
 
       return {$table, $wrapper};
-    }
+    });
 
     function wrapTable($table, tableStyles) {
       const $wrapper = $('<div class="sticky-table-wrapper">');
@@ -87,6 +85,7 @@
 
     function scrollHandler($wrapper, $stickyElems, offsetX, offsetY) {
       requestAnimationFrame(() => {
+        console.log('scroll fired');
         updateScrollPosition($wrapper, $stickyElems, offsetX, offsetY);
       });
     }
