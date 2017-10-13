@@ -4,18 +4,24 @@
   $.fn.stickyTable = function (args) {
     this.each(() => {
       const {$table, $wrapper} = init(this);
-      debugger
     });
 
     function init($table) {
       const tableStyles = window.getComputedStyle($table[0]);
       const $wrapper = wrapTable($table, tableStyles);
       const $stickyElems = $table.find('th.sticky, td.sticky');
+
       positionStickyElements($stickyElems);
 
       $wrapper.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
         wheelHandler($table, $wrapper, $stickyElems, event);
       });
+
+      // $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', function (event) {
+      //   requestAnimationFrame(() => {
+
+      //   });
+      // });
       
 
       return {$table, $wrapper};
@@ -58,35 +64,32 @@
     }
 
     function wheelHandler($table, $wrapper, $stickyElems, event) {
-      const scBox = $wrapper[0].getBoundingClientRect();
-      const scTableBox = $table[0].getBoundingClientRect();
-      // console.log(scBox, scTableBox)
-      if (scTableBox.height > scBox.height || scTableBox.width > scBox.width) {
+      const {deltaX, deltaY} = event.originalEvent;
+      if ($table.height() > $wrapper.height() || $table.width() > $wrapper.width()) {
         if (
-          ($wrapper.scrollTop() > 0 && $table.height() > ($wrapper.scrollTop() + $wrapper.height())) || ($wrapper.scrollTop() === 0 && event.originalEvent.deltaY > 0)
+          ($wrapper.scrollTop() > 0 && $table.height() > ($wrapper.scrollTop() + $wrapper.height())) || ($wrapper.scrollTop() === 0 && deltaY > 0)
           ||
-          ($wrapper.scrollLeft() > 0 && $table.width() > ($wrapper.scrollLeft() + $wrapper.width())) || ($wrapper.scrollLeft() === 0 && event.originalEvent.deltaX > 0)
+          ($wrapper.scrollLeft() > 0 && $table.width() > ($wrapper.scrollLeft() + $wrapper.width())) || ($wrapper.scrollLeft() === 0 && deltaX > 0)
         ) {
           event.preventDefault();
-          calculatePosition($wrapper, $stickyElems, event.originalEvent.deltaX, event.originalEvent.deltaY);
+          const {newX, newY} = calculatePosition({currentPosition: $wrapper.data(), deltaX, deltaY});
+          $wrapper.data({scrollX: newX, scrollY: newY });
+          $wrapper.scrollLeft(newX);
+          $wrapper.scrollTop(newY);
+          positionStickyElements($stickyElems, newX, newY);    
         }
       }
     }
 
-    function positionStickyElements($elems, scrollX = 0, scrollY = 0) {
+    function positionStickyElements($elems, offsetX = 0, offsetY = 0) {
       $elems.css({
-        transform: `translate(${scrollX}px, ${scrollY}px)`
+        transform: `translate(${offsetX}px, ${offsetY}px)`
       });
     }
 
-    function calculatePosition($wrapper, $stickyElems, changeX, changeY) {
-      var existingX = $wrapper.data('scrollX');
-      var existingY = $wrapper.data('scrollY');
-      var maxX = $wrapper.data('maxX');
-      var maxY = $wrapper.data('maxY');
-      var newX = existingX + changeX;
-      var newY = existingY + changeY;
-      console.log('newY', newY, maxY)
+    function calculatePosition({currentPosition: { scrollX, scrollY, maxX, maxY }, deltaX, deltaY}) {
+      let newX = scrollX + deltaX;
+      let newY = scrollY + deltaY;
 
       if (newX < 0) {
         newX = 0;
@@ -97,13 +100,8 @@
         newY = 0;
       } else if (newY > maxY) {
         newY = maxY;
-        console.log('newY reset', newY, maxY)
       }
-
-      $wrapper.data({scrollX: newX, scrollY: newY });
-      $wrapper.scrollLeft(newX);
-      $wrapper.scrollTop(newY);
-      positionStickyElements($stickyElems, newX, newY);
+      return {newX, newY};
     }
 
     function scrollHandler($offsetElems, $sc) {
@@ -111,9 +109,6 @@
       positionHeader($offsetElems, $sc.scrollTop());
     }
 
-    // $sc.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
-    //   wheelHandler($sc, $scTable, event);
-    // });
 
     // $sc.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', function (event) {
     //   if ($scTable.height() > $sc.height()) {
