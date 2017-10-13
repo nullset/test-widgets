@@ -1,0 +1,1 @@
+"use strict";var $table=$("#blah");$table.stickyTable();

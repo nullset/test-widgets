@@ -1,0 +1,166 @@
+table {
+  border-collapse: collapse;
+  max-height: 400px;
+  max-width: 100%;
+  thead {
+    th {
+      background: limegreen;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border: 1px solid;
+    }
+  }
+  tbody {
+    tr {
+      &:nth-child(2n+1) {
+        th, td {
+          background: peachpuff;          
+        }
+      }
+      &:nth-child(2n) {
+        th, td {
+          background: lightcyan;            
+        }
+      }
+    }
+    td {
+      padding: 50px;
+      border: 1px solid blue;
+    }
+  }
+  // tr {
+  //   > *:nth-child(1) {
+  //     background: rgba(0, 255, 0, 0.3) ;
+  //     // position: sticky;
+  //     // left: 0;
+  //     z-index: 1;  
+  //   }
+  // }
+  .corner {
+    // position: sticky;
+    // left :0;
+    // top: 0;
+    z-index: 2 !important;
+  }
+  .blah-td {
+    // padding: 0;
+    // position: sticky;
+    // top: 0;
+  .blah {
+      // padding: 50;
+      background: rgba(120,120,0, 0.3);
+    }
+  }
+}
+
+// ------------ STICKY STYLES ---------------- //
+
+table.sticky {
+  // Prevent FOUC when page is first loaded.
+  visibility: hidden;
+  display: block;
+}
+.sticky-table-wrapper {
+  overflow: auto;
+  table.sticky {
+    border-collapse: separate !important;
+    border-spacing: 0px !important;
+    box-sizing: border-box !important;
+    // Return table display back to normal.
+    display: table;
+    visibility: visible;
+    max-height: inherit !important;
+    max-width: inherit !important;
+  }
+  thead {
+    // If there is more than one <thead>, ensure that cells within secondary <thead> do not have top border.
+    &:not(:first-child) {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+    // If there is more than one <tr> within a <thead>, ensure that cells within secondary <tr> do not have top border.
+    tr:not(:first-child) {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+    // If a table has a <thead> followed by a <tbody>, ensure that cells within <tbody> do not have a top border.
+    + tbody {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+  }
+  tbody:first-child {
+    // If a table does *not* start with a <thead>, ensure that cells within the <tbody> secondary <tr> do not have a top border.
+    tr:not(:first-child) {
+      th, td {
+        border-top-width: 0;
+      }
+    }
+  }
+  th, td {
+    // Ensure that non-first child <th> and <td> do not have a left border.
+    &:not(:first-child) {
+      border-left: 0;
+    }
+  }
+
+  thead, tbody {
+    // tr {
+    //   position: relative;
+    //   z-index: 100;
+    // }
+    // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
+    // (as, from the rendering engine perspective, it is no longer a part of the table).
+    // We need to add these borders back via some css generated elements.
+    .sticky {
+      position: relative;
+      // visibility: hidden;
+      // &:before {
+      //   content: "";
+      //   border-top: 1px solid;
+      //   border-left: 1px solid;
+      //   border-bottom: 1px solid;
+      //   border-right: 1px solid;
+      //   position: absolute;
+      //   top: 0;
+      //   right: -1px;
+      //   left: 0;
+      //   bottom: -1px;
+      //   // transform: translateY(-1px);
+      // }
+      // .sticky-table-header {
+      //   box-sizing: border-box;
+      //   position: absolute;
+      //   top: 0;
+      //   bottom: 0;
+      //   left: 0;
+      //   right: 0;
+      //   padding: inherit;
+      //   z-index: 1;
+      //   // border-top: 1px solid #ddd;
+      //   // border-bottom: 1px solid #ddd;
+      //   // margin-top: -1px;
+      //   // margin-bottom: -1px;
+      //   .sticky-table-positioned {
+      //     // height: 100%;
+      //     // width: 100%;
+      //     position: absolute;
+      //     top: 0;
+      //     right: 0;
+      //     bottom: 0;
+      //     left: 0;
+      //     box-sizing: border-box;
+      //     visibility: visible;
+      //   }
+      // }
+    }
+  }
+}
+
+#blah-wrapper {
+  height: 400px;
+  overflow: auto;
+}
