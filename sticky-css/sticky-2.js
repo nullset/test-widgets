@@ -24,9 +24,7 @@
           event.preventDefault();
           $wrapper.data('disableScrollEvent', false);
         } else {
-          requestAnimationFrame(() => {
-            scrollHandler($wrapper, $stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
-          });
+          scrollHandler($wrapper, $stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
         }
       });
       
@@ -88,7 +86,9 @@
     }
 
     function scrollHandler($wrapper, $stickyElems, offsetX, offsetY) {
-      updateScrollPosition($wrapper, $stickyElems, offsetX, offsetY);
+      requestAnimationFrame(() => {
+        updateScrollPosition($wrapper, $stickyElems, offsetX, offsetY);
+      });
     }
 
     function updateScrollPosition($wrapper, $stickyElems, offsetX, offsetY) {
