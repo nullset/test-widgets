@@ -4,7 +4,8 @@
   $.fn.stickyTable = function (args) {
     this.each(() => {
       const $table = this;
-      const tableStyles = window.getComputedStyle($table[0]);
+      const table = $table[0];
+      const tableStyles = window.getComputedStyle(table);
       const $wrapper = wrapTable($table, tableStyles);
       const $stickyElems = $table.find('th.sticky, td.sticky');
 
@@ -25,8 +26,31 @@
 
       $wrapper.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
         wheelEventTriggered = true;
-        wheelHandler($table, $wrapper, $stickyElems, event);
-      });
+        event.preventDefault();
+        const { deltaX, deltaY } = event.originalEvent;
+        const { scrollWidth, scrollHeight } = $wrapper[0];
+        let maxWidth = scrollWidth - $wrapper[0].clientWidth;
+        let maxHeight = scrollHeight - $wrapper[0].clientHeight;
+
+        let { scrollX, scrollY } = $wrapper.data();
+        let newX = scrollX + deltaX;
+        let newY = scrollY + deltaY;
+        if (newX >= maxWidth) {
+          newX = maxWidth;
+        }
+        if (newX <= 0) {
+          newX = 0;
+        }
+        if (newY >= maxHeight) {
+          newY = maxHeight;
+        }
+        if (newY <= 0) {
+          newY = 0;
+        }
+        $wrapper.data({scrollX: newX, scrollY: newY});
+        $wrapper.scrollLeft(newX).scrollTop(newY);
+        positionStickyElements($stickyElems, newX, newY);
+    });
 
       $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', () => {
         if (wheelEventTriggered) {
@@ -60,20 +84,22 @@
       $table.wrap($wrapper);
 
       // Determine just how much the wrapper can be scrolled.
-      setMaxScrollValues($table)
+      // setMaxScrollValues($table)
       
       return $table.parent();
     }
 
-    function setMaxScrollValues($table) {
-      const table = $table[0];
-      const tableBox = table.getBoundingClientRect();
-      const wrapper = table.parentElement;
-      $(wrapper).data({
-        maxX: tableBox.width - wrapper.clientWidth,
-        maxY: tableBox.height - wrapper.clientHeight
-      });
-    }
+    // function setMaxScrollValues($table) {
+    //   const table = $table[0];
+    //   const tableBox = table.getBoundingClientRect();
+    //   const wrapper = table.parentElement;
+    //   $(wrapper).data({
+    //     maxX: tableBox.width - wrapper.clientWidth,
+    //     maxY: tableBox.height - wrapper.clientHeight,
+    //     // maxX: tableBox.clientWidth - wrapper.clientWidth,
+    //     // maxY: wrapper.clientHeight
+    //   });
+    // }
 
     function wheelHandler($table, $wrapper, $stickyElems, event) {
       const {deltaX, deltaY} = event.originalEvent;
