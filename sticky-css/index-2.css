@@ -24,6 +24,9 @@ table.sticky {
 
 .sticky-table-wrapper {
   overflow: auto; }
+  .sticky-table-wrapper.--is-scrolling th.sticky, .sticky-table-wrapper.--is-scrolling td.sticky {
+    -webkit-box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3), 2px 4px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3), 2px 4px 4px rgba(0, 0, 0, 0.3); }
   .sticky-table-wrapper table.sticky {
     border-spacing: 0px !important;
     -webkit-box-sizing: border-box !important;
@@ -41,25 +44,18 @@ table.sticky {
   .sticky-table-wrapper tbody:first-child tr:not(:first-child) th, .sticky-table-wrapper tbody:first-child tr:not(:first-child) td {
     border-top-width: 0; }
   .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
-    position: relative; }
+    position: relative;
+    -webkit-transition: -webkit-box-shadow 0.3s;
+    transition: -webkit-box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, -webkit-box-shadow 0.3s; }
     .sticky-table-wrapper thead .sticky:before, .sticky-table-wrapper tbody .sticky:before {
       content: "";
       position: absolute;
-      border-top-width: var(--border-top-width);
-      border-top-style: var(--border-top-style);
-      border-top-color: var(--border-top-color);
+      border: inherit;
       top: calc(-1 * var(--border-top-width));
-      border-right-width: var(--border-right-width);
-      border-right-style: var(--border-right-style);
-      border-right-color: var(--border-right-color);
       right: calc(-1 * var(--border-right-width));
-      border-bottom-width: var(--border-bottom-width);
-      border-bottom-style: var(--border-bottom-style);
-      border-bottom-color: var(--border-bottom-color);
       bottom: calc(-1 * var(--border-bottom-width));
-      border-left-width: var(--border-left-width);
-      border-left-style: var(--border-left-style);
-      border-left-color: var(--border-left-color);
       left: calc(-1 * var(--border-left-width)); }
 
 @-moz-document url-prefix() {

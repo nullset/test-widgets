@@ -48,6 +48,14 @@ table.sticky {
 }
 .sticky-table-wrapper {
   overflow: auto;
+  &.--is-scrolling {
+    th, td {
+      &.sticky {
+        box-shadow: 4px 2px 4px rgba(0,0,0,0.3), 2px 4px 4px rgba(0,0,0,0.3);
+      }
+    }
+  }
+
   table.sticky {
     // border-collapse: separate !important;
     border-spacing: 0px !important;
@@ -86,92 +94,23 @@ table.sticky {
       }
     }
   }
-  // th, td {
-  //   // Ensure that non-first child <th> and <td> do not have a left border.
-  //   &:not(:first-child) {
-  //     border-left: 0;
-  //   }
-  // }
 
   thead, tbody {
-    // tr {
-    //   position: relative;
-    //   z-index: 100;
-    // }
-    // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
-    // (as, from the rendering engine perspective, it is no longer a part of the table).
-    // We need to add these borders back via some css generated elements.
     .sticky {
       position: relative;
+      transition: box-shadow 0.3s;
+      // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
+      // (as, from the rendering engine perspective, it is no longer a part of the table).
+      // We need to add these borders back via some css generated elements.
       &:before {
         content: "";
         position: absolute;
-
-        border-top-width: var(--border-top-width);
-        border-top-style: var(--border-top-style);
-        border-top-color: var(--border-top-color);
+        border: inherit;        
         top: calc(-1 * var(--border-top-width));
-
-        border-right-width: var(--border-right-width);
-        border-right-style: var(--border-right-style);
-        border-right-color: var(--border-right-color);
         right: calc(-1 * var(--border-right-width));
-
-        border-bottom-width: var(--border-bottom-width);
-        border-bottom-style: var(--border-bottom-style);
-        border-bottom-color: var(--border-bottom-color);
         bottom: calc(-1 * var(--border-bottom-width));
-
-        border-left-width: var(--border-left-width);
-        border-left-style: var(--border-left-style);
-        border-left-color: var(--border-left-color);
         left: calc(-1 * var(--border-left-width));
-
-        // top: -1px;
-        // right: -1px;
-        // bottom: -1px;
-        // left: -1px;
-        // border: 1px solid red;
       }
-      // visibility: hidden;
-      // &:before {
-      //   content: "";
-      //   border-top: 1px solid;
-      //   border-left: 1px solid;
-      //   border-bottom: 1px solid;
-      //   border-right: 1px solid;
-      //   position: absolute;
-      //   top: 0;
-      //   right: -1px;
-      //   left: 0;
-      //   bottom: -1px;
-      //   // transform: translateY(-1px);
-      // }
-      // .sticky-table-header {
-      //   box-sizing: border-box;
-      //   position: absolute;
-      //   top: 0;
-      //   bottom: 0;
-      //   left: 0;
-      //   right: 0;
-      //   padding: inherit;
-      //   z-index: 1;
-      //   // border-top: 1px solid #ddd;
-      //   // border-bottom: 1px solid #ddd;
-      //   // margin-top: -1px;
-      //   // margin-bottom: -1px;
-      //   .sticky-table-positioned {
-      //     // height: 100%;
-      //     // width: 100%;
-      //     position: absolute;
-      //     top: 0;
-      //     right: 0;
-      //     bottom: 0;
-      //     left: 0;
-      //     box-sizing: border-box;
-      //     visibility: visible;
-      //   }
-      // }
     }
   }
 }

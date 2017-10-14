@@ -18,7 +18,7 @@
       $stickyElems.each((i, cell) => {
         cellStyles = window.getComputedStyle(cell);
         ['Top', 'Right', 'Bottom', 'Left'].forEach((side) => {
-          ['Width', 'Style', 'Color'].forEach((property) => {
+          ['Width'].forEach((property) => {
             cell.style.setProperty(`--border-${side.toLowerCase()}-${property.toLowerCase()}`, cellStyles[`border${side}${property}`]);
           });
         });
@@ -46,6 +46,11 @@
         }
         if (newY <= 0) {
           newY = 0;
+        }
+        if (newX > 0) {
+          $wrapper.addClass('--is-scrolling');
+        } else {
+          $wrapper.removeClass('--is-scrolling');
         }
         $wrapper.data({scrollX: newX, scrollY: newY});
         $wrapper.scrollLeft(newX).scrollTop(newY);
