@@ -14,6 +14,16 @@
 
       positionStickyElements($stickyElems);
 
+      $stickyElems.each((i, cell) => {
+        cellStyles = window.getComputedStyle(cell);
+        ['Top', 'Right', 'Bottom', 'Left'].forEach((side) => {
+          ['Width', 'Style', 'Color'].forEach((property) => {
+            cell.style.setProperty(`--border-${side.toLowerCase()}-${property.toLowerCase()}`, cellStyles[`border${side}${property}`]);
+          });
+        });
+        cell.style.setProperty('--color', 'red');
+      });
+
       $wrapper.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
         wheelEventTriggered = true;
         wheelHandler($table, $wrapper, $stickyElems, event);

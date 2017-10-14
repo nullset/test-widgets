@@ -14,10 +14,9 @@ table {
   table tbody td {
     padding: 50px;
     border: 1px solid blue; }
-  table .corner {
-    z-index: 2 !important; }
-  table .blah-td .blah {
-    background: rgba(120, 120, 0, 0.3); }
+  table th:last-child, table td:last-child {
+    background: plum !important;
+    border-left-width: 3px; }
 
 table.sticky {
   visibility: hidden;
@@ -26,7 +25,6 @@ table.sticky {
 .sticky-table-wrapper {
   overflow: auto; }
   .sticky-table-wrapper table.sticky {
-    border-collapse: separate !important;
     border-spacing: 0px !important;
     -webkit-box-sizing: border-box !important;
             box-sizing: border-box !important;
@@ -42,10 +40,34 @@ table.sticky {
     border-top-width: 0; }
   .sticky-table-wrapper tbody:first-child tr:not(:first-child) th, .sticky-table-wrapper tbody:first-child tr:not(:first-child) td {
     border-top-width: 0; }
-  .sticky-table-wrapper th:not(:first-child), .sticky-table-wrapper td:not(:first-child) {
-    border-left: 0; }
   .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
     position: relative; }
+    .sticky-table-wrapper thead .sticky:before, .sticky-table-wrapper tbody .sticky:before {
+      content: "";
+      position: absolute;
+      border-top-width: var(--border-top-width);
+      border-top-style: var(--border-top-style);
+      border-top-color: var(--border-top-color);
+      top: calc(-1 * var(--border-top-width));
+      border-right-width: var(--border-right-width);
+      border-right-style: var(--border-right-style);
+      border-right-color: var(--border-right-color);
+      right: calc(-1 * var(--border-right-width));
+      border-bottom-width: var(--border-bottom-width);
+      border-bottom-style: var(--border-bottom-style);
+      border-bottom-color: var(--border-bottom-color);
+      bottom: calc(-1 * var(--border-bottom-width));
+      border-left-width: var(--border-left-width);
+      border-left-style: var(--border-left-style);
+      border-left-color: var(--border-left-color);
+      left: calc(-1 * var(--border-left-width)); }
+
+@-moz-document url-prefix() {
+  table.sticky thead .sticky:before, table.sticky tbody .sticky:before {
+    top: -1px;
+    right: 0;
+    bottom: -1px;
+    left: -2px; } }
 
 #blah-wrapper {
   height: 400px;

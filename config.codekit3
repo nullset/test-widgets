@@ -1600,6 +1600,22 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/sticky-css\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/sticky-css\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/sticky-css\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/sticky-css\/index.html",
+		"oF": 0
+		},
 	"\/sticky-css\/index.js": {
 		"ft": 64,
 		"ma": 0,
@@ -1609,6 +1625,19 @@
 		"oF": 0,
 		"sC": 1,
 		"tS": 1
+		},
+	"\/sticky-css\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/sticky-css\/index.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/sticky-css\/min\/index-min.js": {
 		"ft": 64,

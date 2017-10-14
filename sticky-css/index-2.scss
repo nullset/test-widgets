@@ -28,27 +28,13 @@ table {
       border: 1px solid blue;
     }
   }
-  // tr {
-  //   > *:nth-child(1) {
-  //     background: rgba(0, 255, 0, 0.3) ;
-  //     // position: sticky;
-  //     // left: 0;
-  //     z-index: 1;  
-  //   }
-  // }
-  .corner {
-    // position: sticky;
-    // left :0;
-    // top: 0;
-    z-index: 2 !important;
-  }
-  .blah-td {
-    // padding: 0;
-    // position: sticky;
-    // top: 0;
-  .blah {
-      // padding: 50;
-      background: rgba(120,120,0, 0.3);
+  th, td {
+    &:last-child {
+      background: plum !important;
+      border-left-width: 3px;
+    }
+    &:nth-child(2) {
+      // border-left: 3px solid red;
     }
   }
 }
@@ -63,7 +49,7 @@ table.sticky {
 .sticky-table-wrapper {
   overflow: auto;
   table.sticky {
-    border-collapse: separate !important;
+    // border-collapse: separate !important;
     border-spacing: 0px !important;
     box-sizing: border-box !important;
     // Return table display back to normal.
@@ -100,12 +86,12 @@ table.sticky {
       }
     }
   }
-  th, td {
-    // Ensure that non-first child <th> and <td> do not have a left border.
-    &:not(:first-child) {
-      border-left: 0;
-    }
-  }
+  // th, td {
+  //   // Ensure that non-first child <th> and <td> do not have a left border.
+  //   &:not(:first-child) {
+  //     border-left: 0;
+  //   }
+  // }
 
   thead, tbody {
     // tr {
@@ -117,6 +103,36 @@ table.sticky {
     // We need to add these borders back via some css generated elements.
     .sticky {
       position: relative;
+      &:before {
+        content: "";
+        position: absolute;
+
+        border-top-width: var(--border-top-width);
+        border-top-style: var(--border-top-style);
+        border-top-color: var(--border-top-color);
+        top: calc(-1 * var(--border-top-width));
+
+        border-right-width: var(--border-right-width);
+        border-right-style: var(--border-right-style);
+        border-right-color: var(--border-right-color);
+        right: calc(-1 * var(--border-right-width));
+
+        border-bottom-width: var(--border-bottom-width);
+        border-bottom-style: var(--border-bottom-style);
+        border-bottom-color: var(--border-bottom-color);
+        bottom: calc(-1 * var(--border-bottom-width));
+
+        border-left-width: var(--border-left-width);
+        border-left-style: var(--border-left-style);
+        border-left-color: var(--border-left-color);
+        left: calc(-1 * var(--border-left-width));
+
+        // top: -1px;
+        // right: -1px;
+        // bottom: -1px;
+        // left: -1px;
+        // border: 1px solid red;
+      }
       // visibility: hidden;
       // &:before {
       //   content: "";
@@ -160,7 +176,29 @@ table.sticky {
   }
 }
 
+@-moz-document url-prefix() { 
+  table.sticky {
+    thead, tbody {
+      .sticky {
+        &:before {
+          top: -1px;
+          right: 0;
+          bottom: -1px;
+          left: -2px;
+        }
+      }
+    }
+  }
+}
+
+
 #blah-wrapper {
   height: 400px;
   overflow: auto;
 }
+
+// @-moz-document url-prefix() { 
+//   body {
+//      background:lime;
+//   }
+// }
