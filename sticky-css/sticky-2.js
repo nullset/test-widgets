@@ -15,8 +15,8 @@
       let wheelEventTriggered = false;
 
       // Set initial scrolled value.
-      wrapper.dataset.scrollX = 0;
-      wrapper.dataset.scrollY = 0;      
+      wrapper.setAttribute('data-scroll-left', 0);
+      wrapper.setAttribute('data-scroll-top', 0);      
 
       positionStickyElements(stickyElems);
 
@@ -39,7 +39,7 @@
         if (wheelEventTriggered) {
           wheelEventTriggered = false;
         } else {
-          scrollHandler($wrapper, stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
+          scrollHandler(wrapper, stickyElems);
         }
       })
 
@@ -69,12 +69,12 @@
     function wheelHandler(event, wrapper, $wrapper, stickyElems) {
       const { deltaX, deltaY } = event.originalEvent;
       const { scrollWidth, scrollHeight, clientWidth, clientHeight } = wrapper;
-      let maxWidth = scrollWidth - clientWidth;
-      let maxHeight = scrollHeight - clientHeight;
-
-      let { scrollX, scrollY } = wrapper.dataset;
-      let newX = parseInt(scrollX, 10) + deltaX;
-      let newY = parseInt(scrollY, 10) + deltaY;
+      const maxWidth = scrollWidth - clientWidth;
+      const maxHeight = scrollHeight - clientHeight;
+      const scrollLeft = parseInt(wrapper.getAttribute('data-scroll-left'), 10);
+      const scrollTop = parseInt(wrapper.getAttribute('data-scroll-top'), 10);
+      let newX = scrollLeft + deltaX;
+      let newY = scrollTop + deltaY;
       if (newX >= maxWidth) {
         newX = maxWidth;
       }
@@ -92,8 +92,8 @@
       } else {
         wrapper.classList.remove('--is-scrolling');
       }
-      wrapper.dataset.scrollX = newX;
-      wrapper.dataset.scrollY = newY;
+      wrapper.setAttribute('data-scroll-left', newX);
+      wrapper.setAttribute('data-scroll-top', newY);
       // $wrapper.scrollLeft(newX).scrollTop(newY);
       wrapper.scrollLeft = newX;
       wrapper.scrollTop = newY;
@@ -129,15 +129,17 @@
     //   }
     // }
 
-    function scrollHandler(stickyElems, offsetX, offsetY) {
+    function scrollHandler(wrapper, stickyElems) {
       requestAnimationFrame(() => {
         console.log('scroll fired');
-        updateScrollPosition(stickyElems, offsetX, offsetY);
+        updateScrollPosition(wrapper, stickyElems);
       });
     }
 
-    function updateScrollPosition(stickyElems, offsetX, offsetY) {
-      positionStickyElements(stickyElems, offsetX, offsetY);
+    function updateScrollPosition(wrapper, stickyElems) {
+      wrapper.setAttribute('data-scroll-left', wrapper.scrollLeft);
+      wrapper.setAttribute('data-scroll-top', wrapper.scrollTop);
+      positionStickyElements(stickyElems, wrapper.scrollLeft, wrapper.scrollTop);
     }
 
     function calculateShadow(offset) {
@@ -175,22 +177,22 @@
       });
     }
 
-    function calculatePosition({currentPosition: { scrollX, scrollY, maxX, maxY }, deltaX, deltaY}) {
-      let newX = scrollX + deltaX;
-      let newY = scrollY + deltaY;
+    // function calculatePosition({currentPosition: { scrollX, scrollY, maxX, maxY }, deltaX, deltaY}) {
+    //   let newX = scrollX + deltaX;
+    //   let newY = scrollY + deltaY;
 
-      if (newX < 0) {
-        newX = 0;
-      } else if (newX > maxX) {
-        newX = maxX;
-      }
-      if (newY < 0) {
-        newY = 0;
-      } else if (newY > maxY) {
-        newY = maxY;
-      }
-      return {newX, newY};
-    }
+    //   if (newX < 0) {
+    //     newX = 0;
+    //   } else if (newX > maxX) {
+    //     newX = maxX;
+    //   }
+    //   if (newY < 0) {
+    //     newY = 0;
+    //   } else if (newY > maxY) {
+    //     newY = maxY;
+    //   }
+    //   return {newX, newY};
+    // }
 
     return this;
   };
