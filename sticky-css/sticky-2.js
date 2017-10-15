@@ -15,9 +15,12 @@
       let wheelEventTriggered = false;
 
       // Set initial scrolled value.
+      // Use .setAttribute rather that .data() or .dataset for massive speed boost.
+      // https://jsperf.com/dataset-vs-jquery-data
       wrapper.setAttribute('data-scroll-left', 0);
       wrapper.setAttribute('data-scroll-top', 0);      
 
+      // Set initial position of elements to 0.
       positionStickyElements(stickyElems);
 
       stickyElems.forEach((cell) => {
@@ -60,9 +63,6 @@
       // Wrap existing table inside wrapper.
       $table.wrap($wrapper);
 
-      // Determine just how much the wrapper can be scrolled.
-      // setMaxScrollValues($table)
-      
       return $table.parent();
     }
 
@@ -94,44 +94,13 @@
       }
       wrapper.setAttribute('data-scroll-left', newX);
       wrapper.setAttribute('data-scroll-top', newY);
-      // $wrapper.scrollLeft(newX).scrollTop(newY);
       wrapper.scrollLeft = newX;
       wrapper.scrollTop = newY;
       positionStickyElements(stickyElems, newX, newY);
     }
 
-    // function setMaxScrollValues($table) {
-    //   const table = $table[0];
-    //   const tableBox = table.getBoundingClientRect();
-    //   const wrapper = table.parentElement;
-    //   $(wrapper).data({
-    //     maxX: tableBox.width - wrapper.clientWidth,
-    //     maxY: tableBox.height - wrapper.clientHeight,
-    //     // maxX: tableBox.clientWidth - wrapper.clientWidth,
-    //     // maxY: wrapper.clientHeight
-    //   });
-    // }
-
-    // function wheelHandler($table, $wrapper, $stickyElems, event) {
-    //   const {deltaX, deltaY} = event.originalEvent;
-    //   if ($table.height() > $wrapper.height() || $table.width() > $wrapper.width()) {
-    //     if (
-    //       ($wrapper.scrollTop() > 0 && $table.height() > ($wrapper.scrollTop() + $wrapper.height())) || ($wrapper.scrollTop() === 0 && deltaY > 0)
-    //       ||
-    //       ($wrapper.scrollLeft() > 0 && $table.width() > ($wrapper.scrollLeft() + $wrapper.width())) || ($wrapper.scrollLeft() === 0 && deltaX > 0)
-    //     ) {
-    //       event.preventDefault();
-    //       const {newX, newY} = calculatePosition({currentPosition: $wrapper.data(), deltaX, deltaY});
-    //       $wrapper.scrollLeft(newX);
-    //       $wrapper.scrollTop(newY);
-    //       updateScrollPosition($wrapper, $stickyElems, newX, newY);
-    //     }
-    //   }
-    // }
-
     function scrollHandler(wrapper, stickyElems) {
       requestAnimationFrame(() => {
-        console.log('scroll fired');
         updateScrollPosition(wrapper, stickyElems);
       });
     }
@@ -173,26 +142,8 @@
         if (cell.tagName === 'TH') zIndex = zIndex + 5;
         cell.style.transform = transforms.join(' ');
         cell.style.zIndex = zIndex;
-        // cell.style.transform = `translateX(${offsetX}px) translateY(${offsetY}px)`;        
       });
     }
-
-    // function calculatePosition({currentPosition: { scrollX, scrollY, maxX, maxY }, deltaX, deltaY}) {
-    //   let newX = scrollX + deltaX;
-    //   let newY = scrollY + deltaY;
-
-    //   if (newX < 0) {
-    //     newX = 0;
-    //   } else if (newX > maxX) {
-    //     newX = maxX;
-    //   }
-    //   if (newY < 0) {
-    //     newY = 0;
-    //   } else if (newY > maxY) {
-    //     newY = maxY;
-    //   }
-    //   return {newX, newY};
-    // }
 
     return this;
   };
