@@ -8,7 +8,7 @@
       const tableStyles = window.getComputedStyle(table);
       const $wrapper = wrapTable($table, tableStyles);
       const wrapper = $wrapper[0];
-      const $stickyElems = $table.find('th.sticky, td.sticky');
+      const stickyElems = table.querySelectorAll('th.sticky, td.sticky');
 
       // Variable that tracks whether "wheel" event was called.
       // Prevents both "wheel" and "scroll" events being triggered simultaneously.
@@ -18,9 +18,9 @@
       wrapper.dataset.scrollX = 0;
       wrapper.dataset.scrollY = 0;      
 
-      positionStickyElements($stickyElems);
+      positionStickyElements(stickyElems);
 
-      $stickyElems.each((i, cell) => {
+      stickyElems.forEach((cell) => {
         cellStyles = window.getComputedStyle(cell);
         ['Top', 'Right', 'Bottom', 'Left'].forEach((side) => {
           ['Width'].forEach((property) => {
@@ -32,14 +32,14 @@
       $wrapper.off('wheel.stickyTable mousewheel.stickyTable', wheelHandler).on('wheel.stickyTable mousewheel.stickyTable', function (event) {
         wheelEventTriggered = true;
         event.preventDefault();
-        wheelHandler(event, wrapper, $wrapper, $stickyElems);
+        wheelHandler(event, wrapper, $wrapper, stickyElems);
     });
 
       $wrapper.off('scroll.stickyTable', scrollHandler).on('scroll.stickyTable', () => {
         if (wheelEventTriggered) {
           wheelEventTriggered = false;
         } else {
-          scrollHandler($wrapper, $stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
+          scrollHandler($wrapper, stickyElems, $wrapper.scrollLeft(), $wrapper.scrollTop());
         }
       })
 
@@ -66,7 +66,7 @@
       return $table.parent();
     }
 
-    function wheelHandler(event, wrapper, $wrapper, $stickyElems) {
+    function wheelHandler(event, wrapper, $wrapper, stickyElems) {
       const { deltaX, deltaY } = event.originalEvent;
       const { scrollWidth, scrollHeight, clientWidth, clientHeight } = wrapper;
       let maxWidth = scrollWidth - clientWidth;
@@ -97,7 +97,7 @@
       // $wrapper.scrollLeft(newX).scrollTop(newY);
       wrapper.scrollLeft = newX;
       wrapper.scrollTop = newY;
-      positionStickyElements($stickyElems, newX, newY);
+      positionStickyElements(stickyElems, newX, newY);
     }
 
     // function setMaxScrollValues($table) {
@@ -129,15 +129,15 @@
     //   }
     // }
 
-    function scrollHandler($stickyElems, offsetX, offsetY) {
+    function scrollHandler(stickyElems, offsetX, offsetY) {
       requestAnimationFrame(() => {
         console.log('scroll fired');
-        updateScrollPosition($stickyElems, offsetX, offsetY);
+        updateScrollPosition(stickyElems, offsetX, offsetY);
       });
     }
 
-    function updateScrollPosition($stickyElems, offsetX, offsetY) {
-      positionStickyElements($stickyElems, offsetX, offsetY);
+    function updateScrollPosition(stickyElems, offsetX, offsetY) {
+      positionStickyElements(stickyElems, offsetX, offsetY);
     }
 
     function calculateShadow(offset) {
@@ -149,8 +149,8 @@
       return shadow;
     }
 
-    function positionStickyElements($elems, offsetX = 0, offsetY = 0) {
-      $elems.each((i, cell) => {
+    function positionStickyElements(elems, offsetX = 0, offsetY = 0) {
+      elems.forEach((cell) => {
         if (cell.classList.contains('sticky-scroll-x') && cell.classList.contains('sticky-scroll-y')) {
           return;
         }
