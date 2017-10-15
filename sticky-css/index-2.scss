@@ -99,7 +99,7 @@ table.sticky {
   thead, tbody {
     .sticky {
       position: relative;
-      transition: box-shadow 0.2s;
+      transition: box-shadow 0.1s;
       // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
       // (as, from the rendering engine perspective, it is no longer a part of the table).
       // We need to add these borders back via some css generated elements.
@@ -111,6 +111,7 @@ table.sticky {
         right: calc(-1 * var(--border-right-width));
         bottom: calc(-1 * var(--border-bottom-width));
         left: calc(-1 * var(--border-left-width));
+        z-index: inherit;
       }
     }
   }

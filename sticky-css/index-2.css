@@ -45,10 +45,10 @@ table.sticky {
     border-top-width: 0; }
   .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
     position: relative;
-    -webkit-transition: -webkit-box-shadow 0.2s;
-    transition: -webkit-box-shadow 0.2s;
-    transition: box-shadow 0.2s;
-    transition: box-shadow 0.2s, -webkit-box-shadow 0.2s; }
+    -webkit-transition: -webkit-box-shadow 0.1s;
+    transition: -webkit-box-shadow 0.1s;
+    transition: box-shadow 0.1s;
+    transition: box-shadow 0.1s, -webkit-box-shadow 0.1s; }
     .sticky-table-wrapper thead .sticky:before, .sticky-table-wrapper tbody .sticky:before {
       content: "";
       position: absolute;
@@ -56,7 +56,8 @@ table.sticky {
       top: calc(-1 * var(--border-top-width));
       right: calc(-1 * var(--border-right-width));
       bottom: calc(-1 * var(--border-bottom-width));
-      left: calc(-1 * var(--border-left-width)); }
+      left: calc(-1 * var(--border-left-width));
+      z-index: inherit; }
 
 @-moz-document url-prefix() {
   table.sticky thead .sticky:before, table.sticky tbody .sticky:before {

@@ -135,27 +135,38 @@
       positionStickyElements($stickyElems, offsetX, offsetY);
     }
 
+    function calculateShadow(offset) {
+      let shadow = offset/10;
+      let max = 6;
+      let min = 3;
+      if (shadow > max) return max;
+      if (shadow < min) return min;
+      return shadow;
+    }
+
     function positionStickyElements($elems, offsetX = 0, offsetY = 0) {
-      // $elems.css({
-      //   transform: `translate(${offsetX}px, ${offsetY}px)`
-      // });
       $elems.each((i, cell) => {
-        cell.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        let shadowX = parseInt(offsetX/10, 10);
-        let shadowY = parseInt(offsetY/10, 10);
-        if (shadowX > 6) {
-          shadowX = 6;
-        }
-        if (shadowX === 0) {
-          shadowX = 3;
-        }
-        if (shadowY > 6) {
-          shadowY = 6;
-        }
-        if (shadowY === 0) {
-          shadowY = 3;
-        }
+        let shadowX = calculateShadow(offsetX);
+        let shadowY = calculateShadow(offsetY);
+        let transforms = [];
+        let zIndex = 0;
         cell.style.setProperty(`--box-shadow`, `${shadowX}px ${shadowY}px ${shadowX}px rgba(0,0,0,0.15), ${shadowX}px ${shadowY}px ${shadowY}px  rgba(0,0,0,0.15)`);
+        if (cell.classList.contains('sticky-scroll-x') && cell.classList.contains('sticky-scroll-y')) {
+          return;
+        }
+        if (!cell.classList.contains('sticky-scroll-x')) {
+          transforms.push(`translateX(${offsetX}px)`);
+          zIndex++;
+        }
+        if (!cell.classList.contains('sticky-scroll-y')) {
+          transforms.push(`translateY(${offsetY}px)`);
+          zIndex++;
+        }
+        if (cell.parentNode.parentNode.tagName === 'THEAD') zIndex = zIndex + 10;
+        if (cell.tagName === 'TH') zIndex = zIndex + 5;
+        cell.style.transform = transforms.join(' ');
+        cell.style.zIndex = zIndex;
+        // cell.style.transform = `translateX(${offsetX}px) translateY(${offsetY}px)`;        
       });
     }
 
