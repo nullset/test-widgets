@@ -25,8 +25,8 @@ table.sticky {
 .sticky-table-wrapper {
   overflow: auto; }
   .sticky-table-wrapper.--is-scrolling th.sticky, .sticky-table-wrapper.--is-scrolling td.sticky {
-    -webkit-box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3), 2px 4px 4px rgba(0, 0, 0, 0.3);
-            box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3), 2px 4px 4px rgba(0, 0, 0, 0.3); }
+    -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow); }
   .sticky-table-wrapper table.sticky {
     border-spacing: 0px !important;
     -webkit-box-sizing: border-box !important;
@@ -45,10 +45,10 @@ table.sticky {
     border-top-width: 0; }
   .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
     position: relative;
-    -webkit-transition: -webkit-box-shadow 0.3s;
-    transition: -webkit-box-shadow 0.3s;
-    transition: box-shadow 0.3s;
-    transition: box-shadow 0.3s, -webkit-box-shadow 0.3s; }
+    -webkit-transition: -webkit-box-shadow 0.2s;
+    transition: -webkit-box-shadow 0.2s;
+    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s, -webkit-box-shadow 0.2s; }
     .sticky-table-wrapper thead .sticky:before, .sticky-table-wrapper tbody .sticky:before {
       content: "";
       position: absolute;

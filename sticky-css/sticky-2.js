@@ -47,7 +47,7 @@
         if (newY <= 0) {
           newY = 0;
         }
-        if (newX > 0) {
+        if (newX > 0 || newY > 0) {
           $wrapper.addClass('--is-scrolling');
         } else {
           $wrapper.removeClass('--is-scrolling');
@@ -136,8 +136,26 @@
     }
 
     function positionStickyElements($elems, offsetX = 0, offsetY = 0) {
-      $elems.css({
-        transform: `translate(${offsetX}px, ${offsetY}px)`
+      // $elems.css({
+      //   transform: `translate(${offsetX}px, ${offsetY}px)`
+      // });
+      $elems.each((i, cell) => {
+        cell.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        let shadowX = parseInt(offsetX/10, 10);
+        let shadowY = parseInt(offsetY/10, 10);
+        if (shadowX > 6) {
+          shadowX = 6;
+        }
+        if (shadowX === 0) {
+          shadowX = 3;
+        }
+        if (shadowY > 6) {
+          shadowY = 6;
+        }
+        if (shadowY === 0) {
+          shadowY = 3;
+        }
+        cell.style.setProperty(`--box-shadow`, `${shadowX}px ${shadowY}px ${shadowX}px rgba(0,0,0,0.15), ${shadowX}px ${shadowY}px ${shadowY}px  rgba(0,0,0,0.15)`);
       });
     }
 
