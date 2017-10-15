@@ -146,14 +146,14 @@
 
     function positionStickyElements($elems, offsetX = 0, offsetY = 0) {
       $elems.each((i, cell) => {
+        if (cell.classList.contains('sticky-scroll-x') && cell.classList.contains('sticky-scroll-y')) {
+          return;
+        }
         let shadowX = calculateShadow(offsetX);
         let shadowY = calculateShadow(offsetY);
         let transforms = [];
         let zIndex = 0;
         cell.style.setProperty(`--box-shadow`, `${shadowX}px ${shadowY}px ${shadowX}px rgba(0,0,0,0.15), ${shadowX}px ${shadowY}px ${shadowY}px  rgba(0,0,0,0.15)`);
-        if (cell.classList.contains('sticky-scroll-x') && cell.classList.contains('sticky-scroll-y')) {
-          return;
-        }
         if (!cell.classList.contains('sticky-scroll-x')) {
           transforms.push(`translateX(${offsetX}px)`);
           zIndex++;
