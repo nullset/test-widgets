@@ -1,0 +1,3 @@
+## Known issues:
+
+1. Styling should be added directly to <th> and <td> elements. Assigning (for example) borders and backgrounds to <tr> elements likely will not cause the effect you are hoping to get.

@@ -23,7 +23,7 @@ table {
         }
       }
     }
-    td {
+    th, td {
       padding: 50px;
       border: 1px solid blue;
     }
@@ -116,30 +116,3 @@ table.sticky {
     }
   }
 }
-
-@-moz-document url-prefix() { 
-  table.sticky {
-    thead, tbody {
-      .sticky {
-        &:before {
-          top: -1px;
-          right: 0;
-          bottom: -1px;
-          left: -2px;
-        }
-      }
-    }
-  }
-}
-
-
-#blah-wrapper {
-  height: 400px;
-  overflow: auto;
-}
-
-// @-moz-document url-prefix() { 
-//   body {
-//      background:lime;
-//   }
-// }

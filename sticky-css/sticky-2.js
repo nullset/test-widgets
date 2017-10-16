@@ -132,11 +132,11 @@
         cell.style.setProperty(`--box-shadow`, `${shadowX}px ${shadowY}px ${shadowX}px rgba(0,0,0,0.15), ${shadowX}px ${shadowY}px ${shadowY}px  rgba(0,0,0,0.15)`);
         if (!cell.classList.contains('sticky-scroll-x')) {
           transforms.push(`translateX(${offsetX}px)`);
-          zIndex++;
+          zIndex = zIndex + 1;
         }
         if (!cell.classList.contains('sticky-scroll-y')) {
           transforms.push(`translateY(${offsetY}px)`);
-          zIndex++;
+          zIndex = zIndex + 2;
         }
         if (cell.parentNode.parentNode.tagName === 'THEAD') zIndex = zIndex + 10;
         if (cell.tagName === 'TH') zIndex = zIndex + 5;

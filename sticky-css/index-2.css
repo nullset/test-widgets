@@ -11,7 +11,7 @@ table {
     background: peachpuff; }
   table tbody tr:nth-child(2n) th, table tbody tr:nth-child(2n) td {
     background: lightcyan; }
-  table tbody td {
+  table tbody th, table tbody td {
     padding: 50px;
     border: 1px solid blue; }
   table th:last-child, table td:last-child {
@@ -58,14 +58,3 @@ table.sticky {
       bottom: calc(-1 * var(--border-bottom-width));
       left: calc(-1 * var(--border-left-width));
       z-index: inherit; }
-
-@-moz-document url-prefix() {
-  table.sticky thead .sticky:before, table.sticky tbody .sticky:before {
-    top: -1px;
-    right: 0;
-    bottom: -1px;
-    left: -2px; } }
-
-#blah-wrapper {
-  height: 400px;
-  overflow: auto; }

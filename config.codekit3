@@ -1659,6 +1659,32 @@
 		"sC": 1,
 		"tS": 1
 		},
+	"\/sticky-css\/README": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/sticky-css\/README",
+		"oF": 0
+		},
+	"\/sticky-css\/sticky-2-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/sticky-2-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/sticky-css\/sticky-2.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/sticky-2-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
 	"\/sticky-css\/sticky.js": {
 		"ft": 64,
 		"ma": 0,
