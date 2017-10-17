@@ -1551,94 +1551,6 @@
 		"oS": 1,
 		"uL": 1
 		},
-	"\/sticky-css\/index-2-min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sticky-css\/index-2-min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 1
-		},
-	"\/sticky-css\/index-2.css": {
-		"aP": 0,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 2,
-		"oAP": "\/sticky-css\/index-2-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"\/sticky-css\/index-2.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/sticky-css\/index-2.html",
-		"oF": 0
-		},
-	"\/sticky-css\/index-2.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sticky-css\/index-2-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 1
-		},
-	"\/sticky-css\/index-2.scss": {
-		"aP": 1,
-		"bl": 0,
-		"dP": 10,
-		"dS": 0,
-		"ft": 4,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/sticky-css\/index-2.css",
-		"oF": 0,
-		"oS": 0,
-		"uL": 1
-		},
-	"\/sticky-css\/index.css": {
-		"aP": 0,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 2,
-		"oAP": "\/sticky-css\/index-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"\/sticky-css\/index.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/sticky-css\/index.html",
-		"oF": 0
-		},
-	"\/sticky-css\/index.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sticky-css\/min\/index-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 1
-		},
-	"\/sticky-css\/index.scss": {
-		"aP": 1,
-		"bl": 0,
-		"dP": 10,
-		"dS": 0,
-		"ft": 4,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/sticky-css\/index.css",
-		"oF": 0,
-		"oS": 0,
-		"uL": 1
-		},
 	"\/sticky-css\/min\/index-min.js": {
 		"ft": 64,
 		"ma": 0,
@@ -1665,32 +1577,120 @@
 		"oAP": "\/sticky-css\/README",
 		"oF": 0
 		},
-	"\/sticky-css\/sticky-2-min.js": {
+	"\/sticky-css\/v1\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/sticky-css\/v1\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/sticky-css\/v1\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/sticky-css\/v1\/index.html",
+		"oF": 0
+		},
+	"\/sticky-css\/v1\/index.js": {
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "\/sticky-css\/sticky-2-min-min.js",
+		"oAP": "\/sticky-css\/v1\/index-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 1
 		},
-	"\/sticky-css\/sticky-2.js": {
+	"\/sticky-css\/v1\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/sticky-css\/v1\/index.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/sticky-css\/v1\/sticky.js": {
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "\/sticky-css\/sticky-2-min.js",
+		"oAP": "\/sticky-css\/v1\/sticky-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 1
 		},
-	"\/sticky-css\/sticky.js": {
+	"\/sticky-css\/v2\/index-2-min.js": {
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "\/sticky-css\/min\/sticky-min.js",
+		"oAP": "\/sticky-css\/v2\/index-2-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/sticky-css\/v2\/index-2.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/sticky-css\/v2\/index-2-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/sticky-css\/v2\/index-2.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/sticky-css\/v2\/index-2.html",
+		"oF": 0
+		},
+	"\/sticky-css\/v2\/index-2.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/v2\/index-2-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/sticky-css\/v2\/index-2.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/sticky-css\/v2\/index-2.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/sticky-css\/v2\/sticky-2-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/v2\/sticky-2-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/sticky-css\/v2\/sticky-2.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/v2\/sticky-2-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 1

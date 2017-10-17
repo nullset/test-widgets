@@ -3,30 +3,35 @@ table {
   max-height: 400px;
   max-width: 100%; }
   table thead th {
-    background: limegreen;
+    background: #6698f5;
     padding-top: 10px;
     padding-bottom: 10px;
-    border: 1px solid; }
+    border: 1px solid #4f74b9; }
   table tbody tr:nth-child(2n+1) th, table tbody tr:nth-child(2n+1) td {
-    background: peachpuff; }
+    background: #fff; }
   table tbody tr:nth-child(2n) th, table tbody tr:nth-child(2n) td {
-    background: lightcyan; }
+    background: #efefef; }
   table tbody th, table tbody td {
     padding: 50px;
-    border: 1px solid blue; }
+    border: 1px solid lightgray; }
   table th:last-child, table td:last-child {
-    background: plum !important;
-    border-left-width: 3px; }
+    background: #acacfd !important;
+    border-left-width: 3px;
+    border-color: #7a7ab4; }
 
 table.sticky {
   visibility: hidden;
-  display: block; }
+  display: block;
+  overflow: hidden; }
 
 .sticky-table-wrapper {
   overflow: auto; }
   .sticky-table-wrapper.sticky--is-scrolling th[class*="sticky--is-stuck"], .sticky-table-wrapper.sticky--is-scrolling td[class*="sticky--is-stuck"] {
-    -webkit-box-shadow: var(--box-shadow);
-            box-shadow: var(--box-shadow); }
+    -webkit-box-shadow: inherit;
+            box-shadow: inherit; }
+  .sticky-table-wrapper:not(.sticky--is-scrolling) th[class*="sticky--is-stuck"], .sticky-table-wrapper:not(.sticky--is-scrolling) td[class*="sticky--is-stuck"] {
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important; }
   .sticky-table-wrapper table.sticky {
     border-spacing: 0px !important;
     -webkit-box-sizing: border-box !important;
@@ -56,7 +61,6 @@ table.sticky {
       top: calc(-1 * var(--border-top-width));
       right: calc(-1 * var(--border-right-width));
       bottom: calc(-1 * var(--border-bottom-width));
-      left: calc(-1 * var(--border-left-width));
-      z-index: inherit; }
+      left: calc(-1 * var(--border-left-width)); }
   .sticky-table-wrapper thead *.sticky--is-stuck, .sticky-table-wrapper tbody *.sticky--is-stuck {
     z-index: 100; }

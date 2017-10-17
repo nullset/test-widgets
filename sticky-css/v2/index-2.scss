@@ -4,34 +4,35 @@ table {
   max-width: 100%;
   thead {
     th {
-      background: limegreen;
+      background: rgb(102, 152, 245);
       padding-top: 10px;
       padding-bottom: 10px;
-      border: 1px solid;
+      border: 1px solid rgb(79, 116, 185);
     }
   }
   tbody {
     tr {
       &:nth-child(2n+1) {
         th, td {
-          background: peachpuff;          
+          background: #fff;          
         }
       }
       &:nth-child(2n) {
         th, td {
-          background: lightcyan;            
+          background: #efefef;            
         }
       }
     }
     th, td {
       padding: 50px;
-      border: 1px solid blue;
+      border: 1px solid lightgray;
     }
   }
   th, td {
     &:last-child {
-      background: plum !important;
+      background: rgb(172, 172, 253) !important;
       border-left-width: 3px;
+      border-color: rgb(122, 122, 180);
     }
     &:nth-child(2) {
       // border-left: 3px solid red;
@@ -45,6 +46,7 @@ table.sticky {
   // Prevent FOUC when page is first loaded.
   visibility: hidden;
   display: block;
+  overflow: hidden;
 }
 .sticky-table-wrapper {
   overflow: auto;
@@ -52,7 +54,14 @@ table.sticky {
     th, td {
       &[class*="sticky--is-stuck"] {
         // box-shadow: 4px 2px 4px rgba(0,0,0,0.3), 2px 4px 4px rgba(0,0,0,0.3);
-        box-shadow: var(--box-shadow);
+        box-shadow: inherit;
+      }
+    }
+  }
+  &:not(.sticky--is-scrolling) {
+    th, td {
+      &[class*="sticky--is-stuck"] {
+        box-shadow: none !important;
       }
     }
   }
@@ -112,7 +121,6 @@ table.sticky {
         right: calc(-1 * var(--border-right-width));
         bottom: calc(-1 * var(--border-bottom-width));
         left: calc(-1 * var(--border-left-width));
-        z-index: inherit;
       }
     }
     *.sticky--is-stuck {
