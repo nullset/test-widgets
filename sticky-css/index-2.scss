@@ -48,9 +48,9 @@ table.sticky {
 }
 .sticky-table-wrapper {
   overflow: auto;
-  &.--is-scrolling {
+  &.sticky--is-scrolling {
     th, td {
-      &.sticky {
+      &[class*="sticky--is-stuck"] {
         // box-shadow: 4px 2px 4px rgba(0,0,0,0.3), 2px 4px 4px rgba(0,0,0,0.3);
         box-shadow: var(--box-shadow);
       }
@@ -97,9 +97,10 @@ table.sticky {
   }
 
   thead, tbody {
-    .sticky {
+    *[class*="sticky--is-stuck"] {
       position: relative;
       transition: box-shadow 0.1s;
+
       // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
       // (as, from the rendering engine perspective, it is no longer a part of the table).
       // We need to add these borders back via some css generated elements.
@@ -113,6 +114,9 @@ table.sticky {
         left: calc(-1 * var(--border-left-width));
         z-index: inherit;
       }
+    }
+    *.sticky--is-stuck {
+      z-index: 100;
     }
   }
 }

@@ -8,7 +8,7 @@
       const tableStyles = window.getComputedStyle(table);
       const $wrapper = wrapTable($table, tableStyles);
       const wrapper = $wrapper[0];
-      const stickyElems = table.querySelectorAll('th.sticky, td.sticky');
+      const stickyElems = table.querySelectorAll('th[class*="sticky--is-stuck"], td[class*="sticky--is-stuck"]');
 
       // Variable that tracks whether "wheel" event was called.
       // Prevents both "wheel" and "scroll" events being triggered simultaneously.
@@ -88,9 +88,9 @@
         newY = 0;
       }
       if (newX > 0 || newY > 0) {
-        wrapper.classList.add('--is-scrolling');
+        wrapper.classList.add('sticky--is-scrolling');
       } else {
-        wrapper.classList.remove('--is-scrolling');
+        wrapper.classList.remove('sticky--is-scrolling');
       }
       wrapper.setAttribute('data-scroll-left', newX);
       wrapper.setAttribute('data-scroll-top', newY);
@@ -122,26 +122,17 @@
 
     function positionStickyElements(elems, offsetX = 0, offsetY = 0) {
       elems.forEach((cell) => {
-        if (cell.classList.contains('sticky-scroll-x') && cell.classList.contains('sticky-scroll-y')) {
-          return;
-        }
         let shadowX = calculateShadow(offsetX);
         let shadowY = calculateShadow(offsetY);
         let transforms = [];
-        let zIndex = 0;
         cell.style.setProperty(`--box-shadow`, `${shadowX}px ${shadowY}px ${shadowX}px rgba(0,0,0,0.15), ${shadowX}px ${shadowY}px ${shadowY}px  rgba(0,0,0,0.15)`);
-        if (!cell.classList.contains('sticky-scroll-x')) {
+        if (!cell.classList.contains('sticky--is-stuck-y') || cell.classList.contains('sticky--is-stuck')) {
           transforms.push(`translateX(${offsetX}px)`);
-          zIndex = zIndex + 1;
         }
-        if (!cell.classList.contains('sticky-scroll-y')) {
+        if (!cell.classList.contains('sticky--is-stuck-x') || cell.classList.contains('sticky--is-stuck')) {
           transforms.push(`translateY(${offsetY}px)`);
-          zIndex = zIndex + 2;
         }
-        if (cell.parentNode.parentNode.tagName === 'THEAD') zIndex = zIndex + 10;
-        if (cell.tagName === 'TH') zIndex = zIndex + 5;
         cell.style.transform = transforms.join(' ');
-        cell.style.zIndex = zIndex;
       });
     }
 

@@ -24,7 +24,7 @@ table.sticky {
 
 .sticky-table-wrapper {
   overflow: auto; }
-  .sticky-table-wrapper.--is-scrolling th.sticky, .sticky-table-wrapper.--is-scrolling td.sticky {
+  .sticky-table-wrapper.sticky--is-scrolling th[class*="sticky--is-stuck"], .sticky-table-wrapper.sticky--is-scrolling td[class*="sticky--is-stuck"] {
     -webkit-box-shadow: var(--box-shadow);
             box-shadow: var(--box-shadow); }
   .sticky-table-wrapper table.sticky {
@@ -43,13 +43,13 @@ table.sticky {
     border-top-width: 0; }
   .sticky-table-wrapper tbody:first-child tr:not(:first-child) th, .sticky-table-wrapper tbody:first-child tr:not(:first-child) td {
     border-top-width: 0; }
-  .sticky-table-wrapper thead .sticky, .sticky-table-wrapper tbody .sticky {
+  .sticky-table-wrapper thead *[class*="sticky--is-stuck"], .sticky-table-wrapper tbody *[class*="sticky--is-stuck"] {
     position: relative;
     -webkit-transition: -webkit-box-shadow 0.1s;
     transition: -webkit-box-shadow 0.1s;
     transition: box-shadow 0.1s;
     transition: box-shadow 0.1s, -webkit-box-shadow 0.1s; }
-    .sticky-table-wrapper thead .sticky:before, .sticky-table-wrapper tbody .sticky:before {
+    .sticky-table-wrapper thead *[class*="sticky--is-stuck"]:before, .sticky-table-wrapper tbody *[class*="sticky--is-stuck"]:before {
       content: "";
       position: absolute;
       border: inherit;
@@ -58,3 +58,5 @@ table.sticky {
       bottom: calc(-1 * var(--border-bottom-width));
       left: calc(-1 * var(--border-left-width));
       z-index: inherit; }
+  .sticky-table-wrapper thead *.sticky--is-stuck, .sticky-table-wrapper tbody *.sticky--is-stuck {
+    z-index: 100; }
