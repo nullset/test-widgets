@@ -114,7 +114,7 @@
     function calculateShadow(offset) {
       let shadow = offset/10;
       let max = 6;
-      let min = 3;
+      let min = 2;
       if (shadow > max) return max;
       if (shadow < min) return min;
       return shadow;
