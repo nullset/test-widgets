@@ -4,25 +4,21 @@ table {
   max-width: 100%; }
   table thead th {
     background: #6698f5;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 30px;
     border: 1px solid #4f74b9; }
   table tbody tr:nth-child(2n+1) th, table tbody tr:nth-child(2n+1) td {
     background: #fff; }
   table tbody tr:nth-child(2n) th, table tbody tr:nth-child(2n) td {
     background: #efefef; }
   table tbody th, table tbody td {
-    padding: 50px;
+    padding: 50px 30px;
     border: 1px solid lightgray; }
-  table th:last-child, table td:last-child {
-    background: #acacfd !important;
-    border-left-width: 3px;
-    border-color: #7a7ab4; }
+  table .sticky--is-stuck-x {
+    background: #e5eeff !important; }
 
 table.sticky {
   visibility: hidden;
-  display: block;
-  overflow: hidden; }
+  display: block; }
 
 .sticky-table-wrapper {
   overflow: auto; }

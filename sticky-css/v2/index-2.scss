@@ -5,8 +5,7 @@ table {
   thead {
     th {
       background: rgb(102, 152, 245);
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding: 30px;
       border: 1px solid rgb(79, 116, 185);
     }
   }
@@ -24,19 +23,22 @@ table {
       }
     }
     th, td {
-      padding: 50px;
+      padding: 50px 30px;
       border: 1px solid lightgray;
     }
   }
   th, td {
     &:last-child {
-      background: rgb(172, 172, 253) !important;
-      border-left-width: 3px;
-      border-color: rgb(122, 122, 180);
+      // background: rgb(172, 172, 253) !important;
+      // border-left-width: 3px;
+      // border-color: rgb(122, 122, 180);
     }
     &:nth-child(2) {
       // border-left: 3px solid red;
     }
+  }
+  .sticky--is-stuck-x {
+    background: rgb(229, 238, 255) !important;
   }
 }
 
@@ -46,7 +48,7 @@ table.sticky {
   // Prevent FOUC when page is first loaded.
   visibility: hidden;
   display: block;
-  overflow: hidden;
+  // overflow-x: hidden;
 }
 .sticky-table-wrapper {
   overflow: auto;
