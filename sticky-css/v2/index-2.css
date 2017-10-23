@@ -18,9 +18,12 @@ table {
 
 table.sticky {
   visibility: hidden;
-  display: block; }
+  display: block;
+  overflow-x: auto; }
 
 .sticky-table-wrapper {
+  display: inline-block;
+  padding-right: 8px;
   overflow: auto; }
   .sticky-table-wrapper.sticky--is-scrolling th[class*="sticky--is-stuck"], .sticky-table-wrapper.sticky--is-scrolling td[class*="sticky--is-stuck"] {
     -webkit-box-shadow: inherit;
@@ -60,3 +63,23 @@ table.sticky {
       left: calc(-1 * var(--border-left-width)); }
   .sticky-table-wrapper thead *.sticky--is-stuck, .sticky-table-wrapper tbody *.sticky--is-stuck {
     z-index: 100; }
+
+@-moz-document url-prefix() {
+  .sticky-table-wrapper table.sticky thead *[class*="sticky--is-stuck"]:before {
+    border-top-color: red;
+    border-right-color: green;
+    border-bottom-color: yellowgreen;
+    border-left-color: pink;
+    top: calc(-1 * (var(--border-top-width) + 2px));
+    bottom: calc(-1 * var(--border-bottom-width));
+    right: 0;
+    left: calc(-1 * (var(--border-left-width) + 2px)); }
+  .sticky-table-wrapper table.sticky tbody *[class*="sticky--is-stuck"]:before {
+    border-top-color: red;
+    border-right-color: green;
+    border-bottom-color: yellowgreen;
+    border-left-color: pink;
+    top: calc(-1 * var(--border-top-width));
+    bottom: calc(-1 * var(--border-bottom-width));
+    right: 0;
+    left: calc(-1 * (var(--border-left-width) + 2px)); } }

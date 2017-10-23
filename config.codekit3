@@ -1685,6 +1685,16 @@
 		"sC": 1,
 		"tS": 1
 		},
+	"\/sticky-css\/v2\/sticky-2.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/sticky-css\/v2\/sticky-2-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
 	"\/svg-flex\/index.css": {
 		"aP": 0,
 		"bl": 0,

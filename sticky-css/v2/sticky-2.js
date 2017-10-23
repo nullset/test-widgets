@@ -6,6 +6,7 @@
       const $table = this;
       const table = $table[0];
       const tableStyles = window.getComputedStyle(table);
+      window.tableStyles = tableStyles;
       const $wrapper = wrapTable($table, tableStyles);
       const wrapper = $wrapper[0];
       const stickyElems = table.querySelectorAll('th[class*="sticky--is-stuck"], td[class*="sticky--is-stuck"]');
