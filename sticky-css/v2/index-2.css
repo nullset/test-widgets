@@ -24,7 +24,9 @@ table.sticky {
 .sticky-table-wrapper {
   display: inline-block;
   padding-right: 8px;
-  overflow: auto; }
+  overflow: auto;
+  width: 500px;
+  border: 1px solid red; }
   .sticky-table-wrapper.sticky--is-scrolling th[class*="sticky--is-stuck"], .sticky-table-wrapper.sticky--is-scrolling td[class*="sticky--is-stuck"] {
     -webkit-box-shadow: inherit;
             box-shadow: inherit; }
@@ -52,34 +54,22 @@ table.sticky {
     -webkit-transition: -webkit-box-shadow 0.1s;
     transition: -webkit-box-shadow 0.1s;
     transition: box-shadow 0.1s;
-    transition: box-shadow 0.1s, -webkit-box-shadow 0.1s; }
+    transition: box-shadow 0.1s, -webkit-box-shadow 0.1s;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    margin-right: -1px;
+    margin-left: -1px; }
     .sticky-table-wrapper thead *[class*="sticky--is-stuck"]:before, .sticky-table-wrapper tbody *[class*="sticky--is-stuck"]:before {
       content: "";
       position: absolute;
       border: inherit;
-      top: calc(-1 * var(--border-top-width));
-      right: calc(-1 * var(--border-right-width));
-      bottom: calc(-1 * var(--border-bottom-width));
-      left: calc(-1 * var(--border-left-width)); }
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin-top: inherit;
+      margin-right: inherit;
+      margin-bottom: inherit;
+      margin-left: inherit; }
   .sticky-table-wrapper thead *.sticky--is-stuck, .sticky-table-wrapper tbody *.sticky--is-stuck {
     z-index: 100; }
-
-@-moz-document url-prefix() {
-  .sticky-table-wrapper table.sticky thead *[class*="sticky--is-stuck"]:before {
-    border-top-color: red;
-    border-right-color: green;
-    border-bottom-color: yellowgreen;
-    border-left-color: pink;
-    top: calc(-1 * (var(--border-top-width) + 2px));
-    bottom: calc(-1 * var(--border-bottom-width));
-    right: 0;
-    left: calc(-1 * (var(--border-left-width) + 2px)); }
-  .sticky-table-wrapper table.sticky tbody *[class*="sticky--is-stuck"]:before {
-    border-top-color: red;
-    border-right-color: green;
-    border-bottom-color: yellowgreen;
-    border-left-color: pink;
-    top: calc(-1 * var(--border-top-width));
-    bottom: calc(-1 * var(--border-bottom-width));
-    right: 0;
-    left: calc(-1 * (var(--border-left-width) + 2px)); } }

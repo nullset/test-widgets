@@ -56,6 +56,8 @@ table.sticky {
   display: inline-block;
   padding-right: 8px;
   overflow: auto;
+  width: 500px;
+  border: 1px solid red;
   &.sticky--is-scrolling {
     th, td {
       &[class*="sticky--is-stuck"] {
@@ -115,7 +117,11 @@ table.sticky {
     *[class*="sticky--is-stuck"] {
       position: relative;
       transition: box-shadow 0.1s;
-
+      margin-top: -1px;
+      margin-bottom: -1px;
+      margin-right: -1px;
+      margin-left: -1px;
+      
       // Because transform removes our <th> from the normal flow of the page, it loses its top and bottom borders
       // (as, from the rendering engine perspective, it is no longer a part of the table).
       // We need to add these borders back via some css generated elements.
@@ -123,10 +129,18 @@ table.sticky {
         content: "";
         position: absolute;
         border: inherit;        
-        top: calc(-1 * var(--border-top-width));
-        right: calc(-1 * var(--border-right-width));
-        bottom: calc(-1 * var(--border-bottom-width));
-        left: calc(-1 * var(--border-left-width));
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin-top: inherit;
+        margin-right: inherit;
+        margin-bottom: inherit;
+        margin-left: inherit;
+        // top: calc(-1 * var(--border-top-width));
+        // right: calc(-1 * var(--border-right-width));
+        // bottom: calc(-1 * var(--border-bottom-width));
+        // left: calc(-1 * var(--border-left-width));
       }
     }
     *.sticky--is-stuck {
@@ -135,37 +149,37 @@ table.sticky {
   }
 }
 
-@-moz-document url-prefix() { 
-  .sticky-table-wrapper {
-    table.sticky {
-      thead {
-        *[class*="sticky--is-stuck"] {
-          &:before {
-            border-top-color: red;
-            border-right-color: green;
-            border-bottom-color: yellowgreen;
-            border-left-color: pink;
-            top: calc(-1 * (var(--border-top-width) + 2px));
-            bottom: calc(-1 * var(--border-bottom-width));
-            right: 0;
-            left: calc(-1 * (var(--border-left-width) + 2px));
-          }
-        }
-      }
-      tbody {
-        *[class*="sticky--is-stuck"] {
-          &:before {
-            border-top-color: red;
-            border-right-color: green;
-            border-bottom-color: yellowgreen;
-            border-left-color: pink;
-            top: calc(-1 * var(--border-top-width));
-            bottom: calc(-1 * var(--border-bottom-width));
-            right: 0;
-            left: calc(-1 * (var(--border-left-width) + 2px));
-          }
-        }
-      }
-    }
-  }
-}
+// @-moz-document url-prefix() { 
+//   .sticky-table-wrapper {
+//     table.sticky {
+//       thead {
+//         *[class*="sticky--is-stuck"] {
+//           &:before {
+//             border-top-color: red;
+//             border-right-color: green;
+//             border-bottom-color: yellowgreen;
+//             border-left-color: pink;
+//             top: calc(-1 * (var(--border-top-width) + 2px));
+//             bottom: calc(-1 * var(--border-bottom-width));
+//             right: 0;
+//             left: calc(-1 * (var(--border-left-width) + 2px));
+//           }
+//         }
+//       }
+//       tbody {
+//         *[class*="sticky--is-stuck"] {
+//           &:before {
+//             border-top-color: red;
+//             border-right-color: green;
+//             border-bottom-color: yellowgreen;
+//             border-left-color: pink;
+//             top: calc(-1 * var(--border-top-width));
+//             bottom: calc(-1 * var(--border-bottom-width));
+//             right: 0;
+//             left: calc(-1 * (var(--border-left-width) + 2px));
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

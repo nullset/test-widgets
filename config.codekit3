@@ -7,9 +7,10 @@
 		"uuidString": "3DB4FE91-4143-45ED-BFF4-BE178367F24D"
 		}
 	],
-"creatorBuild": "25900",
+"creatorBuild": "26097",
 "files": {
 	"\/.gitignore": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/.gitignore",
@@ -26,6 +27,7 @@
 		"oS": 0
 		},
 	"\/100vh\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/100vh\/index.html",
@@ -59,6 +61,7 @@
 		"oS": 0
 		},
 	"\/before\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/before\/index.html",
@@ -103,6 +106,7 @@
 		"tS": 1
 		},
 	"\/blink1test1\/blink1test1.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/blink1test1\/blink1test1.html",
@@ -137,10 +141,10 @@
 		"tS": 1
 		},
 	"\/blink1test1\/README.md": {
+		"cB": 0,
 		"cS": 0,
 		"eF": 1,
 		"eL": 1,
-		"eLB": 0,
 		"ema": 1,
 		"eSQ": 1,
 		"ft": 4096,
@@ -165,6 +169,7 @@
 		"oS": 3
 		},
 	"\/content-editable\/Archive.zip": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/content-editable\/Archive.zip",
@@ -181,6 +186,7 @@
 		"oS": 3
 		},
 	"\/content-editable\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/content-editable\/index.html",
@@ -220,6 +226,7 @@
 		"tS": 1
 		},
 	"\/content-editable\/test.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/content-editable\/test.html",
@@ -236,6 +243,7 @@
 		"oS": 3
 		},
 	"\/css-grid\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/css-grid\/index.html",
@@ -322,7 +330,8 @@
 		"oAP": "\/flat\/blah.js",
 		"oF": 0,
 		"oS": 0,
-		"sC": 0
+		"sC": 0,
+		"tS": 1
 		},
 	"\/flat\/index-orig.js": {
 		"ft": 64,
@@ -335,6 +344,7 @@
 		"tS": 1
 		},
 	"\/flat\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/flat\/index.html",
@@ -349,6 +359,7 @@
 		"oS": 1
 		},
 	"\/flat\/selectro.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/flat\/selectro.html",
@@ -372,7 +383,8 @@
 		"oAP": "\/flat\/selectro\/index.js",
 		"oF": 1,
 		"oS": 0,
-		"sC": 0
+		"sC": 0,
+		"tS": 1
 		},
 	"\/flat\/selectro\/index.js": {
 		"ft": 64,
@@ -385,6 +397,7 @@
 		"tS": 1
 		},
 	"\/flex-wrap\/.sass-cache\/26ad1a9badc4c84f68ba0ab0f66a010734994ae9\/index.scssc": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/flex-wrap\/.sass-cache\/26ad1a9badc4c84f68ba0ab0f66a010734994ae9\/index.scssc",
@@ -401,6 +414,7 @@
 		"oS": 0
 		},
 	"\/flex-wrap\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/flex-wrap\/index.html",
@@ -420,6 +434,7 @@
 		"uL": 1
 		},
 	"\/iframe-100vh\/iframe.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/iframe-100vh\/iframe.html",
@@ -436,6 +451,7 @@
 		"oS": 0
 		},
 	"\/iframe-100vh\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/iframe-100vh\/index.html",
@@ -459,12 +475,14 @@
 		"sU": 0
 		},
 	"\/iframe\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/iframe\/index.html",
 		"oF": 0
 		},
 	"\/integrations\/_select_field.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/integrations\/_select_field.html",
@@ -501,6 +519,7 @@
 		"oS": 0
 		},
 	"\/integrations\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/integrations\/index.html",
@@ -524,6 +543,7 @@
 		"sU": 0
 		},
 	"\/integrations2\/_select_field.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 1,
 		"oAP": "\/integrations2\/_select_field.html",
@@ -560,6 +580,7 @@
 		"oS": 0
 		},
 	"\/integrations2\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/integrations2\/index.html",
@@ -665,24 +686,28 @@
 		"tS": 1
 		},
 	"\/monet 2\/Brain.fm (1).mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/Brain.fm (1).mp3",
 		"oF": 0
 		},
 	"\/monet 2\/Brain.fm (2).mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/Brain.fm (2).mp3",
 		"oF": 0
 		},
 	"\/monet 2\/Brain.fm (3).mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/Brain.fm (3).mp3",
 		"oF": 0
 		},
 	"\/monet 2\/Brain.fm.mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/Brain.fm.mp3",
@@ -709,6 +734,7 @@
 		"oS": 0
 		},
 	"\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.eot": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.eot",
@@ -725,30 +751,35 @@
 		"prP": 0
 		},
 	"\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.ttf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.ttf",
 		"oF": 0
 		},
 	"\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.woff": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.woff",
 		"oF": 0
 		},
 	"\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.woff2": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/font-awesome-4.6.1\/fonts\/fontawesome-webfont.woff2",
 		"oF": 0
 		},
 	"\/monet 2\/font-awesome-4.6.1\/fonts\/FontAwesome.otf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/font-awesome-4.6.1\/fonts\/FontAwesome.otf",
 		"oF": 0
 		},
 	"\/monet 2\/font-awesome-4.6.1\/HELP-US-OUT.txt": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/font-awesome-4.6.1\/HELP-US-OUT.txt",
@@ -1185,6 +1216,7 @@
 		"oS": 0
 		},
 	"\/monet 2\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/monet 2\/index.html",
@@ -1218,18 +1250,21 @@
 		"oS": 0
 		},
 	"\/monet 2\/questions": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet 2\/questions",
 		"oF": 0
 		},
 	"\/monet\/.sass-cache\/ee3e2bcaad8f23b6fa74aaab72d3615f0394f80c\/monet.scssc": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/monet\/.sass-cache\/ee3e2bcaad8f23b6fa74aaab72d3615f0394f80c\/monet.scssc",
 		"oF": 0
 		},
 	"\/monet\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/monet\/index.html",
@@ -1259,12 +1294,14 @@
 		"uL": 1
 		},
 	"\/mutation livequery\/index-light.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index-light.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/index2.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/index2.html",
@@ -1334,12 +1371,14 @@
 		"tS": 1
 		},
 	"\/mutation livequery\/index_files\/W3C-REC": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/mutation livequery\/index_files\/W3C-REC",
 		"oF": 0
 		},
 	"\/mutation livequery\/index_files\/w3c_home": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/mutation livequery\/index_files\/w3c_home",
@@ -1376,60 +1415,70 @@
 		"tS": 1
 		},
 	"\/mutation livequery\/mutation-3.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation-3.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/mutation-light.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation-light.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/mutation-livequery.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation-livequery.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/mutation-observer.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation-observer.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/mutation-test-2.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation-test-2.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/mutation-test.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation-test.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/mutation.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/mutation.html",
 		"oF": 0
 		},
 	"\/mutation livequery\/test-1.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/mutation livequery\/test-1.html",
 		"oF": 0
 		},
 	"\/plumb\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/plumb\/index.html",
 		"oF": 0
 		},
 	"\/roadmap-email\/.sass-cache\/4867f5fcce627c3481ab22795b5b7f140687c93e\/index.scssc": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/roadmap-email\/.sass-cache\/4867f5fcce627c3481ab22795b5b7f140687c93e\/index.scssc",
@@ -1468,6 +1517,7 @@
 		"oS": 0
 		},
 	"\/roadmap-email\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/index.html",
@@ -1487,6 +1537,7 @@
 		"uL": 1
 		},
 	"\/roadmap-email\/o-index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/roadmap-email\/o-index.html",
@@ -1517,6 +1568,7 @@
 		"q": 100
 		},
 	"\/staging\/.sass-cache\/9d1ec9d9b90610f4eb1a97eba0668d2ed6894048\/staging.scssc": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/staging\/.sass-cache\/9d1ec9d9b90610f4eb1a97eba0668d2ed6894048\/staging.scssc",
@@ -1533,6 +1585,7 @@
 		"oS": 0
 		},
 	"\/staging\/staging.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/staging\/staging.html",
@@ -1572,6 +1625,7 @@
 		"tS": 1
 		},
 	"\/sticky-css\/README": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sticky-css\/README",
@@ -1588,6 +1642,7 @@
 		"oS": 3
 		},
 	"\/sticky-css\/v1\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sticky-css\/v1\/index.html",
@@ -1647,6 +1702,7 @@
 		"oS": 3
 		},
 	"\/sticky-css\/v2\/index-2.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sticky-css\/v2\/index-2.html",
@@ -1706,6 +1762,7 @@
 		"oS": 0
 		},
 	"\/svg-flex\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/svg-flex\/index.html",
@@ -1735,30 +1792,35 @@
 		"prP": 0
 		},
 	"\/table-fixed-header\/_table.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 1,
 		"oAP": "\/table-fixed-header\/_table.html",
 		"oF": 0
 		},
 	"\/table-fixed-header\/index-1.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-fixed-header\/index-1.html",
 		"oF": 0
 		},
 	"\/table-fixed-header\/index-1.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-1.html",
 		"oF": 0
 		},
 	"\/table-fixed-header\/index-2.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-fixed-header\/index-2.html",
 		"oF": 0
 		},
 	"\/table-fixed-header\/index-2.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-2.html",
@@ -1775,12 +1837,14 @@
 		"oS": 0
 		},
 	"\/table-fixed-header\/index-3.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-fixed-header\/index-3.html",
 		"oF": 0
 		},
 	"\/table-fixed-header\/index-3.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-3.html",
@@ -1810,6 +1874,7 @@
 		"oS": 0
 		},
 	"\/table-fixed-header\/index-4.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-fixed-header\/index-4.html",
@@ -1826,6 +1891,7 @@
 		"tS": 1
 		},
 	"\/table-fixed-header\/index-4.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-4.html",
@@ -1865,6 +1931,7 @@
 		"oS": 0
 		},
 	"\/table-fixed-header\/index-5.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-fixed-header\/index-5.html",
@@ -1881,6 +1948,7 @@
 		"tS": 1
 		},
 	"\/table-fixed-header\/index-5.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-5.html",
@@ -1910,6 +1978,7 @@
 		"oS": 0
 		},
 	"\/table-fixed-header\/index-6.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-fixed-header\/index-6.html",
@@ -1926,6 +1995,7 @@
 		"tS": 1
 		},
 	"\/table-fixed-header\/index-6.kit": {
+		"cB": 0,
 		"ft": 2048,
 		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-6.html",
@@ -1998,6 +2068,7 @@
 		"oS": 3
 		},
 	"\/table-rounding\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-rounding\/index.html",
@@ -2035,12 +2106,14 @@
 		"oS": 1
 		},
 	"\/table-rounding\/yarn.lock": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-rounding\/yarn.lock",
 		"oF": 0
 		},
 	"\/table-width-rounding\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/table-width-rounding\/index.html",
@@ -2070,18 +2143,35 @@
 		"uL": 1
 		},
 	"\/temp\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/temp\/index.html",
 		"oF": 0
 		},
+	"\/textarea-utf\/index-orig.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/textarea-utf\/index-orig.html",
+		"oF": 0
+		},
+	"\/textarea-utf\/index.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/textarea-utf\/index.html",
+		"oF": 0
+		},
 	"\/USB\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/USB\/index.html",
 		"oF": 0
 		},
 	"\/web-worker\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/web-worker\/index.html",
@@ -2098,6 +2188,7 @@
 		"tS": 1
 		},
 	"\/web-worker\/window2.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/web-worker\/window2.html",
@@ -2114,6 +2205,7 @@
 		"tS": 1
 		},
 	"\/weird-fixed\/.sass-cache\/544fb903e31d2f523f075f5797239c4ae1e1963c\/index.scssc": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/weird-fixed\/.sass-cache\/544fb903e31d2f523f075f5797239c4ae1e1963c\/index.scssc",
@@ -2130,6 +2222,7 @@
 		"oS": 0
 		},
 	"\/weird-fixed\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/weird-fixed\/index.html",
@@ -2693,6 +2786,10 @@
 			"active": 0,
 			"optionString": "'expression'"
 			},
+		"function-paren-newline": {
+			"active": 0,
+			"optionString": "'multiline'"
+			},
 		"generator-star-spacing": {
 			"active": 0,
 			"optionString": "{'before': true, 'after': false}"
@@ -2757,9 +2854,9 @@
 			"active": 0,
 			"optionString": "{'beforeBlockComment': true}"
 			},
-		"lines-around-directive": {
+		"lines-between-class-members": {
 			"active": 0,
-			"optionString": "{'before': 'always', 'after': 'always'}"
+			"optionString": "'always', {exceptAfterSingleLine: false}"
 			},
 		"max-depth": {
 			"active": 0,
@@ -2789,6 +2886,10 @@
 			"active": 0,
 			"optionString": "{'max': 1}"
 			},
+		"multiline-comment-style": {
+			"active": 0,
+			"optionString": "'starred-block'"
+			},
 		"multiline-ternary": {
 			"active": 0,
 			"optionString": "'always'"
@@ -2798,14 +2899,6 @@
 			"optionString": "{'newIsCap': true, 'capIsNew': true, 'newIsCapExceptions': [], 'capIsNewExceptions': ['Array', 'Boolean', 'Date', 'Error', 'Function', 'Number', 'Object', 'RegExp', 'String', 'Symbol'], 'properties': true}"
 			},
 		"new-parens": {
-			"active": 0,
-			"optionString": ""
-			},
-		"newline-after-var": {
-			"active": 0,
-			"optionString": "'always'"
-			},
-		"newline-before-return": {
 			"active": 0,
 			"optionString": ""
 			},
@@ -3909,7 +4002,8 @@
 		"createSourceMap": 0,
 		"minifyOutput": 1,
 		"outputStyle": 0,
-		"syntaxCheckerStyle": 1
+		"syntaxCheckerStyle": 1,
+		"transpilerStyle": 1
 		},
 	"languageDefaultsCSS": {
 		"autoOutputAction": 2,
@@ -3942,6 +4036,7 @@
 		"noEscapeInAttributes": 0,
 		"outputFormat": 2,
 		"outputStyle": 0,
+		"shouldRunCacheBuster": 0,
 		"useCDATA": 0,
 		"useDoubleQuotes": 0,
 		"useUnixNewlines": 0
@@ -3983,7 +4078,8 @@
 		"autoOutputPathRelativePath": "",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0
+		"autoOutputPathStyle": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsLESS": {
 		"allowInsecureImports": 0,
@@ -4015,13 +4111,13 @@
 		"enableFootnotes": 1,
 		"enableLabels": 1,
 		"enableSmartQuotes": 1,
-		"escapeLineBreaks": 0,
 		"maskEmailAddresses": 1,
 		"outputFormat": 0,
 		"outputStyle": 0,
 		"parseMetadata": 1,
 		"processHTML": 0,
 		"randomFootnoteNumbers": 0,
+		"shouldRunCacheBuster": 0,
 		"useCompatibilityMode": 0
 		},
 	"languageDefaultsOTHER": {
@@ -4030,7 +4126,8 @@
 		"autoOutputPathRelativePath": "",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0
+		"autoOutputPathStyle": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsPNG": {
 		"autoOutputAction": 0,
@@ -4050,7 +4147,8 @@
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
 		"compileDebug": 1,
-		"outputStyle": 0
+		"outputStyle": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsSASS": {
 		"autoOutputAction": 0,
@@ -4078,7 +4176,8 @@
 		"logicless": 0,
 		"outputFormat": 0,
 		"outputStyle": 1,
-		"railsCompatible": 0
+		"railsCompatible": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsSTYLUS": {
 		"autoOutputAction": 0,

@@ -1,4 +1,3 @@
-
 (function ($) {
 
   $.fn.stickyTable = function (args) {
@@ -9,7 +8,9 @@
       window.tableStyles = tableStyles;
       const $wrapper = wrapTable($table, tableStyles);
       const wrapper = $wrapper[0];
-      const stickyElems = table.querySelectorAll('th[class*="sticky--is-stuck"], td[class*="sticky--is-stuck"]');
+      // const stickyElems = Array.from(table.querySelectorAll('th[class*="sticky--is-stuck"], td[class*="sticky--is-stuck"]'));
+      const stickyElems = $table.find('th[class*="sticky--is-stuck"], td[class*="sticky--is-stuck"]').toArray();
+      console.log('stickyElems', stickyElems);
 
       // Variable that tracks whether "wheel" event was called.
       // Prevents both "wheel" and "scroll" events being triggered simultaneously.
@@ -25,7 +26,7 @@
       positionStickyElements(stickyElems);
 
       stickyElems.forEach((cell) => {
-        cellStyles = window.getComputedStyle(cell);
+        const cellStyles = window.getComputedStyle(cell);
         ['Top', 'Right', 'Bottom', 'Left'].forEach((side) => {
           ['Width'].forEach((property) => {
             cell.style.setProperty(`--border-${side.toLowerCase()}-${property.toLowerCase()}`, cellStyles[`border${side}${property}`]);
@@ -95,9 +96,9 @@
       }
       wrapper.setAttribute('data-scroll-left', newX);
       wrapper.setAttribute('data-scroll-top', newY);
+      positionStickyElements(stickyElems, newX, newY);
       wrapper.scrollLeft = newX;
       wrapper.scrollTop = newY;
-      positionStickyElements(stickyElems, newX, newY);
     }
 
     function scrollHandler(wrapper, stickyElems) {
