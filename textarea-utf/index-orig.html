@@ -562,12 +562,20 @@ and other things
     return input.value.substring(0, position) + '󰀀' + input.value.substring(position, input.value.length);
   }
 
+  function isArrowKey(key) {
+    return ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key);
+  }
+
   refreshView(input, result, transforms);
 
 
   // Position cursor when key is pressed.
-  input.addEventListener('keydown', () => {
+  input.addEventListener('keydown', (event) => {
     requestAnimationFrame(() => {
+      const position = input.selectionStart;
+      const prevChar = input.value.substring(position - 1, position);
+      const nextChar = input.value.substring(position, position + 1);
+      
       refreshView(input, result, transforms);
     });
   });
