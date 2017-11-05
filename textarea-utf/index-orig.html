@@ -381,15 +381,7 @@ and other things
 
   <script>
   
-  const transform = {
-    '󰀃': '<ul>',
-    '󰀁': '<li>',
-    '󰀂': '</li>',
-    '󰀄': '</ul>',
-    '': '<span class="blink"></span>'
-  };
-
-  const t2 = {
+  const transforms = {
     '󰀀': {
       name: 'cursor',
       codePoint: '0xF0000',
@@ -527,7 +519,7 @@ and other things
   //   refreshView(input, result, t2);
   // });
 
-  const regexBeacons = new RegExp(Object.keys(t2).join('|'), 'g');
+  const regexBeacons = new RegExp(Object.keys(transforms).join('|'), 'g');
   let positionInRow = undefined;
 
   // input.addEventListener('keydown', (event) => {
@@ -554,30 +546,39 @@ and other things
 
 
   function refreshView(input, result, transforms) {
-    let data = dataWithCursor(input);
-    Object.keys(t2).forEach((key) => {
+    let data = injectCursorIntoData(input);
+    Object.keys(transforms).forEach((key) => {
       console.log(key)
       const regex = new RegExp(key, 'g');
-      data = data.replace(regex, t2[key].transform.value);
+      data = data.replace(regex, transforms[key].transform.value);
     });
 
     result.innerHTML = data;
   }
 
-  function dataWithCursor(input) {
+  function injectCursorIntoData(input) {
     const position = input.selectionStart;
+    input.cursorPosition = position;
     return input.value.substring(0, position) + '󰀀' + input.value.substring(position, input.value.length);
   }
 
-  refreshView(input, result, t2);
+  refreshView(input, result, transforms);
 
 
   // Position cursor when key is pressed.
   input.addEventListener('keydown', () => {
     requestAnimationFrame(() => {
-      refreshView(input, result, t2);
+      refreshView(input, result, transforms);
     });
   });
+
+  // If user clicks on the facade, refocus on the real textarea and position the cursor back to the last spot it was at.
+  // NOTE: Will eventually want to make this position on whereever the user clicked on the facade.
+  result.addEventListener('click', ()=> {
+    const position = input.cursorPosition || 0;
+    input.focus();
+    input.setSelectionRange(position, position);
+  })
 
   // Object.keys(transform).forEach((key) => {
   //   const regex = new RegExp(key, 'g')
