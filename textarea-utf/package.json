@@ -1,0 +1,9 @@
+{
+  "name": "textarea-utf",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "unicode-substring": "^1.0.0"
+  }
+}
