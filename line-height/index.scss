@@ -1,0 +1,43 @@
+body {
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: Helvetica;
+}
+.ex2 {
+  // display: none;
+}
+.ex3 {
+  // display: none;
+}
+
+ul > li:first-child {
+  background: yellow;
+}
+.wrapper {
+  display: flex;
+  > * {
+    flex: 1 0;
+    &:first-child {
+      border-right: 1px solid #ddd;
+      margin-right: 20px;
+      padding-right: 20px;
+    }
+  }
+  h1 {
+    margin: 0;
+  }
+}
+
+.lh {
+  // display: none;
+  li {
+    line-height: 20px;
+  }
+}
+
+.padding {
+  li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}

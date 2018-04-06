@@ -1,0 +1,111 @@
+// [data-color-by=column-ceb1a011b88334e017c3aa95b76aa8156e9b0627] {
+//   background-color:#d8cfb4 !important;
+// }
+// [data-color-by=column-ceb1a011b88334e017c3aa95b76aa8156e9b0627],
+// [data-color-by=column-ceb1a011b88334e017c3aa95b76aa8156e9b0627] a {
+//   color: #363636 !important;
+// }
+
+// [data-color-by=column-a5caddef1af590626f196c2c0102d0b0dfaf6199] {
+//   background-color:#d6c572 !important;
+// }
+// [data-color-by=column-a5caddef1af590626f196c2c0102d0b0dfaf6199],
+// [data-color-by=column-a5caddef1af590626f196c2c0102d0b0dfaf6199] a {
+//   color: #363636 !important;
+// }
+
+// [data-color-by=column-2adf78e8c23c67882c53488854f7d08e9fffc029] {
+//   background-color:#b0d66e !important;
+// }
+// [data-color-by=column-2adf78e8c23c67882c53488854f7d08e9fffc029],
+// [data-color-by=column-2adf78e8c23c67882c53488854f7d08e9fffc029] a {
+//   color: #363636 !important;
+// }
+
+// [data-color-by=column-de604f80edabafda9fa64c481e253955c9fc95d1] {
+//   background-color:#80b3c7 !important;
+// }
+// [data-color-by=column-de604f80edabafda9fa64c481e253955c9fc95d1],
+// [data-color-by=column-de604f80edabafda9fa64c481e253955c9fc95d1] a {
+//   color: #363636 !important;
+// }
+
+
+
+
+.custom-pivot-wrapper table.custom-pivot-table {
+border-collapse: collapse;
+}
+.custom-pivot-wrapper table.custom-pivot-table, .custom-pivot-wrapper table.custom-pivot-table th, .custom-pivot-wrapper table.custom-pivot-table td {
+  border: 1px solid red;
+}
+
+.custom-pivot-wrapper table.custom-pivot-table thead th {
+border-color: #DDD;
+}
+.custom-pivot-wrapper table.custom-pivot-table thead th.empty-cell {
+background-color: transparent;
+}
+
+.custom-pivot-wrapper table.custom-pivot-table thead th.pivot-cell {
+background-color: #4D9DDD;
+background-color: rgba(255,0,0,0.3);
+color: #FFF;
+}
+
+
+.custom-pivot-wrapper table.custom-pivot-table thead th.last + th {
+border-left: 1px solid #888;
+}
+.custom-pivot-wrapper table.custom-pivot-table thead th.cross-columns {
+text-align: center;
+}
+.custom-pivot-wrapper table.custom-pivot-table thead tr:last-child th, .custom-pivot-wrapper table.custom-pivot-table thead th.spansRow {
+border-bottom-color: #888;
+}
+.custom-pivot-wrapper table.custom-pivot-table thead .pivot-cell.last {
+border-right-color: #888;
+}
+.custom-pivot-wrapper table.custom-pivot-table > thead .pivot-cell.last.spansRow {
+border-bottom-color: #888;
+}
+.custom-pivot-wrapper table.custom-pivot-table tbody th {
+page-break-inside: auto;
+border-color: #DDD;
+}
+.custom-pivot-wrapper table.custom-pivot-table tbody th.last {
+border-right-color: #888;
+}
+.custom-pivot-wrapper table.custom-pivot-table tbody td {
+background-color: #FFF;
+border-color: #DDD;      
+}
+.custom-pivot-wrapper table.custom-pivot-table thead .cross-columns {
+background-color: #E6F1FA;
+color: #333333;
+}
+
+.custom-pivot-wrapper table.custom-pivot-table tbody .pivot-table-row.pivot-swimlane th {
+color: #333333;
+background-color: #D2DDE6;
+border-bottom-color: #888;
+text-align: center;
+}
+
+.custom-pivot-wrapper table.custom-pivot-table tbody .pivot-table-row th, .custom-pivot-wrapper table.custom-pivot-table tbody th.empty-heading.total {
+background-color: #E6F1FA;
+color: #333333;
+visibility: visible;
+}
+.custom-pivot-wrapper.totals table.custom-pivot-table tbody tr:nth-last-child(2) * {
+border-bottom-color: #888;
+}
+.custom-pivot-wrapper.totals table.custom-pivot-table thead .cross-columns.total {
+border-left-color: #888;
+}
+.custom-pivot-wrapper.totals table.custom-pivot-table tbody td:nth-last-child(2) {
+border-right-color: #888;
+}
+.custom-pivot-wrapper.totals table.custom-pivot-table tbody td:last-child, .custom-pivot-wrapper.totals table.custom-pivot-table tbody .total-cell {
+background-color: #FAFAFA;
+}

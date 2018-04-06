@@ -7,7 +7,7 @@
 		"uuidString": "3DB4FE91-4143-45ED-BFF4-BE178367F24D"
 		}
 	],
-"creatorBuild": "26097",
+"creatorBuild": "26268",
 "files": {
 	"\/.gitignore": {
 		"cB": 0,
@@ -167,6 +167,54 @@
 		"oAP": "\/blink1test1\/style-min.css",
 		"oF": 0,
 		"oS": 3
+		},
+	"\/busy\/busy.gif": {
+		"ft": 4194304,
+		"iS": 506,
+		"oA": 0,
+		"oAP": "\/busy\/busy.gif",
+		"oF": 0,
+		"opt": 0
+		},
+	"\/busy\/busy.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/busy\/busy.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
+	"\/busy\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/busy\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/busy\/index.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/busy\/index.html",
+		"oF": 0
+		},
+	"\/busy\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/busy\/index.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/content-editable\/Archive.zip": {
 		"cB": 0,
@@ -396,6 +444,36 @@
 		"sC": 0,
 		"tS": 1
 		},
+	"\/flex-direction\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/flex-direction\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/flex-direction\/index.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/flex-direction\/index.html",
+		"oF": 0
+		},
+	"\/flex-direction\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/flex-direction\/index.css",
+		"oF": 2,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/flex-wrap\/.sass-cache\/26ad1a9badc4c84f68ba0ab0f66a010734994ae9\/index.scssc": {
 		"cB": 0,
 		"ft": 8192,
@@ -602,6 +680,36 @@
 		"sI": 0,
 		"sM": 0,
 		"sU": 0
+		},
+	"\/line-height\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/line-height\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/line-height\/index.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/line-height\/index.html",
+		"oF": 0
+		},
+	"\/line-height\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/line-height\/index.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/monet 2\/bootstrap\/css\/bootstrap-responsive.css": {
 		"aP": 0,
@@ -1470,6 +1578,56 @@
 		"oAP": "\/mutation livequery\/test-1.html",
 		"oF": 0
 		},
+	"\/mutation-observer\/index-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/mutation-observer\/index-min-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
+	"\/mutation-observer\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/mutation-observer\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/mutation-observer\/index.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/mutation-observer\/index.html",
+		"oF": 0
+		},
+	"\/mutation-observer\/index.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/mutation-observer\/index-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
+	"\/mutation-observer\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/mutation-observer\/index.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/plumb\/index.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -1790,6 +1948,36 @@
 		"opt": 0,
 		"plM": 3758088159,
 		"prP": 0
+		},
+	"\/table-ff\/index.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/table-ff\/index-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/table-ff\/index.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/table-ff\/index.html",
+		"oF": 0
+		},
+	"\/table-ff\/index.scss": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/table-ff\/index.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/table-fixed-header\/_table.kit": {
 		"cB": 0,
@@ -2149,6 +2337,16 @@
 		"oAP": "\/temp\/index.html",
 		"oF": 0
 		},
+	"\/textarea-utf\/index-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/textarea-utf\/index-min-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
 	"\/textarea-utf\/index-orig.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -2289,6 +2487,7 @@
 	"animateCSSInjections": 1,
 	"autoBuildNewItems": 1,
 	"autoprefixerBrowserString": "last 2 versions",
+	"autoprefixerEnableIEGrid": 0,
 	"babelAuxiliaryCommentAfter": "",
 	"babelAuxiliaryCommentBefore": "",
 	"babelConfigFileHandlingType": 0,
@@ -2852,6 +3051,10 @@
 		"id-match": {
 			"active": 0,
 			"optionString": "'^[a-z]+([A-Z][a-z]+)*$', {'properties': false, 'onlyDeclarations': true}"
+			},
+		"implicit-arrow-linebreak": {
+			"active": 0,
+			"optionString": "'beside'"
 			},
 		"indent": {
 			"active": 0,

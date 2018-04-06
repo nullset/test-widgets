@@ -1,0 +1,9 @@
+.busy {
+  border: 1px solid red;
+  #dot-1, #dot-2, #dot-3 {
+    transform-origin: top left;
+  }
+  #dot-1 {
+    transform: scale(2);
+  }
+}

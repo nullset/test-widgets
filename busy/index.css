@@ -1,0 +1,8 @@
+.busy {
+  border: 1px solid red; }
+  .busy #dot-1, .busy #dot-2, .busy #dot-3 {
+    -webkit-transform-origin: top left;
+            transform-origin: top left; }
+  .busy #dot-1 {
+    -webkit-transform: scale(2);
+            transform: scale(2); }

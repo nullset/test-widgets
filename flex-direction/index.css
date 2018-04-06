@@ -1,0 +1,35 @@
+body {
+  background: #ddd;
+  padding: 200px 50px; }
+
+.legend {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  flex-direction: column-reverse;
+  border: 1px solid; }
+  .legend header {
+    background: #808080;
+    color: #fff;
+    padding: 10px; }
+  .legend .keys {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #fff; }
+    .legend .keys li {
+      padding: 10px; }
+      .legend .keys li:before {
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background: orange;
+        margin-right: 1ch; }
