@@ -7,7 +7,7 @@
 		"uuidString": "3DB4FE91-4143-45ED-BFF4-BE178367F24D"
 		}
 	],
-"creatorBuild": "26268",
+"creatorBuild": "26680",
 "files": {
 	"\/.gitignore": {
 		"cB": 0,
@@ -98,9 +98,9 @@
 	"\/blink1test1\/background.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/blink1test1\/min\/background-min.js",
+		"oAP": "\/blink1test1\/background-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -115,9 +115,9 @@
 	"\/blink1test1\/blink1test1.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/blink1test1\/min\/blink1test1-min.js",
+		"oAP": "\/blink1test1\/blink1test1-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -133,9 +133,9 @@
 	"\/blink1test1\/min\/blink1test1-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/blink1test1\/min\/min\/blink1test1-min-min.js",
+		"oAP": "\/blink1test1\/min\/blink1test1-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -243,9 +243,9 @@
 	"\/content-editable\/index.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/content-editable\/min\/index-min.js",
+		"oAP": "\/content-editable\/index-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -266,9 +266,9 @@
 	"\/content-editable\/min\/index-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/content-editable\/min\/min\/index-min-min.js",
+		"oAP": "\/content-editable\/min\/index-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -384,10 +384,10 @@
 	"\/flat\/index-orig.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/flat\/min\/index-orig-min.js",
-		"oF": 1,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/flat\/index-orig-min.js",
+		"oF": 0,
 		"sC": 0,
 		"tS": 1
 		},
@@ -416,9 +416,9 @@
 	"\/flat\/selectro.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/flat\/min\/selectro-min.js",
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/flat\/selectro-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -437,9 +437,9 @@
 	"\/flat\/selectro\/index.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/flat\/selectro\/min\/index-min.js",
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/flat\/selectro\/index-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -776,9 +776,9 @@
 	"\/monet 2\/bootstrap\/js\/bootstrap.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/monet 2\/bootstrap\/js\/min\/bootstrap-min.js",
+		"oAP": "\/monet 2\/bootstrap\/js\/bootstrap-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -786,9 +786,9 @@
 	"\/monet 2\/bootstrap\/js\/bootstrap.min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/monet 2\/bootstrap\/js\/min\/bootstrap.min-min.js",
+		"oAP": "\/monet 2\/bootstrap\/js\/bootstrap.min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1418,9 +1418,9 @@
 	"\/mutation livequery\/index_files\/authorstylesheet.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/mutation livequery\/index_files\/min\/authorstylesheet-min.js",
+		"oAP": "\/mutation livequery\/index_files\/authorstylesheet-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1471,9 +1471,9 @@
 	"\/mutation livequery\/index_files\/link-fixup.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/mutation livequery\/index_files\/min\/link-fixup-min.js",
+		"oAP": "\/mutation livequery\/index_files\/link-fixup-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1495,9 +1495,9 @@
 	"\/mutation livequery\/jquery-1.12.4.min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/mutation livequery\/min\/jquery-1.12.4.min-min.js",
+		"oAP": "\/mutation livequery\/jquery-1.12.4.min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1505,9 +1505,9 @@
 	"\/mutation livequery\/jquery.livequery.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/mutation livequery\/min\/jquery.livequery-min.js",
+		"oAP": "\/mutation livequery\/jquery.livequery-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1515,9 +1515,9 @@
 	"\/mutation livequery\/min\/jquery.livequery-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/mutation livequery\/min\/min\/jquery.livequery-min-min.js",
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/mutation livequery\/min\/jquery.livequery-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1581,7 +1581,7 @@
 	"\/mutation-observer\/index-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/mutation-observer\/index-min-min.js",
 		"oF": 0,
@@ -1608,7 +1608,7 @@
 	"\/mutation-observer\/index.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/mutation-observer\/index-min.js",
 		"oF": 0,
@@ -1627,6 +1627,61 @@
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
+		},
+	"\/mutation-observer\/node_modules": {
+		"ft": 65536,
+		"oA": 2,
+		"oAP": "\/build\/mutation-observer\/node_modules",
+		"oF": 0
+		},
+	"\/mutation-observer\/package.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "\/mutation-observer\/package-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"\/mutation-observer\/plugin-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/mutation-observer\/plugin-min-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
+	"\/mutation-observer\/plugin.html": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/mutation-observer\/plugin.html",
+		"oF": 0
+		},
+	"\/mutation-observer\/plugin.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/mutation-observer\/plugin-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
+	"\/mutation-observer\/yarn-error.log": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/mutation-observer\/yarn-error.log",
+		"oF": 0
+		},
+	"\/mutation-observer\/yarn.lock": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/mutation-observer\/yarn.lock",
+		"oF": 0
 		},
 	"\/plumb\/index.html": {
 		"cB": 0,
@@ -1765,9 +1820,9 @@
 	"\/sticky-css\/min\/index-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/sticky-css\/min\/min\/index-min-min.js",
+		"oAP": "\/sticky-css\/min\/index-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1775,9 +1830,9 @@
 	"\/sticky-css\/min\/sticky-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/sticky-css\/min\/min\/sticky-min-min.js",
+		"oAP": "\/sticky-css\/min\/sticky-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -1809,7 +1864,7 @@
 	"\/sticky-css\/v1\/index.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/sticky-css\/v1\/index-min.js",
 		"oF": 0,
@@ -1832,7 +1887,7 @@
 	"\/sticky-css\/v1\/sticky.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/sticky-css\/v1\/sticky-min.js",
 		"oF": 0,
@@ -1842,7 +1897,7 @@
 	"\/sticky-css\/v2\/index-2-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/sticky-css\/v2\/index-2-min-min.js",
 		"oF": 0,
@@ -1869,7 +1924,7 @@
 	"\/sticky-css\/v2\/index-2.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/sticky-css\/v2\/index-2-min.js",
 		"oF": 0,
@@ -1892,7 +1947,7 @@
 	"\/sticky-css\/v2\/sticky-2-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/sticky-css\/v2\/sticky-2-min-min.js",
 		"oF": 0,
@@ -1902,7 +1957,7 @@
 	"\/sticky-css\/v2\/sticky-2.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/sticky-css\/v2\/sticky-2-min.js",
 		"oF": 0,
@@ -2101,9 +2156,9 @@
 	"\/table-fixed-header\/index-5-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/table-fixed-header\/min\/index-5-min-min.js",
+		"oAP": "\/table-fixed-header\/index-5-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -2128,10 +2183,10 @@
 	"\/table-fixed-header\/index-5.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
+		"mi": 0,
+		"oA": 0,
 		"oAP": "\/table-fixed-header\/index-5-min.js",
-		"oF": 3,
+		"oF": 2,
 		"sC": 0,
 		"tS": 1
 		},
@@ -2177,7 +2232,7 @@
 		"ma": 0,
 		"mi": 0,
 		"oA": 0,
-		"oAP": "\/table-fixed-header\/min\/index-6-min.js",
+		"oAP": "\/table-fixed-header\/index-6-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -2228,9 +2283,9 @@
 	"\/table-fixed-header\/jquery-3.1.1.min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/table-fixed-header\/min\/jquery-3.1.1.min-min.js",
+		"oAP": "\/table-fixed-header\/jquery-3.1.1.min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -2238,9 +2293,9 @@
 	"\/table-fixed-header\/min\/index-5-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/table-fixed-header\/min\/min\/index-5-min-min.js",
+		"oAP": "\/table-fixed-header\/min\/index-5-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -2278,9 +2333,9 @@
 	"\/table-rounding\/min\/index-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/table-rounding\/min\/min\/index-min-min.js",
+		"oAP": "\/table-rounding\/min\/index-min-min.js",
 		"oF": 0,
 		"sC": 0,
 		"tS": 1
@@ -2340,7 +2395,7 @@
 	"\/textarea-utf\/index-min.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/textarea-utf\/index-min-min.js",
 		"oF": 0,
@@ -2364,7 +2419,7 @@
 	"\/textarea-utf\/index.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "\/textarea-utf\/index-min.js",
 		"oF": 0,
@@ -2409,10 +2464,10 @@
 	"\/web-worker\/index.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/web-worker\/min\/index-min.js",
-		"oF": 1,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/web-worker\/index-min.js",
+		"oF": 0,
 		"sC": 0,
 		"tS": 1
 		},
@@ -2426,10 +2481,10 @@
 	"\/web-worker\/worker.js": {
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "\/web-worker\/min\/worker-min.js",
-		"oF": 1,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/web-worker\/worker-min.js",
+		"oF": 0,
 		"sC": 0,
 		"tS": 1
 		},
@@ -2479,7 +2534,8 @@
 	"creationDate": 502136121,
 	"displayValue": "test-widgets",
 	"displayValueWasSetByUser": 0,
-	"iconImageName": "brackets_green"
+	"iconImageName": "brackets_green",
+	"iconImageWasSetByUser": 0
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
@@ -4282,6 +4338,7 @@
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
+		"outputFormat": 0,
 		"quality": 100
 		},
 	"languageDefaultsJS": {
@@ -4292,7 +4349,7 @@
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
 		"createSourceMap": 0,
-		"minifyOutput": 1,
+		"minifyOutput": 0,
 		"syntaxCheckerStyle": 0,
 		"transpilerStyle": 1
 		},
