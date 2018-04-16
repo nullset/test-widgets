@@ -85,48 +85,156 @@ function randomNumber(max = 99999) {
     Element.prototype.matches = Element.prototype.msMatchesSelector;
   }
  
-  $.fn.lq = function(options) {
-    const selector = this.selector;
+  $.fn.detect2 = function(opts) {
     const observer =  new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         // Watch for both added and removed elements, and behave accordingly.
         ['added', 'removed'].forEach((operation) => {
-          if (options[operation]) {
+          if (opts[operation]) {
             Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
               if (node.nodeType === 1) {
-                if (node.matches(selector)) {
-                  options[operation](node);
-                  observer.takeRecords();
+                let matchingNodes;
+                if (node.matches(opts.matches)) {
+                  matchingNodes = [node];
                 } else {
-                  const matchingNodes = node.querySelectorAll(selector);
-                  Array.from(matchingNodes).forEach((matchingNode) => {
-                    options[operation](node);
-                    observer.takeRecords();
-                  });
+                  matchingNodes = Array.from(node.querySelectorAll(opts.matches));
                 }
+                matchingNodes.forEach((matchingNode) => {
+                  opts[operation](node);
+                  observer.takeRecords();
+                });
               }
             });  
           }
         });
       });
-  });
+    });
     
+    const watchSubtree = opts.shallow === undefined ? true : !opts.shallow;
 
-  observer.observe(document.querySelector('body'), {
-    childList: true,
-    // attributes: true,
-    // characterData: true,
-    subtree: true,
-    // attributeOldValue: true,
-    // characterDataOldValue: true,
-    // attributeFilter: ['class'],
-  })
-    
+    this.each(function() {
+      observer.observe(this, {
+        childList: true,
+        subtree: watchSubtree,
+      })
+    });
+  
   };
+
+  const scopes = {};
+
+  $.fn.detect = function(opts) {
+    if (!scopes[opts.scope]) {
+      scopes[opts.scope] = [];
+    }
+
+    scopes[opts.scope].push({
+      watch: this.selector,
+      added: opts.added,
+      removed: opts.removed,
+    });
+
+    // const observer =  new MutationObserver((mutations) => {
+    //   mutations.forEach((mutation) => {
+    //     // Watch for both added and removed elements, and behave accordingly.
+    //     ['added', 'removed'].forEach((operation) => {
+    //       if (opts[operation]) {
+    //         Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
+    //           if (node.nodeType === 1) {
+    //             let matchingNodes;
+    //             if (node.matches(opts.matches)) {
+    //               matchingNodes = [node];
+    //             } else {
+    //               matchingNodes = Array.from(node.querySelectorAll(opts.matches));
+    //             }
+    //             matchingNodes.forEach((matchingNode) => {
+    //               opts[operation](node);
+    //               observer.takeRecords();
+    //             });
+    //           }
+    //         });  
+    //       }
+    //     });
+    //   });
+    // });
+    
+    // const watchSubtree = opts.shallow === undefined ? true : !opts.shallow;
+
+    // this.each(function() {
+    //   observer.observe(this, {
+    //     childList: true,
+    //     subtree: watchSubtree,
+    //   })
+    // });
+    
+  
+  };  
+
+  window.addEventListener("load", function(event) {
+    console.log("All resources finished loading!");
+
+    Object.entries(scopes).forEach((arr) => {
+      const scope = arr[0];
+      const actions = arr[1];
+
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          // Watch for both added and removed elements, and behave accordingly.
+          ['added', 'removed'].forEach((operation) => {
+            Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
+              if (node.nodeType === 1) {
+                actions.forEach((action) => {
+                  console.log('node', node)                
+                  if (node.matches(action.watch)) {
+                    debugger
+                    action[operation](node);
+                    observer.takeRecords();
+                  }    
+                });
+              }
+            });
+          });
+        });
+      });
+
+      Array.from(document.querySelectorAll(scope)).forEach((elem) => {
+        observer.observe(elem, {
+          childList: true,
+          subtree: true,
+        });  
+      });
+
+    });
+  });
 
 }( jQuery ));
 
-$('p').lq({
+$('p').detect({
+  scope: '#watchElem',
+  added: function(elem) {
+    var newP = document.createElement('p');
+    newP.innerText = 'blah dee blah';
+    elem.parentElement.appendChild(newP);
+  },
+  removed: function(elem) {
+    alert(`where did you go P tag ${elem.innerText}?`)
+  }
+});
+
+$('li').detect({
+  scope: '#watchElem',
+  added: function(elem) {
+    var newP = document.createElement('li');
+    newP.innerText = 'new LI';
+    elem.parentElement.appendChild(newP);
+  },
+  removed: function(elem) {
+    alert(`where did you go LI tag ${elem.innerText}?`)
+  }
+});
+
+$('#watchElem2').detect2({
+  matches: 'p',
   added: function(elem) {
     var newP = document.createElement('p');
     newP.innerText = 'blah dee blah';
@@ -137,10 +245,20 @@ $('p').lq({
   }
 });
 
-$('li').lq({
+$('#watchElem2').detect2({
+  matches: 'li',
+  shallow: true,
   added: function(elem) {
     var newP = document.createElement('p');
-    newP.innerText = 'blah dee blah';
+    newP.innerText = 'oooooo oooo';
     elem.parentElement.appendChild(newP);
   }
 });
+
+
+// $(elem).detect({
+//   matches: string,   // simple query selector
+//   shallow: boolean,  // default: false
+//   added: function(elem),
+//   removed: function(elem),
+// })
