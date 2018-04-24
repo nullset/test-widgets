@@ -124,9 +124,13 @@ function randomNumber(max = 99999) {
   const scopes = {};
 
   $.fn.detect = function(opts) {
+    if (!opts.scope) {
+      opts.scope = 'html';
+    }
     if (!scopes[opts.scope]) {
       scopes[opts.scope] = [];
     }
+    console.log(scopes);
 
     scopes[opts.scope].push({
       watch: this.selector,
@@ -178,18 +182,25 @@ function randomNumber(max = 99999) {
       const actions = arr[1];
 
       const observer = new MutationObserver((mutations) => {
+        console.log('mutations', mutations);
         mutations.forEach((mutation) => {
           // Watch for both added and removed elements, and behave accordingly.
           ['added', 'removed'].forEach((operation) => {
             Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
               if (node.nodeType === 1) {
                 actions.forEach((action) => {
-                  console.log('node', node)                
+                  let matchingNodes;
                   if (node.matches(action.watch)) {
-                    debugger
-                    action[operation](node);
-                    observer.takeRecords();
-                  }    
+                    matchingNodes = [node];
+                  } else {
+                    matchingNodes = Array.from(node.querySelectorAll(action.watch));
+                  }
+                  matchingNodes.forEach((matchingNode) => {
+                    if (action[operation]) {
+                      action[operation](node);
+                      observer.takeRecords();  
+                    }
+                  });
                 });
               }
             });
@@ -222,13 +233,13 @@ $('p').detect({
 });
 
 $('li').detect({
-  scope: '#watchElem',
+  // scope: '#watchElem',
   added: function(elem) {
     var newP = document.createElement('li');
     newP.innerText = 'new LI';
     elem.parentElement.appendChild(newP);
   },
-  removed: function(elem) {
+  removed2: function(elem) {
     alert(`where did you go LI tag ${elem.innerText}?`)
   }
 });

@@ -126,9 +126,13 @@ function randomNumber() {
   var scopes = {};
 
   $.fn.detect = function (opts) {
+    if (!opts.scope) {
+      opts.scope = 'html';
+    }
     if (!scopes[opts.scope]) {
       scopes[opts.scope] = [];
     }
+    console.log(scopes);
 
     scopes[opts.scope].push({
       watch: this.selector,
@@ -179,18 +183,25 @@ function randomNumber() {
       var actions = arr[1];
 
       var observer = new MutationObserver(function (mutations) {
+        console.log('mutations', mutations);
         mutations.forEach(function (mutation) {
           // Watch for both added and removed elements, and behave accordingly.
           ['added', 'removed'].forEach(function (operation) {
             Array.from(mutation[operation + 'Nodes']).forEach(function (node) {
               if (node.nodeType === 1) {
                 actions.forEach(function (action) {
-                  console.log('node', node);
+                  var matchingNodes = void 0;
                   if (node.matches(action.watch)) {
-                    debugger;
-                    action[operation](node);
-                    observer.takeRecords();
+                    matchingNodes = [node];
+                  } else {
+                    matchingNodes = Array.from(node.querySelectorAll(action.watch));
                   }
+                  matchingNodes.forEach(function (matchingNode) {
+                    if (action[operation]) {
+                      action[operation](node);
+                      observer.takeRecords();
+                    }
+                  });
                 });
               }
             });
@@ -221,13 +232,13 @@ $('p').detect({
 });
 
 $('li').detect({
-  scope: '#watchElem',
+  // scope: '#watchElem',
   added: function added(elem) {
     var newP = document.createElement('li');
     newP.innerText = 'new LI';
     elem.parentElement.appendChild(newP);
   },
-  removed: function removed(elem) {
+  removed2: function removed2(elem) {
     alert('where did you go LI tag ' + elem.innerText + '?');
   }
 });
