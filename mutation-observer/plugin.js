@@ -121,102 +121,202 @@ function randomNumber(max = 99999) {
   
   };
 
-  const scopes = {};
+  const uuids = {};
+
+  function defaultValue(thing, def) {
+    return typeof thing === 'undefined' ? def : thing;
+  }
+
+  function run() {
+    Object.entries(window.detectChanges).forEach((arr) => {
+      const {elems, fn, fnOptions} = arr[1];
+      
+    });
+    // Array.from(document.querySelectorAll(opts.scope)).forEach((elem) => {
+    //   if (!elem.detectChanges) {
+    //     Object.defineProperty(elem, 'detectChanges', {
+    //       value: {}, 
+    //       writable: true,
+    //       enumerable: false,
+    //     })
+    //   }
+    // });
+  }
 
   $.fn.detect = function(opts) {
     if (!opts.scope) {
       opts.scope = 'html';
     }
-    if (!scopes[opts.scope]) {
-      scopes[opts.scope] = [];
+
+    if (!opts.options) {
+      opts.options = {};
     }
-    console.log(scopes);
 
-    scopes[opts.scope].push({
-      watch: this.selector,
-      added: opts.added,
-      removed: opts.removed,
+    const observerOptions = {
+      childList: defaultValue(opts.options.childList, true),
+      attributes: defaultValue(opts.options.attributes, true),
+      charaterData: defaultValue(opts.options.charaterData, true),
+      subtree: defaultValue(opts.options.subtree, true),
+      attributeOldValue: defaultValue(opts.options.attributeOldValue, undefined),
+      characterDataOldValue: defaultValue(opts.options.characterDataOldValue, undefined),
+      attributeFilter: defaultValue(opts.options.attributeFilter, undefined),
+    };
+
+    let key = [];
+    Object.entries(observerOptions).forEach((arr) => {
+      let value = typeof arr[1] === 'undefined' ? 'undefined' : arr[1].toString();
+      key.push(`${arr[0]}:${value}`);
     });
-
-    // const observer =  new MutationObserver((mutations) => {
-    //   mutations.forEach((mutation) => {
-    //     // Watch for both added and removed elements, and behave accordingly.
-    //     ['added', 'removed'].forEach((operation) => {
-    //       if (opts[operation]) {
-    //         Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
-    //           if (node.nodeType === 1) {
-    //             let matchingNodes;
-    //             if (node.matches(opts.matches)) {
-    //               matchingNodes = [node];
-    //             } else {
-    //               matchingNodes = Array.from(node.querySelectorAll(opts.matches));
-    //             }
-    //             matchingNodes.forEach((matchingNode) => {
-    //               opts[operation](node);
-    //               observer.takeRecords();
-    //             });
-    //           }
-    //         });  
-    //       }
-    //     });
-    //   });
-    // });
     
-    // const watchSubtree = opts.shallow === undefined ? true : !opts.shallow;
+    key = key.toString()
+    // if (!uuids[key]) {
+    //   uuids[key] = [];
+    // }
 
-    // this.each(function() {
-    //   observer.observe(this, {
-    //     childList: true,
-    //     subtree: watchSubtree,
-    //   })
+    // uuids[key].push({
+    //   scope: opts.scope,
+    //   watch: this.selector,
+    //   options: observerOptions,
+    //   added: opts.added,
+    //   removed: opts.removed,
     // });
-    
-  
-  };  
 
-  window.addEventListener("load", function(event) {
-    console.log("All resources finished loading!");
+    if (!window.detectChanges) {
+      Object.defineProperty(window, 'detectChanges', {
+        value: {},
+        writable: true,
+        enumerable: false,
+      });
+    }
 
-    Object.entries(scopes).forEach((arr) => {
-      const scope = arr[0];
-      const actions = arr[1];
-
-      const observer = new MutationObserver((mutations) => {
-        console.log('mutations', mutations);
-        mutations.forEach((mutation) => {
-          // Watch for both added and removed elements, and behave accordingly.
-          ['added', 'removed'].forEach((operation) => {
-            Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
-              if (node.nodeType === 1) {
-                actions.forEach((action) => {
-                  let matchingNodes;
-                  if (node.matches(action.watch)) {
-                    matchingNodes = [node];
-                  } else {
-                    matchingNodes = Array.from(node.querySelectorAll(action.watch));
-                  }
-                  matchingNodes.forEach((matchingNode) => {
-                    if (action[operation]) {
-                      action[operation](node);
-                      observer.takeRecords();  
+    if (!window.detectChanges[key]) {
+      window.detectChanges[key] = {
+        elems: {},
+        fnOptions: observerOptions,
+        fn: new MutationObserver((mutations) => {
+          console.log('mutations', mutations);
+          mutations.forEach((mutation) => {
+            // Watch for both added and removed elements, and behave accordingly.
+            ['added', 'removed'].forEach((operation) => {
+              Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
+                if (node.nodeType === 1) {
+                  actions.forEach((action) => {
+                    let matchingNodes;
+                    if (node.matches(action.watch)) {
+                      matchingNodes = [node];
+                    } else {
+                      matchingNodes = Array.from(node.querySelectorAll(action.watch));
                     }
+                    matchingNodes.forEach((matchingNode) => {
+                      if (action[operation]) {
+                        action[operation](node);
+                        observer.takeRecords();  
+                      }
+                    });
                   });
-                });
-              }
+                }
+              });
             });
           });
-        });
-      });
+        })
+      };
+    }
 
-      Array.from(document.querySelectorAll(scope)).forEach((elem) => {
-        observer.observe(elem, {
-          childList: true,
-          subtree: true,
-        });  
-      });
+    if (!window.detectChanges[key].elems[opts.scope]) {
+      window.detectChanges[key].elems[opts.scope] = {
+        added: [],
+        removed: []
+      }
+    }
 
-    });
-  });
+    if (opts.added) {
+      window.detectChanges[key].elems[opts.scope].added.push(opts.added);
+    }
+    
+    if (opts.removed) {
+      window.detectChanges[key].elems[opts.scope].removed.push(opts.removed);
+    }
+
+
+    // window.detectChanges[key].push({
+    //   scope: opts.scope,
+
+    // })
+
+    // const selector = this.selector;
+
+
+    // Array.from(document.querySelectorAll(opts.scope)).forEach((elem) => {
+    //   if (!opts.mutationObservers) {
+    //     Object.defineProperty(elem, 'mutationObservers', {
+    //       value: {
+    //         obs: {},
+    //       },
+    //       writable: true
+    //     });    
+    //   };
+
+    //   if (!elem.mutationObservers.obs[key]) {
+    //     elem.mutationObservers.obs[key] = {
+    //       observer: function() {},
+    //       watch: [],
+    //     }
+    //   }
+  
+    //   elem.mutationObservers.obs[key].watch.push({
+    //     elem: selector,
+    //     added: opts.added,
+    //     removed: opts.removed,
+    //   });  
+    // });
+
+
+  };  
+
+
+  window.addEventListener("load", run);
+
+  // window.addEventListener("load", function(event) {
+  //   console.log("All resources finished loading!");
+
+  //   Object.entries(uuids).forEach((arr) => {
+  //     const {scope, options} = arr[1][0];
+  //     const actions = arr[1];
+
+      // const observer = new MutationObserver((mutations) => {
+      //   console.log('mutations', mutations);
+      //   mutations.forEach((mutation) => {
+      //     // Watch for both added and removed elements, and behave accordingly.
+      //     ['added', 'removed'].forEach((operation) => {
+      //       Array.from(mutation[`${operation}Nodes`]).forEach((node) => {
+      //         if (node.nodeType === 1) {
+      //           actions.forEach((action) => {
+      //             let matchingNodes;
+      //             if (node.matches(action.watch)) {
+      //               matchingNodes = [node];
+      //             } else {
+      //               matchingNodes = Array.from(node.querySelectorAll(action.watch));
+      //             }
+      //             matchingNodes.forEach((matchingNode) => {
+      //               if (action[operation]) {
+      //                 action[operation](node);
+      //                 observer.takeRecords();  
+      //               }
+      //             });
+      //           });
+      //         }
+      //       });
+      //     });
+      //   });
+      // });
+
+  //     debugger
+  //     Array.from(document.querySelectorAll(scope)).forEach((elem) => {
+  //       observer.observe(elem, options);  
+  //     });
+
+  //   });
+  // });
 
 }( jQuery ));
 
