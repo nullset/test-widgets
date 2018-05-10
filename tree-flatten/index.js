@@ -368,19 +368,14 @@ const data = [{
 	"height": 37
 }];
 
-function walk(resource, path = []) {
+function walk2(resource, path = []) {
   const newPath = path.slice(0);
   newPath.push(resource.label);
   if (resource.children) {
     return resource.children.map((child) => {
-      return walk(child, newPath)
+      return walk2(child, newPath)
     });
-  //   // debugger
-  //   children.map((child) => {
-  //     path.push(this.walk(child, path));
-  //   });
   } else {
-    // newPath.push(resource.label);
     if (resource.rows.length > 0) {
       return resource.rows.map((child) => {
         const oldPath = newPath.slice(0);
@@ -390,44 +385,29 @@ function walk(resource, path = []) {
     } else {
       return newPath;
     }
-    // return newPath;
-    // return resource.rows.map((child) => {
-    //   const newPath = path.slice(0);
-    //   newPath.push(child.label);
-    //   return newPath;  
-    // });
   }
-  // return path;
 }
 
-const blah = walk(data[1])
-console.log(blah)
+// const blah = walk2(data[1])
+// console.log(blah)
 
 
-function origwalk(resource, cells = []) {
-  cells.push(resource.label);
-  const children = resource.children || resource.rows;
+function walk(resource, cells = []) {
+  const children = resource.children || resource.rows || 0;
+  if (resource.label) {
+    // resource.rowSpan = children.length;
+    cells.push(resource)
+  };
   if (children && children.length > 0) {
     return children.map((child) => {
-      return origwalk(child, cells.slice(0));
+      return walk(child, cells.slice(0));
     });
   } else {
+    debugger
     return cells;
   }
-  // if (resource.children) {
-  //   return resource.children.map((child) => {
-  //     return origwalk(child, cells.slice(0));
-  //   });
-  // } else if (resource.rows) {
-  //   if (resource.rows.length > 0) {
-  //     return resource.rows.map((child) => {
-  //       return origwalk(child, cells.slice(0));
-  //     });
-  //   } else {
-  //     return [cells];
-  //   }
-  // }
-  // return cells;
 }
-const blah1 = origwalk(data[1])
+
+// const blah1 = data.map((child) => walk(child))
+const blah1 = walk({children: data});
 console.log(blah1)
