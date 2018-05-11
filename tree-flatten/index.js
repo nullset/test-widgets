@@ -402,7 +402,7 @@ const currier = function(fn) {
 }
 
 function walk(resource, cells = [], parent) {
-  const children = resource.children || resource.rows || 0;
+  const children = resource.children || resource.rows;
   if (resource.label) {
     cells.push(resource)
   };
@@ -417,5 +417,64 @@ function walk(resource, cells = [], parent) {
 
 // const blah1 = data.map((child) => walk(child))
 const blah1 = walk({children: data});
-debugger
 console.log(blah1)
+
+function descendants(resource) {
+  if (resource.children && resource.children.length > 0) {
+    return resource.children.map((child) => {
+      return descendants(child);
+    });
+  } else if (resource.rows && resource.rows.length > 0) {
+    return resource.rows.length;
+  } else {
+    return 1;
+  }
+}
+
+function rowSpan(resource) {
+  return arraySum(descendants(resource));
+}
+
+function arraySum(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      sum += arraySum(arr[i]);
+    } else {
+      sum += arr[i];
+    }
+  }
+  return sum;
+}
+
+
+function descendantsOrig(resource) {
+  const children = resource.children || resource.rows;
+  if (children && children.length > 0) {
+    return children.map((child) => {
+      return descendants(child);
+    });
+  } else {
+    return 1;
+  }
+}
+
+function bloo(resource) {
+  const pHandler = {
+    get: function(target, name) {
+      console.log(target, name)
+      if (name === 'rowspan') {
+        return 42;
+      } else {
+        return name in target ? target[name] : 'it is undefined!';
+      }
+    }
+  }
+  return new Proxy(resource, pHandler);
+}
+
+const x = bloo({children: data});
+
+const allDesc = descendants({children: data});
+
+// console.log([].concat.apply([], allDesc))
