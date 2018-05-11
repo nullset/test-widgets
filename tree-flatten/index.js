@@ -391,23 +391,31 @@ function walk2(resource, path = []) {
 // const blah = walk2(data[1])
 // console.log(blah)
 
+const currier = function(fn) {
+  const args = Array.prototype.slice.call(arguments, 1);
 
-function walk(resource, cells = []) {
+  return function() {
+    return fn.apply(this, args.concat(
+      Array.prototype.slice.call(arguments, 0)
+    ));
+  }
+}
+
+function walk(resource, cells = [], parent) {
   const children = resource.children || resource.rows || 0;
   if (resource.label) {
-    // resource.rowSpan = children.length;
     cells.push(resource)
   };
   if (children && children.length > 0) {
     return children.map((child) => {
-      return walk(child, cells.slice(0));
+      return walk(child, cells.slice(0), resource);
     });
   } else {
-    debugger
     return cells;
   }
 }
 
 // const blah1 = data.map((child) => walk(child))
 const blah1 = walk({children: data});
+debugger
 console.log(blah1)
