@@ -6,7 +6,7 @@
   <title>Document</title>
   <script src="https://unpkg.com/jquery@1.12.4/dist/jquery.js"></script>
   <script src="https://unpkg.com/popper.js"></script>
-  <script src="https://unpkg.com/tooltip.js"></script>
+  <script src="https://unpkg.com/tooltip.js@1.2.0"></script>
   <script src="./ahaTooltip.js"></script>
   <link rel="stylesheet" href="./index.css">
 </head>
@@ -20,6 +20,7 @@
       <button class="btn2" title="<script>alert(2)</script><b>Only $5</b> one-time payment!">Add to basket</button>
     </p>
     
+    <button class="btn3" title="<script>alert(2)</script><b>Only $5</b> one-time payment!">Add to basket</button>
 
     <p style="margin-top: 100vh"></p>
 
@@ -29,13 +30,20 @@
     $(document).ahaTooltip({
       selector: '.btn',
       trigger: 'click',
+      container: 'body',
     })
 
     $('.btn2').ahaTooltip({
       trigger: 'hover',
-      html: true
+      html: true,
+      container: 'body',
     })
 
+    $('.btn3').ahaTooltip({
+      trigger: 'focus hover',
+      html: true,
+      container: 'body',
+    })
 
 
     // new Tooltip($('.btn'),{
