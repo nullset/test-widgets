@@ -1,6 +1,7 @@
 (function($) {
   const fnName = 'ahaTooltip';
-  const disabledName = `${fnName}Disabled`
+  const disabledName = `${fnName}Disabled`;
+
   $.fn[fnName] = function(opts = {}) {
 
     // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
@@ -16,26 +17,34 @@
       });
     }
 
-    function mergeData($elem, newData = {}) {
-      const oldData = $elem.data(fnName) || {};
-      const mergedData = Object.assign(oldData, newData);
-      $elem.data(fnName, mergedData);
-    }
-
     if (typeof opts === 'string') {
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
             if (!elem.dataset[disabledName]) {
               const tooltip = $(elem).data(fnName);
-              if (tooltip) tooltip.show();
+              if (tooltip) {
+                tooltip.show();
+
+                // Just calling `.show()` leaves `_isOpening` set to false if tooltip was already shown.
+                // Must set it to `true`, otherwise once the tooltip is disabled the user must trigger
+                // the close event twice before the tooltip will disappear.
+                tooltip._isOpening = true;
+              }
             }
           });
           break;
         case 'hide':
           this.each((i, elem) => {
             const tooltip = $(elem).data(fnName);
-            if (tooltip) tooltip.hide();
+            if (tooltip) {
+              tooltip.hide();
+
+              // Just calling `.hide()` leaves `_isOpening` set to true if tooltip was already shown.
+              // Must set it to `false`, otherwise once the tooltip is re-enabled the user must trigger
+              // the open event twice before the tooltip will reappear.
+              tooltip._isOpening = false;
+            }
           });
           break;
         case 'enable':
@@ -67,8 +76,8 @@
               tooltip.hide();
 
               // Just calling `.hide()` leaves `_isOpening` set to true if tooltip was already shown.
-              // Must set it to `false`, otherwise once re-enabled must trigger the open event twice
-              // before the tooltip will reappear.
+              // Must set it to `false`, otherwise once the tooltip is re-enabled the user must trigger
+              // the open event twice before the tooltip will reappear.
               tooltip._isOpening = false;
 
               // Store existing events for use when re-enabling.
