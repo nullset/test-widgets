@@ -1,6 +1,5 @@
 (function($) {
-  const selectors = new Map();
-
+  // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
   function mutationCallback(tooltip, mutations, observer) {
     mutations.forEach((mutation) => {
       tooltip.updateTitleContent(mutation.target.getAttribute(mutation.attributeName));
@@ -10,25 +9,11 @@
         observer.takeRecords();
       }
     });
-    // debugger
-    // const elem = tooltip.reference;
-    // elem.dataset.tooltip = elem.title;
-    // elem.removeAttribute('title');
-    // observer.takeRecords();
-    // tooltip.updateTitleContent(elem.dataset.tooltip);
   }
 
   $.fn.ahaTooltip = function(opts = {}) {
     const fn = $.fn.ahaTooltip;
     const fnName = 'ahaTooltip';
-
-    let context, selector;
-    if (this.selector) {
-      context = this.selector;
-    } else {
-      context = document;
-      selector = opts.selector;
-    }
 
     if (typeof opts === 'string') {
       switch (opts) {
@@ -56,17 +41,32 @@
           return;
       }
     } else {
+      // Default values when undefined
       opts.trigger = opts.trigger || 'hover';
+
+      let context, selector;
+      if (this.selector) {
+        context = this.selector;
+      } else {
+        context = document;
+        selector = opts.selector;
+      }
+
+      // Set original DOM event(s) that trigger Tooltip initialization.
       const domEvent = opts.trigger.replace(/hover/g, 'mouseenter').replace(/\s/g, ', ');
-      const optsTitle = opts.title;
+
 
       $(context).on(domEvent, selector, (e) => {
         const $target = $(e.currentTarget);
-        // const originalTitle = e.currentTarget.title;
+
+        // If the triggering element has a "title" attribute, move that content to the "dataset.title"
+        // and remove the original "title" attribute. This prevents the native browser title from
+        // displaying when the user hovers over the triggering element.
         if (e.currentTarget.title.length > 0) {
-          e.currentTarget.dataset.tooltip = e.currentTarget.title;
+          e.currentTarget.dataset.title = e.currentTarget.title;
           e.currentTarget.removeAttribute('title');
         }
+
         // First time element is activated, establish a tooltip event handler
         // that is used on all subsequent events.
         if (typeof $target.data(fnName) === 'undefined') {
