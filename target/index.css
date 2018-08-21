@@ -1,0 +1,5 @@
+.tabs > * {
+  display: none; }
+
+.tabs > *:target {
+  display: block; }

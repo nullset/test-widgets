@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div>
+    <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-left: 0px">Add to basket</button>
+    <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-top: 5vh">Add to basket</button>
+
+    <p style="text-align: right">
+      <button class="btn2" title="&lt;script&gt;alert()&lt;/script&gt;Only $5 one-time payment!">Add to basket</button>
+    </p>
+    
+
+    <p style="margin-top: 100vh"></p>
+
+
+  </div>
+  <script>
+
+    $('.btn, .btn2').tooltip({
+      boundary: 'window',
+      title: 'Only $5 one-time payment!',
+      container: 'body',
+      placement: 'auto',
+      html: true,
+    })
+    // $(document).tooltip({
+    //   selector: '.btn',
+    //   trigger: 'click',
+    // })
+
+    // $('.btn2').tooltip({
+    //   trigger: 'hover'
+    // })
+
+    // new Tooltip($('.btn'),{
+    //   title: $('.btn').attr('data-tooltip'),
+    //   trigger: "click",
+    // });
+
+  // document.addEventListener('DOMContentLoaded',function(){
+  //   var trigger = document.getElementsByClassName("is-success")[0];
+  //   var instance = new Tooltip(trigger,{
+  //     title: trigger.getAttribute('data-tooltip'),
+  //     trigger: "hover",
+  //   });
+  // });
+  </script>
+</body>
+</html>

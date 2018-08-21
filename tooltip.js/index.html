@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://unpkg.com/jquery@1.12.4/dist/jquery.js"></script>
+  <script src="https://unpkg.com/popper.js"></script>
+  <script src="https://unpkg.com/tooltip.js"></script>
+  <script src="./ahaTooltip.js"></script>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <div>
+    <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-left: 0px">Add to basket</button>
+    <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-top: 5vh">Add to basket</button>
+
+    <p style="text-align: right">
+      <button class="btn2" title="&lt;script&gt;alert(1)&lt;/script&gt;<b>Only $5</b> one-time payment!">Add to basket</button>
+      <button class="btn2" title="<script>alert(2)</script><b>Only $5</b> one-time payment!">Add to basket</button>
+    </p>
+    
+
+    <p style="margin-top: 100vh"></p>
+
+
+  </div>
+  <script>
+    $(document).ahaTooltip({
+      selector: '.btn',
+      trigger: 'click',
+    })
+
+    $('.btn2').ahaTooltip({
+      trigger: 'hover',
+      html: true
+    })
+
+
+
+    // new Tooltip($('.btn'),{
+    //   title: $('.btn').attr('data-tooltip'),
+    //   trigger: "click",
+    // });
+
+  // document.addEventListener('DOMContentLoaded',function(){
+  //   var trigger = document.getElementsByClassName("is-success")[0];
+  //   var instance = new Tooltip(trigger,{
+  //     title: trigger.getAttribute('data-tooltip'),
+  //     trigger: "hover",
+  //   });
+  // });
+  </script>
+</body>
+</html>
