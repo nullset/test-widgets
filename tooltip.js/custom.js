@@ -11,21 +11,35 @@
       });
     }
 
-    // Strip any <script>/<iframe> tags as those can open us up to XSS.
-    // Strip any attribute with a "javascript:" value for the same reason.
-    function stripScripts(str) {
+    // Escaping dangerous HTML content **SHOULD** be done server-side, however, people occasionally forget to do this.
+    // `cleanHTML` serves as a measure of last resort, removing explicitly dangerous tags, removing any non-whitelisted attributes,
+    // and ensuring that any references to external files point to actual external references (not inline JS).
+    function cleanHTML(str) {
       if (!str) return
       const dom = new DOMParser().parseFromString(str, 'text/html');
       const body = dom.body;
       const elems = dom.body.querySelectorAll('*');
 
       for (let node of elems) {
-        if (/^(SCRIPT|IFRAME)$/.test(node.nodeName.toUpperCase())) {
+        // Strip any <script>/<iframe> tags as those can open us up to XSS.
+        if (/^(script|iframe|style)$/i.test(node.nodeName)) {
           node.remove();
         } else {
           for (let attr of node.attributes) {
-            if (/javascript:/.test(attr.value)) {
+            // Strip any attribute with "javascript:" in the value.
+            if (/(j|&#106;|&#74;)avascript:/i.test(attr.value)) {
+              debugger
               node.removeAttribute(attr.name);
+            } else if (/href|src|srcset/i.test(attr.name)) {
+              // Strip any href, src, srcset attribute that does not start with `http://` or `https://`.
+              if (!/^https?:\/\//i.test(attr.value)) {
+                node.removeAttribute(attr.name);
+              }
+            } else {
+              // Strip any attributes that are not class, id, title, alt, width, or height.
+              if (!/class|id|title|alt|width|height/i.test(attr.name)) {
+                node.removeAttribute(attr.name);
+              }
             }
           }
         }
@@ -52,8 +66,8 @@
       const titleElem = popper.querySelector('[x-title]');
       const contentElem = popper.querySelector('[x-content]');
       if (tooltip.opts.html) {
-        titleElem.innerHTML = stripScripts(title) || '';
-        contentElem.innerHTML = stripScripts(content) || '';
+        titleElem.innerHTML = cleanHTML(title) || '';
+        contentElem.innerHTML = cleanHTML(content) || '';
       } else {
         titleElem.textContent = title || '';
         contentElem.textContent = content || '';
