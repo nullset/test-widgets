@@ -8,15 +8,16 @@
   <script src="https://unpkg.com/popper.js"></script>
   <!-- <script src="https://unpkg.com/sanitize-html"></script> -->
   <script src="./custom.js"></script>
-  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="./tooltip.css">
 </head>
 <body>
   <div>
     <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-left: 0px">Add to basket</button>
-    <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-top: 5vh">Add to basket</button>
+    <button class="btn" data-tooltip="Only $5 one-time payment!" data-content="<p>This is some stuff</p><ul><li>some other thing</li><li>and another</li></ul>" style="margin-top: 5vh">Add to basket</button>
+    <button class="btn4" data-tooltip="Only $5 one-time payment!" data-content="<p>This is some stuff Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p><ul><li>some other thing</li><li>and another</li></ul>" style="margin-top: 5vh">Add to basket</button>
 
     <p style="text-align: right">
-      <button class="btn2" title="<div>&lt;script&gt;alert(1)&lt;/script&gt;<b onclick='javascript:alert'>Only $5</b> one-time payment!</div>" data-content="<b>mon</b>keys">Add to basket</button>
+      <button class="btn2" title="<div>&lt;script&gt;alert(1)&lt;/script&gt;<b onclick='javascript:alert'>Only $5</b> one-time payment!</div>" data-content="<p>This is some stuff</p><ul><li>some other thing</li><li>and another</li></ul>">Add to basket</button>
       <button class="btn2" title="<script>alert(2)</script><b>Only $5</b> one-time payment!">Add to basket</button>
     </p>
     
@@ -31,7 +32,7 @@
       selector: '.btn',
       trigger: 'click',
       container: 'body',
-      placement: 'top'
+      placement: 'top',
     })
 
     $('.btn2').ahaTooltip({
@@ -47,6 +48,14 @@
       container: 'body',
     })
 
+    $(document).ahaTooltip({
+      selector: '.btn4',
+      trigger: 'click',
+      container: 'body',
+      html: true,
+      placement: 'top',
+      type: 'popover',
+    })
 
     // new Tooltip($('.btn'),{
     //   title: $('.btn').attr('data-tooltip'),

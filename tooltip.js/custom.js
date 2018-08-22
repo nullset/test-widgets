@@ -130,11 +130,12 @@
 
       opts.popper = popperDefaults;
       opts.html = opts.html || false;
-      opts.template = opts.template || `<div class="tooltip" role="tooltip">
-        <div class="tooltip-arrow"></div>
-        <div class="tooltip-inner">
-          <div class="tooltip-title" x-title></div>
-          <div class="tooltip-content" x-content></div>
+      opts.type = opts.type || 'tooltip';
+      opts.template = opts.template || `<div class="${opts.type}" role="tooltip">
+        <div class="${opts.type}-arrow"></div>
+        <div class="${opts.type}-inner">
+          <div class="${opts.type}-title" x-title></div>
+          <div class="${opts.type}-content" x-content></div>
         </div>
       </div>`;
 
