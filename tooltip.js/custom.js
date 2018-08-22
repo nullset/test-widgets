@@ -1,8 +1,104 @@
 (function($) {
   const fnName = 'ahaTooltip';
-  const disabledName = `${fnName}Disabled`;
 
   $.fn[fnName] = function(opts = {}) {
+
+    // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
+    function mutationCallback(tooltip, mutations, observer) {
+      mutations.forEach((mutation) => {
+        updateTooltipContent($(mutation.target));
+        observer.takeRecords();
+      });
+    }
+
+    // Strip any <script>/<iframe> tags as those can open us up to XSS.
+    // Strip any attribute with a "javascript:" value for the same reason.
+    function stripScripts(str) {
+      if (!str) return
+      const dom = new DOMParser().parseFromString(str, 'text/html');
+      const body = dom.body;
+      const elems = dom.body.querySelectorAll('*');
+
+      for (let node of elems) {
+        if (/^(SCRIPT|IFRAME)$/.test(node.nodeName.toUpperCase())) {
+          node.remove();
+        } else {
+          for (let attr of node.attributes) {
+            if (/javascript:/.test(attr.value)) {
+              node.removeAttribute(attr.name);
+            }
+          }
+        }
+      }
+      return body.innerHTML;
+    }
+
+    function setInnerHTML(element, str = '') {
+      element.innerHTML = str;
+    }
+
+    function updateTooltipContent($elem) {
+      const tooltip = $elem.data(fnName);
+      const elem = $elem[0];
+      let title = elem.title || elem.dataset.title || elem.dataset.tooltip;
+      let content = elem.dataset.content;
+
+      if (elem.title.length > 0) {
+        elem.dataset.title = elem.title;
+        elem.removeAttribute('title');
+      }
+
+      const popper = tooltip.instance.popper;
+      const titleElem = popper.querySelector('[x-title]');
+      const contentElem = popper.querySelector('[x-content]');
+      if (tooltip.opts.html) {
+        titleElem.innerHTML = stripScripts(title) || '';
+        contentElem.innerHTML = stripScripts(content) || '';
+      } else {
+        titleElem.textContent = title || '';
+        contentElem.textContent = content || '';
+      }
+    }
+
+    function createTooltip($triggerElem, opts) {
+      const template = $(opts.template)[0];
+      const tooltip = new Popper($triggerElem, template, opts.popper);
+      const data = { instance: tooltip, enabled: true, opts };
+      $triggerElem.data(fnName, data);
+      updateTooltipContent($triggerElem);
+
+
+      // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
+      // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
+      // and have those changes automatically reflected in the tooltip popup.
+      var observer = new MutationObserver(mutationCallback.bind(null, tooltip));
+      observer.observe($triggerElem[0], {
+        attributes: true,
+        attributeFilter: ["title", "data-tooltip", "data-title", "data-content"],
+      });
+
+      return data;
+    }
+
+    function appendTooltipElem(tooltip) {
+      $(tooltip.opts.container).append(tooltip.instance.popper);
+    }
+
+    function openTooltip($triggerElem, opts) {
+      const tooltip = $triggerElem.data(fnName) || createTooltip($triggerElem, opts);
+      if (tooltip.enabled) {
+        tooltip.instance.update();
+        tooltip.isVisible = true;
+        appendTooltipElem(tooltip)
+      }
+    }
+
+    function closeTooltip($triggerElem) {
+      const tooltip = $triggerElem.data(fnName);
+      tooltip.isVisible = false;
+      // Remove the popper's DOM node.
+      tooltip.instance.popper.remove();
+    }
 
     const popperDefaults = {
       placement: 'auto',
@@ -20,86 +116,6 @@
       preventOverflow: {
         boundariesElement: "scrollView"
       }
-    }
-
-    function mergeData($elem, newData = {}) {
-      const oldData = $elem.data(fnName) || {};
-      const mergedData = Object.assign(oldData, newData);
-      $elem.data(fnName, mergedData);
-    }
-
-    // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
-    function mutationCallback(tooltip, mutations, observer) {
-      mutations.forEach((mutation) => {
-        const value = mutation.target.getAttribute(mutation.attributeName);
-        tooltip.updateTitleContent(value);
-        if (mutation.attributeName === 'title') {
-          mutation.target.dataset.title = mutation.target.title;
-          mutation.target.removeAttribute('title');
-          observer.takeRecords();
-        }
-      });
-    }
-
-    function stripScripts(str) {
-      if (!str) return
-      const dom = new DOMParser().parseFromString(str, 'text/html');
-      const body = dom.body;
-      const scripts = body.querySelectorAll('script');
-      Array.from(scripts).forEach((script) => script.remove());
-      return body.innerHTML;
-    }
-
-    function updateTooltipContent($elem, opts) {
-      const tooltip = $elem.data(fnName);
-      const elem = $elem[0];
-      let title = elem.title || elem.dataset.title || elem.dataset.tooltip;
-      let content = elem.dataset.content;
-
-      elem.removeAttribute('title');
-
-      const popper = tooltip.instance.popper;
-      const titleElem = popper.querySelector('[x-title]');
-      const contentElem = popper.querySelector('[x-content]');
-      if (tooltip.opts.html) {
-        titleElem.innerHTML = stripScripts(title);
-        contentElem.innerHTML = stripScripts(content);
-      } else {
-        titleElem.textContent = title;
-        contentElem.textContent = content;
-      }
-
-      // const data = $elem.data(fnName);
-      // data.instance.popper = popper;
-      // mergeData($elem, data);
-    }
-
-    function createTooltip($triggerElem, opts) {
-      const template = $(opts.template)[0];
-      const tooltip = new Popper($triggerElem, template, opts.popper);
-      const data = { instance: tooltip, enabled: true, opts };
-      $triggerElem.data(fnName, data);
-      updateTooltipContent($triggerElem, opts);
-      return data;
-    }
-
-    function appendTooltipElem(tooltip) {
-      $(tooltip.opts.container).append(tooltip.instance.popper);
-    }
-
-    function openTooltip($triggerElem, opts) {
-      const tooltip = $triggerElem.data(fnName) || createTooltip($triggerElem, opts);
-      if (tooltip.enabled) {
-        tooltip.isVisible = true;
-        appendTooltipElem(tooltip)
-      }
-    }
-
-    function closeTooltip($triggerElem) {
-      const tooltip = $triggerElem.data(fnName);
-      tooltip.isVisible = false;
-      // Remove the popper's DOM node.
-      tooltip.instance.popper.remove();
     }
 
     if (typeof opts !== 'string') {
@@ -121,18 +137,6 @@
           <div class="tooltip-content" x-content></div>
         </div>
       </div>`;
-      
-      // Object.assign({
-      //   base: 'tooltip',
-      //   separator: '-',
-      //   get html: `<div class="${this.base}" role="tooltip">
-      //     <div class="${this.base}${this.separator}arrow" data-arrow></div>
-      //     <div class="${this.base}${this.separator}inner">
-      //       <div class="${this.base}${this.separator}title"></div>
-      //       <div class="${this.base}${this.separator}content"></div>
-      //     </div>
-      //   </div>`,
-      // }, opts.template);
 
       const { trigger } = opts;
       const [ onEvent, offEvent ] = (function(trigger) {
@@ -150,7 +154,6 @@
 
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
-          // createTooltip($(e.currentTarget));
           openTooltip($(e.currentTarget), opts);
         }).on(offEvent, (e) => {
           closeTooltip($(e.currentTarget))
@@ -189,7 +192,7 @@
             const $triggerElem = $(elem)
             const tooltip = $triggerElem.data(fnName);
             if (tooltip) {
-              mergeData($triggerElem, { enabled: true });
+              tooltip.enabled = true;
             }
           });
           break;
@@ -198,7 +201,7 @@
             const $triggerElem = $(elem)
             const tooltip = $triggerElem.data(fnName);
             if (tooltip) {
-              mergeData($triggerElem, { enabled: false });
+              tooltip.enabled = false;
             }
           });
           break;

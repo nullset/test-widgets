@@ -16,7 +16,7 @@
     <button class="btn" data-tooltip="Only $5 one-time payment!" style="margin-top: 5vh">Add to basket</button>
 
     <p style="text-align: right">
-      <button class="btn2" title="&lt;script&gt;alert(1)&lt;/script&gt;<b>Only $5</b> one-time payment!">Add to basket</button>
+      <button class="btn2" title="<div>&lt;script&gt;alert(1)&lt;/script&gt;<b onclick='javascript:alert'>Only $5</b> one-time payment!</div>" data-content="<b>mon</b>keys">Add to basket</button>
       <button class="btn2" title="<script>alert(2)</script><b>Only $5</b> one-time payment!">Add to basket</button>
     </p>
     
@@ -42,7 +42,7 @@
     })
 
     $('.btn3').ahaTooltip({
-      trigger: 'focus hover',
+      trigger: 'click',
       html: true,
       container: 'body',
     })
