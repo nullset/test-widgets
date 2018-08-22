@@ -28,7 +28,6 @@
           for (let attr of node.attributes) {
             // Strip any attribute with "javascript:" in the value.
             if (/(j|&#106;|&#74;)avascript:/i.test(attr.value)) {
-              debugger
               node.removeAttribute(attr.name);
             } else if (/href|src|srcset/i.test(attr.name)) {
               // Strip any href, src, srcset attribute that does not start with `http://` or `https://`.
