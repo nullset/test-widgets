@@ -94,7 +94,7 @@
     }
 
     function appendTooltipElem(tooltip) {
-      $(tooltip.opts.container).append(tooltip.instance.popper);
+
     }
 
     function openTooltip($triggerElem, opts) {
@@ -102,7 +102,8 @@
       if (tooltip.enabled) {
         tooltip.instance.update();
         tooltip.isVisible = true;
-        appendTooltipElem(tooltip)
+        $container = tooltip.opts.container ? $(tooltip.opts.container) : $triggerElem;
+        $container.append(tooltip.instance.popper);
       }
     }
 
