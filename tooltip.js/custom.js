@@ -165,55 +165,58 @@
     }
 
     function getOnOffEvents(opts) {
-      return [ onEvent, offEvent ] = (function(trigger) {
-        switch (trigger) {
-          case 'click':
-            return ['click'];
-          case 'focus':
-            return ['focus', 'blur'];
-          case 'hover':
-            return ['mouseenter', 'mouseleave'];
-          default:
-            return ['mouseenter', 'mouseleave'];
+      const triggers = opts.trigger.split(' ').map(x => x.trim());
+      // TODO: Need to handle touch events.
+      return triggers.reduce((acc, trigger) => {
+        if (trigger === 'click') {
+          acc.push(['click']);
+        } else if (trigger === 'focus') {
+          acc.push(['focus', 'blur']);
+        } else if (trigger === 'hover') {
+          acc.push(['mouseenter', 'mouseleave']);
         }
-      })(opts.trigger);
+        return acc;
+      }, []);
     }
 
     function bindEvents(context, selector, opts) {
-      const [ onEvent, offEvent] = getOnOffEvents(opts);
-      if (offEvent) {
-        $(context).on(onEvent, selector, function onHandler(e) {
-          console.log('onEvent', onEvent);
-          const inlineOpts = e.currentTarget.dataset;
-          opts = deepmerge(opts, inlineOpts);
-          if (inlineOpts.trigger) {
-            delete inlineOpts.trigger;
-            $(context).off(onEvent, selector, onHandler);
-            bindEvents(context, selector, opts);
-          } else {
-            openTooltip(e.currentTarget, opts);
-          }
-        }).on(offEvent, selector, function offHandler(e) {
-          console.log('offEvent', offEvent);
-          const inlineOpts = e.currentTarget.dataset;
-          opts = deepmerge(opts, inlineOpts);
-          if (inlineOpts.trigger) {
-            delete inlineOpts.trigger;
-            $(context).off(offEvent, selector, offHandler);
-          } else {
-            closeTooltip(e.currentTarget);
-          }
-        });
-      } else {
-        $(context).on(onEvent, selector, (e) => {
-          const tooltip = getTooltip(e.currentTarget);
-          if (tooltip && tooltip.isVisible) {
-            closeTooltip(e.currentTarget);
-          } else {
-            openTooltip(e.currentTarget, opts);
-          }
-        });
-      }
+      getOnOffEvents(opts).forEach((event) => {
+        const [ onEvent, offEvent] = event;
+        if (offEvent) {
+          $(context).on(onEvent, selector, function onHandler(e) {
+            console.log('onEvent', onEvent);
+            const inlineOpts = e.currentTarget.dataset;
+            opts = deepmerge(opts, inlineOpts);
+            console.log(opts.trigger, inlineOpts.trigger)
+            if (inlineOpts.trigger && inlineOpts.trigger !== onEvent) {
+              delete inlineOpts.trigger;
+              $(context).off(onEvent, selector, onHandler);
+              bindEvents(context, selector, opts);
+            } else {
+              openTooltip(e.currentTarget, opts);
+            }
+          }).on(offEvent, selector, function offHandler(e) {
+            console.log('offEvent', offEvent);
+            const inlineOpts = e.currentTarget.dataset;
+            opts = deepmerge(opts, inlineOpts);
+            if (inlineOpts.trigger && inlineOpts.trigger !== onEvent) {
+              delete inlineOpts.trigger;
+              $(context).off(offEvent, selector, offHandler);
+            } else {
+              closeTooltip(e.currentTarget);
+            }
+          });
+        } else {
+          $(context).on(onEvent, selector, (e) => {
+            const tooltip = getTooltip(e.currentTarget);
+            if (tooltip && tooltip.isVisible) {
+              closeTooltip(e.currentTarget);
+            } else {
+              openTooltip(e.currentTarget, opts);
+            }
+          });
+        }
+      });
     }
 
     const popperDefaults = {
@@ -247,6 +250,7 @@
       const ahaTooltipDefaults = {
         popper: popperDefaults,
         html: false,
+        trigger: 'hover focus',
         delay: {
           show: 0,
           hide: 0,
