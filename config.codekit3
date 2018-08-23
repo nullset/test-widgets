@@ -2504,6 +2504,16 @@
 		"oAP": "\/tooltip.js\/bootstrap.html",
 		"oF": 0
 		},
+	"\/tooltip.js\/clicks.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/tooltip.js\/clicks-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
 	"\/tooltip.js\/custom.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -2515,7 +2525,7 @@
 		"ft": 64,
 		"ma": 0,
 		"mi": 0,
-		"oA": 1,
+		"oA": 0,
 		"oAP": "\/tooltip.js\/custom-min.js",
 		"oF": 1,
 		"sC": 0,
@@ -2558,6 +2568,16 @@
 		"oAP": "\/tooltip.js\/index.html",
 		"oF": 0
 		},
+	"\/tooltip.js\/tooltip.css": {
+		"aP": 0,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/tooltip.js\/tooltip-min.css",
+		"oF": 0,
+		"oS": 3
+		},
 	"\/tooltip.js\/tooltip.less": {
 		"aP": 0,
 		"bl": 0,
@@ -2566,9 +2586,9 @@
 		"ie": 1,
 		"iI": 0,
 		"ma": 0,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/tooltip.js\/tooltip.css",
-		"oF": 2,
+		"oF": 3,
 		"oS": 0,
 		"rU": 0,
 		"sI": 0,
@@ -2720,7 +2740,7 @@
 			"active": 0
 			},
 		"es2015-arrow-functions": {
-			"active": 0
+			"active": 1
 			},
 		"es2015-block-scoped-functions": {
 			"active": 0
@@ -2735,7 +2755,7 @@
 			"active": 0
 			},
 		"es2015-constants": {
-			"active": 0
+			"active": 1
 			},
 		"es2015-destructuring": {
 			"active": 0

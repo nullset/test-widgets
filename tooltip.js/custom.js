@@ -1,12 +1,12 @@
 (function($) {
-  const fnName = 'ahaTooltip';
+  const refs = new WeakMap();
 
-  $.fn[fnName] = function(opts = {}) {
+  $.fn.ahaTooltip = function(opts = {}) {
 
     // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
     function mutationCallback(tooltip, mutations, observer) {
       mutations.forEach((mutation) => {
-        updateTooltipContent($(mutation.target));
+        updateTooltipContent(mutation.target);
         observer.takeRecords();
       });
     }
@@ -50,9 +50,8 @@
       element.innerHTML = str;
     }
 
-    function updateTooltipContent($elem) {
-      const tooltip = $elem.data(fnName);
-      const elem = $elem[0];
+    function updateTooltipContent(elem) {
+      const tooltip = refs.get(elem);
       let title = elem.title || elem.dataset.title || elem.dataset.tooltip;
       let content = elem.dataset.content;
 
@@ -73,45 +72,73 @@
       }
     }
 
-    function createTooltip($triggerElem, opts) {
+    function createTooltip(triggerElem, opts) {
       const template = $(opts.template)[0];
-      const tooltip = new Popper($triggerElem, template, opts.popper);
+      const tooltip = new Popper(triggerElem, template, opts.popper);
       const data = { instance: tooltip, enabled: true, opts };
-      $triggerElem.data(fnName, data);
-      updateTooltipContent($triggerElem);
+      refs.set(triggerElem, data);
+      updateTooltipContent(triggerElem);
 
 
       // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
       // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
       // and have those changes automatically reflected in the tooltip popup.
       var observer = new MutationObserver(mutationCallback.bind(null, tooltip));
-      observer.observe($triggerElem[0], {
+      observer.observe(triggerElem, {
         attributes: true,
         attributeFilter: ["title", "data-tooltip", "data-title", "data-content"],
       });
-
-      return data;
     }
 
-    function appendTooltipElem(tooltip) {
-
+    function openTooltip(triggerElem, opts) {
+      triggerElem.setAttribute('x-tooltip', '');
+      if (!refs.get(triggerElem)) {
+        createTooltip(triggerElem, opts);
+      }
+      appendTooltip(triggerElem);
     }
 
-    function openTooltip($triggerElem, opts) {
-      const tooltip = $triggerElem.data(fnName) || createTooltip($triggerElem, opts);
-      if (tooltip.enabled) {
+    function appendTooltip(triggerElem) {
+      const tooltip = refs.get(triggerElem);
+      if (tooltip && tooltip.enabled) {
         tooltip.instance.update();
         tooltip.isVisible = true;
-        $container = tooltip.opts.container ? $(tooltip.opts.container) : $triggerElem;
-        $container.append(tooltip.instance.popper);
+        container = tooltip.opts.container ? document.querySelector(tooltip.opts.container) : triggerElem;
+        container.appendChild(tooltip.instance.popper);
       }
     }
 
-    function closeTooltip($triggerElem) {
-      const tooltip = $triggerElem.data(fnName);
-      tooltip.isVisible = false;
-      // Remove the popper's DOM node.
-      tooltip.instance.popper.remove();
+    function closeTooltip(triggerElem) {
+      triggerElem.removeAttribute('x-tooltip');
+      const tooltip = refs.get(triggerElem);
+      if (tooltip) {
+        tooltip.isVisible = false;
+        tooltip.instance.popper.remove();
+      }
+    }
+
+    function enableTooltip(triggerElem) {
+      const tooltip = refs.get(triggerElem);
+      if (tooltip) {
+        tooltip.enabled = true;
+      }
+    }
+
+    function disableTooltip(triggerElem) {
+      closeTooltip(triggerElem);
+      const tooltip = refs.get(triggerElem);
+      if (tooltip) {
+        tooltip.enabled = false;
+      }
+    }
+
+    function destroyTooltip(triggerElem) {
+      closeTooltip(triggerElem);
+      const tooltip = refs.get(triggerElem);
+      if (tooltip) {
+        tooltip.instance.destroy();
+        refs.delete(triggerElem);
+      }
     }
 
     const popperDefaults = {
@@ -128,7 +155,7 @@
         }
       },
       preventOverflow: {
-        boundariesElement: "scrollView"
+        boundariesElement: "viewScroll"
       }
     }
 
@@ -169,18 +196,18 @@
 
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
-          openTooltip($(e.currentTarget), opts);
+          openTooltip(e.currentTarget, opts);
         }).on(offEvent, (e) => {
-          closeTooltip($(e.currentTarget))
+          closeTooltip(e.currentTarget)
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
-          const $triggerElem = $(e.currentTarget);
-          const tooltip = $triggerElem.data(fnName);
+          console.log('Event', onEvent);
+          const tooltip = refs.get(e.currentTarget);
           if (tooltip && tooltip.isVisible) {
-            closeTooltip($triggerElem);
+            closeTooltip(e.currentTarget);
           } else {
-            openTooltip($triggerElem, opts);
+            openTooltip(e.currentTarget, opts);
           }
         });
       }
@@ -188,44 +215,27 @@
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            const tooltip = $(elem).data(fnName);
-            if (tooltip) {
-              $(tooltip.opts.container).append(tooltip.instance.popper);
-            }
+            appendTooltip(elem);
           });
           break;
         case 'hide':
           this.each((i, elem) => {
-            const $triggerElem = $(elem);
-            if ($triggerElem.data(fnName)) {
-              closeTooltip($triggerElem);
-            }
+            closeTooltip(elem);
           });
           break;
         case 'enable':
           this.each((i, elem) => {
-            const $triggerElem = $(elem)
-            const tooltip = $triggerElem.data(fnName);
-            if (tooltip) {
-              tooltip.enabled = true;
-            }
+            enableTooltip(elem);
           });
           break;
         case 'disable':
           this.each((i, elem) => {
-            const $triggerElem = $(elem)
-            const tooltip = $triggerElem.data(fnName);
-            if (tooltip) {
-              tooltip.enabled = false;
-            }
+            disableTooltip(elem);
           });
           break;
         case 'dispose':
           this.each((i, elem) => {
-            const $triggerElem = $(elem)
-            const tooltip = $triggerElem.data(fnName);
-            tooltip.instance.destroy();
-            $triggerElem.removeData(fnName);
+            destroyTooltip(elem);
           });
           break;
         default:
