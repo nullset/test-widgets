@@ -1,14 +1,14 @@
-.tooltip {
+.aha-tooltip {
   position: absolute;
   background: #FFC107;
   color: black;
-  width: 150px;
+  max-width: 150px;
   border-radius: 3px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   padding: 10px;
   text-align: center;
 }
-.tooltip .tooltip-arrow {
+.aha-tooltip .aha-tooltip__arrow {
   width: 0;
   height: 0;
   border-style: solid;
@@ -16,13 +16,10 @@
   margin: 5px;
   border-color: #FFC107;
 }
-.tooltip .tooltip-content {
-  font-size: smaller;
-}
-.tooltip[x-placement^="top"] {
+.aha-tooltip[x-placement^="top"] {
   margin-bottom: 5px;
 }
-.tooltip[x-placement^="top"] .tooltip-arrow {
+.aha-tooltip[x-placement^="top"] .aha-tooltip__arrow {
   border-width: 5px 5px 0 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -32,10 +29,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.tooltip[x-placement^="bottom"] {
+.aha-tooltip[x-placement^="bottom"] {
   margin-top: 5px;
 }
-.tooltip[x-placement^="bottom"] .tooltip-arrow {
+.aha-tooltip[x-placement^="bottom"] .aha-tooltip__arrow {
   border-width: 0 5px 5px 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -45,10 +42,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.tooltip[x-placement^="right"] {
+.aha-tooltip[x-placement^="right"] {
   margin-left: 5px;
 }
-.tooltip[x-placement^="right"] .tooltip-arrow {
+.aha-tooltip[x-placement^="right"] .aha-tooltip__arrow {
   border-width: 5px 5px 5px 0;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -58,10 +55,10 @@
   margin-left: 0;
   margin-right: 0;
 }
-.tooltip[x-placement^="left"] {
+.aha-tooltip[x-placement^="left"] {
   margin-right: 5px;
 }
-.tooltip[x-placement^="left"] .tooltip-arrow {
+.aha-tooltip[x-placement^="left"] .aha-tooltip__arrow {
   border-width: 5px 0 5px 5px;
   border-top-color: transparent;
   border-right-color: transparent;
@@ -71,17 +68,11 @@
   margin-left: 0;
   margin-right: 0;
 }
-.popover {
-  position: absolute;
+.aha-tooltip--popover {
   background: red;
-  color: black;
   max-width: 40vw;
-  border-radius: 3px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  text-align: center;
 }
-.popover .popover-arrow {
+.aha-tooltip--popover .aha-tooltip__arrow {
   width: 0;
   height: 0;
   border-style: solid;
@@ -89,20 +80,10 @@
   margin: 10px;
   border-color: red;
 }
-.popover .popover-title {
-  font-weight: bold;
-  padding-bottom: 10px;
-}
-.popover .popover-content:not(:empty) {
-  border-top: 1px solid;
-  margin-left: -10px;
-  margin-right: -10px;
-  padding: 10px 10px 0;
-}
-.popover[x-placement^="top"] {
+.aha-tooltip--popover[x-placement^="top"] {
   margin-bottom: 10px;
 }
-.popover[x-placement^="top"] .popover-arrow {
+.aha-tooltip--popover[x-placement^="top"] .aha-tooltip__arrow {
   border-width: 10px 10px 0 10px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -112,10 +93,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.popover[x-placement^="bottom"] {
+.aha-tooltip--popover[x-placement^="bottom"] {
   margin-top: 10px;
 }
-.popover[x-placement^="bottom"] .popover-arrow {
+.aha-tooltip--popover[x-placement^="bottom"] .aha-tooltip__arrow {
   border-width: 0 10px 10px 10px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -125,10 +106,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.popover[x-placement^="right"] {
+.aha-tooltip--popover[x-placement^="right"] {
   margin-left: 10px;
 }
-.popover[x-placement^="right"] .popover-arrow {
+.aha-tooltip--popover[x-placement^="right"] .aha-tooltip__arrow {
   border-width: 10px 10px 10px 0;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -138,10 +119,10 @@
   margin-left: 0;
   margin-right: 0;
 }
-.popover[x-placement^="left"] {
+.aha-tooltip--popover[x-placement^="left"] {
   margin-right: 10px;
 }
-.popover[x-placement^="left"] .popover-arrow {
+.aha-tooltip--popover[x-placement^="left"] .aha-tooltip__arrow {
   border-width: 10px 0 10px 10px;
   border-top-color: transparent;
   border-right-color: transparent;
@@ -150,4 +131,14 @@
   top: calc(40%);
   margin-left: 0;
   margin-right: 0;
+}
+.aha-tooltip--popover .aha-tooltip__title {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+.aha-tooltip--popover .aha-tooltip__content:not(:empty) {
+  border-top: 1px solid;
+  margin-left: -10px;
+  margin-right: -10px;
+  padding: 10px 10px 0;
 }

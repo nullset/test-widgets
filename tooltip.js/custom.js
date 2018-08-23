@@ -153,7 +153,7 @@
       removeOnDestroy: false,
       modifiers: {
         arrow: {
-          element: '.tooltip-arrow, .tooltip__arrow',
+          element: '.aha-tooltip__arrow',
         },
         offset: {
           offset: 0,
@@ -176,12 +176,13 @@
 
       opts.popper = popperDefaults;
       opts.html = opts.html || false;
-      opts.type = opts.type || 'tooltip';
-      opts.template = opts.template || `<div class="${opts.type}" role="tooltip">
-        <div class="${opts.type}-arrow"></div>
-        <div class="${opts.type}-inner">
-          <div class="${opts.type}-title" x-title></div>
-          <div class="${opts.type}-content" x-content></div>
+      const typeCSS = opts.type ? ` aha-tooltip--${opts.type}` : '';
+
+      opts.template = opts.template || `<div class="aha-tooltip${typeCSS}" role="tooltip">
+        <div class="aha-tooltip__arrow"></div>
+        <div class="aha-tooltip__inner">
+          <div class="aha-tooltip__title" x-title></div>
+          <div class="aha-tooltip__content" x-content></div>
         </div>
       </div>`;
 
