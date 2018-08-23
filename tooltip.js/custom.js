@@ -179,32 +179,30 @@
       })(opts.trigger);
     }
 
-    function rebindEvents(triggerElem, opts) {
-
-    }
-
     function bindEvents(context, selector, opts) {
       const [ onEvent, offEvent] = getOnOffEvents(opts);
       if (offEvent) {
-        $(context).on(onEvent, selector, (e) => {
+        $(context).on(onEvent, selector, function onHandler(e) {
           console.log('onEvent', onEvent);
           const inlineOpts = e.currentTarget.dataset;
           opts = deepmerge(opts, inlineOpts);
           if (inlineOpts.trigger) {
-            $(context).off(onEvent, selector);
+            delete inlineOpts.trigger;
+            $(context).off(onEvent, selector, onHandler);
             bindEvents(context, selector, opts);
-            return;
+          } else {
+            openTooltip(e.currentTarget, opts);
           }
-          openTooltip(e.currentTarget, opts);
-        }).on(offEvent, selector, (e) => {
+        }).on(offEvent, selector, function offHandler(e) {
           console.log('offEvent', offEvent);
           const inlineOpts = e.currentTarget.dataset;
           opts = deepmerge(opts, inlineOpts);
           if (inlineOpts.trigger) {
-            $(context).off(offEvent, selector);
-            return;
+            delete inlineOpts.trigger;
+            $(context).off(offEvent, selector, offHandler);
+          } else {
+            closeTooltip(e.currentTarget);
           }
-          closeTooltip(e.currentTarget);
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
