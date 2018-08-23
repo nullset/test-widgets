@@ -203,7 +203,7 @@
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
           openTooltip(e.currentTarget, opts);
-        }).on(offEvent, (e) => {
+        }).on(offEvent, selector, (e) => {
           closeTooltip(e.currentTarget);
         });
       } else {
