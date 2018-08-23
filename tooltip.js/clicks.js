@@ -35,6 +35,8 @@ $(document).ready(function() {
       html: true,
       placement: 'top',
       type: 'popover',
-    })
+    });
+
+    $('.btn5').ahaTooltip();
 
 });
