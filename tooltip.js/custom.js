@@ -1,4 +1,6 @@
 (function($) {
+  // WeakMap of DOM nodes to tooltip instance. Using WeakMap allows values to be garbage collected when
+  // the element which forms the "key" is removed from the DOM.
   const refs = new WeakMap();
 
   $.fn.ahaTooltip = function(opts = {}) {
@@ -15,17 +17,17 @@
     // `cleanHTML` serves as a measure of last resort, removing explicitly dangerous tags, removing any non-whitelisted attributes,
     // and ensuring that any references to external files point to actual external references (not inline JS).
     function cleanHTML(str) {
-      if (!str) return
+      if (!str) return;
       const dom = new DOMParser().parseFromString(str, 'text/html');
       const body = dom.body;
       const elems = dom.body.querySelectorAll('*');
 
-      for (let node of elems) {
+      for (const node of elems) {
         // Strip any <script>/<iframe> tags as those can open us up to XSS.
         if (/^(script|iframe|style)$/i.test(node.nodeName)) {
           node.remove();
         } else {
-          for (let attr of node.attributes) {
+          for (const attr of node.attributes) {
             // Strip any attribute with "javascript:" in the value.
             if (/(j|&#106;|&#74;)avascript:/i.test(attr.value)) {
               node.removeAttribute(attr.name);
@@ -46,14 +48,10 @@
       return body.innerHTML;
     }
 
-    function setInnerHTML(element, str = '') {
-      element.innerHTML = str;
-    }
-
     function updateTooltipContent(elem) {
       const tooltip = refs.get(elem);
-      let title = elem.title || elem.dataset.title || elem.dataset.tooltip;
-      let content = elem.dataset.content;
+      const title = elem.title || elem.dataset.title || elem.dataset.tooltip;
+      const content = elem.dataset.content;
 
       if (elem.title.length > 0) {
         elem.dataset.title = elem.title;
@@ -83,11 +81,18 @@
       // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
       // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
       // and have those changes automatically reflected in the tooltip popup.
-      var observer = new MutationObserver(mutationCallback.bind(null, tooltip));
+      const observer = new MutationObserver(mutationCallback.bind(null, tooltip));
       observer.observe(triggerElem, {
         attributes: true,
-        attributeFilter: ["title", "data-tooltip", "data-title", "data-content"],
+        attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
       });
+    }
+
+    function repositionTooltip(triggerElem) {
+      const tooltip = refs.get(triggerElem);
+      if (tooltip) {
+        tooltip.instance.update();
+      }
     }
 
     function openTooltip(triggerElem, opts) {
@@ -101,9 +106,9 @@
     function appendTooltip(triggerElem) {
       const tooltip = refs.get(triggerElem);
       if (tooltip && tooltip.enabled) {
-        tooltip.instance.update();
         tooltip.isVisible = true;
-        container = tooltip.opts.container ? document.querySelector(tooltip.opts.container) : triggerElem;
+        repositionTooltip(triggerElem);
+        const container = tooltip.opts.container ? document.querySelector(tooltip.opts.container) : triggerElem;
         container.appendChild(tooltip.instance.popper);
       }
     }
@@ -148,16 +153,16 @@
       removeOnDestroy: false,
       modifiers: {
         arrow: {
-          element: ".tooltip-arrow, .tooltip__arrow"
+          element: '.tooltip-arrow, .tooltip__arrow',
         },
         offset: {
-          offset: 0
-        }
+          offset: 0,
+        },
       },
       preventOverflow: {
-        boundariesElement: "viewScroll"
-      }
-    }
+        boundariesElement: 'viewScroll'
+      },
+    };
 
     if (typeof opts !== 'string') {
       // Set context and selector for event assignment.
@@ -198,11 +203,10 @@
         $(context).on(onEvent, selector, (e) => {
           openTooltip(e.currentTarget, opts);
         }).on(offEvent, (e) => {
-          closeTooltip(e.currentTarget)
+          closeTooltip(e.currentTarget);
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
-          console.log('Event', onEvent);
           const tooltip = refs.get(e.currentTarget);
           if (tooltip && tooltip.isVisible) {
             closeTooltip(e.currentTarget);
