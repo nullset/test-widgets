@@ -1,14 +1,14 @@
 @tooltipArrowSize: 5px;
-@tooltipColor: #FFC107;
-@tooltipPadding: 10px;
+@tooltipBg: fade(#000, 80%);
+@tooltipPadding: 6px;
 
 @popoverArrowSize: 10px;
-@popoverColor: red;
+@popoverBg: red;
 @popoverPadding: 10px;
 
 
 // ----- MIXINS -----
-.arrow(@size, @color: @tooltipColor) {
+.arrow(@size, @color: @tooltipBg) {
   .aha-tooltip__arrow {
     width: 0;
     height: 0;
@@ -93,21 +93,36 @@
 // ----- STYLES -----
 .aha-tooltip {
   position: absolute;
-  background: @tooltipColor;
-  color: black;
-  max-width: 150px;
-  border-radius: 3px;
-  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  background: @tooltipBg;
+  color: #fff;
+  font-size: 11px;
+  max-width: 200px;
+  border-radius: 4px;
+  pointer-events: none;
+  // box-shadow: 0 0 2px rgba(0,0,0,0.5);
   padding: @tooltipPadding;
   text-align: center;
-  .arrow(@tooltipArrowSize, @tooltipColor);
+  opacity: 0;
+  transition: opacity 0.1s; // Controls how quickly transition occurs when going back to hidden state.
+  &[x-in] {
+    opacity: 1;
+    transition: opacity 0.3s; // Controls how quickly transition occurs when going to visible state.
+  }
+  &[x-out-of-boundaries] {
+    display: none;
+  }
+  .arrow(@tooltipArrowSize, @tooltipBg);
   .placements(@tooltipArrowSize);
 
   // ----- VARIANTS -----
   &--popover {
-    background: @popoverColor;
+    background: @popoverBg;
     max-width: 40vw;
-    .arrow(@popoverArrowSize, @popoverColor);
+    padding: @popoverPadding;
+    color: inherit;
+    font-size: inherit;
+    text-align: left;
+    .arrow(@popoverArrowSize, @popoverBg);
     .placements(@popoverArrowSize);
 
     .aha-tooltip__title {
@@ -123,86 +138,3 @@
 
   }
 }
-
-
-// .popover {
-//   position: absolute;
-//   background: @popoverColor;
-//   color: black;
-//   max-width: 40vw;
-//   // width: 150px;
-//   border-radius: 3px;
-//   box-shadow: 0 0 2px rgba(0,0,0,0.5);
-//   padding: @popoverPadding;
-//   text-align: center;
-//   .popover-arrow {
-//     width: 0;
-//     height: 0;
-//     border-style: solid;
-//     position: absolute;
-//     margin: @popoverArrowSize;
-//     border-color: @popoverColor;
-//   }
-//   .popover-title {
-//     font-weight: bold;
-//     padding-bottom: @popoverPadding;
-//   }
-//   .popover-content:not(:empty) {
-//     border-top: 1px solid;
-//     margin-left: -@popoverPadding;
-//     margin-right: -@popoverPadding;
-//     padding: @popoverPadding @popoverPadding 0;
-//   }
-//   &[x-placement^="top"] {
-//     margin-bottom: @popoverArrowSize;
-//     .popover-arrow {
-//       border-width: @popoverArrowSize @popoverArrowSize 0 @popoverArrowSize;
-//       border-left-color: transparent;
-//       border-right-color: transparent;
-//       border-bottom-color: transparent;
-//       bottom: -@popoverArrowSize;
-//       left: calc(50% - @popoverArrowSize);
-//       margin-top: 0;
-//       margin-bottom: 0;
-//     }
-//   }
-//   &[x-placement^="bottom"] {
-//     margin-top: @popoverArrowSize;
-//     .popover-arrow {
-//       border-width: 0 @popoverArrowSize @popoverArrowSize @popoverArrowSize;
-//       border-left-color: transparent;
-//       border-right-color: transparent;
-//       border-top-color: transparent;
-//       top: -@popoverArrowSize;
-//       left: calc(50% - @popoverArrowSize);
-//       margin-top: 0;
-//       margin-bottom: 0;
-//     }
-//   }
-//   &[x-placement^="right"] {
-//     margin-left: @popoverArrowSize;
-//     .popover-arrow {
-//       border-width: @popoverArrowSize @popoverArrowSize @popoverArrowSize 0;
-//       border-left-color: transparent;
-//       border-top-color: transparent;
-//       border-bottom-color: transparent;
-//       left: -@popoverArrowSize;
-//       top: calc(50% - @popoverArrowSize);
-//       margin-left: 0;
-//       margin-right: 0;
-//     }
-//   }
-//   &[x-placement^="left"] {
-//     margin-right: @popoverArrowSize;
-//     .popover-arrow {
-//         border-width: @popoverArrowSize 0 @popoverArrowSize @popoverArrowSize;
-//         border-top-color: transparent;
-//         border-right-color: transparent;
-//         border-bottom-color: transparent;
-//         right: -@popoverArrowSize;
-//         top: calc(50% - @popoverArrowSize);
-//         margin-left: 0;
-//         margin-right: 0;
-//     }
-//   }
-// }

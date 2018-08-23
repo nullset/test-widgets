@@ -1,12 +1,22 @@
 .aha-tooltip {
   position: absolute;
-  background: #FFC107;
-  color: black;
-  max-width: 150px;
-  border-radius: 3px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 11px;
+  max-width: 200px;
+  border-radius: 4px;
+  pointer-events: none;
+  padding: 6px;
   text-align: center;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.aha-tooltip[x-in] {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.aha-tooltip[x-out-of-boundaries] {
+  display: none;
 }
 .aha-tooltip .aha-tooltip__arrow {
   width: 0;
@@ -14,7 +24,7 @@
   border-style: solid;
   position: absolute;
   margin: 5px;
-  border-color: #FFC107;
+  border-color: rgba(0, 0, 0, 0.8);
 }
 .aha-tooltip[x-placement^="top"] {
   margin-bottom: 5px;
@@ -71,6 +81,10 @@
 .aha-tooltip--popover {
   background: red;
   max-width: 40vw;
+  padding: 10px;
+  color: inherit;
+  font-size: inherit;
+  text-align: left;
 }
 .aha-tooltip--popover .aha-tooltip__arrow {
   width: 0;

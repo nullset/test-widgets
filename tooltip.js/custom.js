@@ -4,6 +4,9 @@
   const refs = new WeakMap();
 
   $.fn.ahaTooltip = function(opts = {}) {
+    function getTooltip(elem) {
+      return refs.get(elem);
+    }
 
     // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
     function mutationCallback(tooltip, mutations, observer) {
@@ -49,7 +52,7 @@
     }
 
     function updateTooltipContent(elem) {
-      const tooltip = refs.get(elem);
+      const tooltip = getTooltip(elem);
       const title = elem.title || elem.dataset.title || elem.dataset.tooltip;
       const content = elem.dataset.content;
 
@@ -89,57 +92,72 @@
     }
 
     function repositionTooltip(triggerElem) {
-      const tooltip = refs.get(triggerElem);
+      const tooltip = getTooltip(triggerElem);
       if (tooltip) {
         tooltip.instance.update();
       }
     }
 
     function openTooltip(triggerElem, opts) {
-      triggerElem.setAttribute('x-tooltip', '');
-      if (!refs.get(triggerElem)) {
+      if (!getTooltip(triggerElem)) {
         createTooltip(triggerElem, opts);
       }
       appendTooltip(triggerElem);
     }
 
     function appendTooltip(triggerElem) {
-      const tooltip = refs.get(triggerElem);
+      const tooltip = getTooltip(triggerElem);
       if (tooltip && tooltip.enabled) {
+        clearTimeout(tooltip.timeout);
         tooltip.isVisible = true;
-        repositionTooltip(triggerElem);
-        const container = tooltip.opts.container ? document.querySelector(tooltip.opts.container) : triggerElem;
-        container.appendChild(tooltip.instance.popper);
+        tooltip.timeout = setTimeout(() => {
+          triggerElem.setAttribute('x-tooltip', '');
+          repositionTooltip(triggerElem);
+          const container = tooltip.opts.container ? document.querySelector(tooltip.opts.container) : triggerElem;
+          container.appendChild(tooltip.instance.popper);
+          requestAnimationFrame(() => tooltip.instance.popper.setAttribute('x-in', ''));
+        }, tooltip.opts.delay.show);
       }
     }
 
-    function closeTooltip(triggerElem) {
+    function fadeTooltipOut(tooltip) {
+      tooltip.instance.popper.removeEventListener('transitionend', tooltip.fadeOut);
+      tooltip.instance.popper.remove();
+      delete tooltip.fadeOut;
+    }
+
+    function closeTooltip(triggerElem, delayHide) {
       triggerElem.removeAttribute('x-tooltip');
-      const tooltip = refs.get(triggerElem);
+      const tooltip = getTooltip(triggerElem);
       if (tooltip) {
+        clearTimeout(tooltip.timeout);
         tooltip.isVisible = false;
-        tooltip.instance.popper.remove();
+        tooltip.fadeOut = fadeTooltipOut(tooltip);
+        tooltip.timeout = setTimeout(() => {
+          tooltip.instance.popper.addEventListener('transitionend', tooltip.fade);
+          tooltip.instance.popper.removeAttribute('x-in');
+        }, typeof delayHide === 'undefined' ? tooltip.opts.delay.hide : delayHide);
       }
     }
 
     function enableTooltip(triggerElem) {
-      const tooltip = refs.get(triggerElem);
+      const tooltip = getTooltip(triggerElem);
       if (tooltip) {
         tooltip.enabled = true;
       }
     }
 
     function disableTooltip(triggerElem) {
-      closeTooltip(triggerElem);
-      const tooltip = refs.get(triggerElem);
+      closeTooltip(triggerElem, 0);
+      const tooltip = getTooltip(triggerElem);
       if (tooltip) {
         tooltip.enabled = false;
       }
     }
 
     function destroyTooltip(triggerElem) {
-      closeTooltip(triggerElem);
-      const tooltip = refs.get(triggerElem);
+      closeTooltip(triggerElem, 0);
+      const tooltip = getTooltip(triggerElem);
       if (tooltip) {
         tooltip.instance.destroy();
         refs.delete(triggerElem);
@@ -174,17 +192,25 @@
         selector = opts.selector;
       }
 
-      opts.popper = popperDefaults;
-      opts.html = opts.html || false;
-      const typeCSS = opts.type ? ` aha-tooltip--${opts.type}` : '';
+      const ahaTooltipDefaults = {
+        popper: popperDefaults,
+        html: false,
+        delay: {
+          show: 0,
+          hide: 0,
+        }
+      }
 
-      opts.template = opts.template || `<div class="aha-tooltip${typeCSS}" role="tooltip">
+      opts = deepmerge(ahaTooltipDefaults, opts);
+
+      const defaultTemplate = `<div class="${['aha-tooltip', opts.type ? `aha-tooltip--${opts.type}` : ''].join(' ').trim()}" role="tooltip">
         <div class="aha-tooltip__arrow"></div>
         <div class="aha-tooltip__inner">
           <div class="aha-tooltip__title" x-title></div>
           <div class="aha-tooltip__content" x-content></div>
         </div>
       </div>`;
+      opts.template = opts.template || defaultTemplate;
 
       const { trigger } = opts;
       const [ onEvent, offEvent ] = (function(trigger) {
@@ -194,6 +220,7 @@
           case 'focus':
             return ['focus', 'blur'];
           case 'hover':
+            return ['mouseenter', 'mouseleave'];
           default:
             return ['mouseenter', 'mouseleave'];
         }
@@ -208,7 +235,7 @@
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
-          const tooltip = refs.get(e.currentTarget);
+          const tooltip = getTooltip(e.currentTarget);
           if (tooltip && tooltip.isVisible) {
             closeTooltip(e.currentTarget);
           } else {
@@ -225,7 +252,7 @@
           break;
         case 'hide':
           this.each((i, elem) => {
-            closeTooltip(elem);
+            closeTooltip(elem, 0);
           });
           break;
         case 'enable':

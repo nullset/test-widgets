@@ -5,13 +5,21 @@ $(document).ready(function() {
       trigger: 'click',
       container: 'body',
       placement: 'top',
+      delay: {
+        show: 1000,
+        hide: 1000,
+      }
     })
 
     $('.btn2').ahaTooltip({
       trigger: 'hover',
       html: true,
       // container: 'body',
-      placement: 'top'
+      placement: 'top',
+      // delay: {
+      //   show: 1000,
+      //   hide: 1000,
+      // }
     })
 
     $('.btn3').ahaTooltip({
