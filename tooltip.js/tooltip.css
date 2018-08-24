@@ -12,20 +12,27 @@
 .aha-tooltip[x-out-of-boundaries] {
   display: none;
 }
-.aha-tooltip .aha-tooltip__arrow,
-.aha-tooltip .aha-tooltip__arrow:after {
+.aha-tooltip--default {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 11px;
+  max-width: 200px;
+  text-align: center;
+}
+.aha-tooltip--default .aha-tooltip__arrow,
+.aha-tooltip--default .aha-tooltip__arrow:after {
   width: 0;
   height: 0;
   border-style: solid;
   position: absolute;
   margin: 5px;
-  border-color: transparent;
+  border-color: rgba(0, 0, 0, 0.8);
   content: "";
 }
-.aha-tooltip[x-placement^="top"] {
+.aha-tooltip--default[x-placement^="top"] {
   margin-bottom: 5px;
 }
-.aha-tooltip[x-placement^="top"] .aha-tooltip__arrow {
+.aha-tooltip--default[x-placement^="top"] .aha-tooltip__arrow {
   border-width: 5px 5px 0 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -35,8 +42,8 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.aha-tooltip[x-placement^="top"] .aha-tooltip__arrow:after {
-  border-color: rgba(0, 0, 0, 0.8);
+.aha-tooltip--default[x-placement^="top"] .aha-tooltip__arrow:after {
+  border-color: transparent;
   border-width: 5px 5px 0 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -46,10 +53,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.aha-tooltip[x-placement^="bottom"] {
+.aha-tooltip--default[x-placement^="bottom"] {
   margin-top: 5px;
 }
-.aha-tooltip[x-placement^="bottom"] .aha-tooltip__arrow {
+.aha-tooltip--default[x-placement^="bottom"] .aha-tooltip__arrow {
   border-width: 0 5px 5px 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -59,8 +66,8 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.aha-tooltip[x-placement^="bottom"] .aha-tooltip__arrow:after {
-  border-color: rgba(0, 0, 0, 0.8);
+.aha-tooltip--default[x-placement^="bottom"] .aha-tooltip__arrow:after {
+  border-color: transparent;
   border-width: 0 5px 5px 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -70,10 +77,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.aha-tooltip[x-placement^="right"] {
+.aha-tooltip--default[x-placement^="right"] {
   margin-left: 5px;
 }
-.aha-tooltip[x-placement^="right"] .aha-tooltip__arrow {
+.aha-tooltip--default[x-placement^="right"] .aha-tooltip__arrow {
   border-width: 5px 5px 5px 0;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -83,8 +90,8 @@
   margin-left: 0;
   margin-right: 0;
 }
-.aha-tooltip[x-placement^="right"] .aha-tooltip__arrow:after {
-  border-color: rgba(0, 0, 0, 0.8);
+.aha-tooltip--default[x-placement^="right"] .aha-tooltip__arrow:after {
+  border-color: transparent;
   border-width: 5px 5px 5px 0;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -94,10 +101,10 @@
   margin-left: 0;
   margin-right: 0;
 }
-.aha-tooltip[x-placement^="left"] {
+.aha-tooltip--default[x-placement^="left"] {
   margin-right: 5px;
 }
-.aha-tooltip[x-placement^="left"] .aha-tooltip__arrow {
+.aha-tooltip--default[x-placement^="left"] .aha-tooltip__arrow {
   border-width: 5px 0 5px 5px;
   border-top-color: transparent;
   border-right-color: transparent;
@@ -107,8 +114,8 @@
   margin-left: 0;
   margin-right: 0;
 }
-.aha-tooltip[x-placement^="left"] .aha-tooltip__arrow:after {
-  border-color: rgba(0, 0, 0, 0.8);
+.aha-tooltip--default[x-placement^="left"] .aha-tooltip__arrow:after {
+  border-color: transparent;
   border-width: 5px 0 5px 5px;
   border-top-color: transparent;
   border-right-color: transparent;
@@ -117,13 +124,6 @@
   top: -10px;
   margin-left: 0;
   margin-right: 0;
-}
-.aha-tooltip--default {
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  font-size: 11px;
-  max-width: 200px;
-  text-align: center;
 }
 .aha-tooltip--popover {
   background: #fff;

@@ -152,8 +152,6 @@
   &[x-out-of-boundaries] {
     display: none;
   }
-  .arrow(@tooltipArrowSize, transparent);
-  .placements(@tooltipArrowSize, @tooltipBg);
 
   // ----- VARIANTS -----
   &--default {
@@ -162,6 +160,8 @@
     font-size: 11px;
     max-width: 200px;
     text-align: center;
+    .arrow(@tooltipArrowSize, @tooltipBg);
+    .placements(@tooltipArrowSize, transparent);
   }
   &--popover {
     background: @popoverBg;
