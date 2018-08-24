@@ -125,12 +125,14 @@
   margin-right: 0;
 }
 .aha-tooltip--popover {
-  background: red;
+  background: #fff;
   max-width: 40vw;
-  padding: 10px;
+  padding: 0;
   color: inherit;
   font-size: inherit;
   text-align: left;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ddd;
 }
 .aha-tooltip--popover .aha-tooltip__arrow,
 .aha-tooltip--popover .aha-tooltip__arrow:after {
@@ -139,7 +141,7 @@
   border-style: solid;
   position: absolute;
   margin: 10px;
-  border-color: red;
+  border-color: #ddd;
   content: "";
 }
 .aha-tooltip--popover[x-placement^="top"] {
@@ -156,7 +158,7 @@
   margin-bottom: 0;
 }
 .aha-tooltip--popover[x-placement^="top"] .aha-tooltip__arrow:after {
-  border-color: green;
+  border-color: #fff;
   border-width: 10px 10px 0 10px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -180,7 +182,7 @@
   margin-bottom: 0;
 }
 .aha-tooltip--popover[x-placement^="bottom"] .aha-tooltip__arrow:after {
-  border-color: green;
+  border-color: #fff;
   border-width: 0 10px 10px 10px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -204,7 +206,7 @@
   margin-right: 0;
 }
 .aha-tooltip--popover[x-placement^="right"] .aha-tooltip__arrow:after {
-  border-color: green;
+  border-color: #fff;
   border-width: 10px 10px 10px 0;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -228,7 +230,7 @@
   margin-right: 0;
 }
 .aha-tooltip--popover[x-placement^="left"] .aha-tooltip__arrow:after {
-  border-color: green;
+  border-color: #fff;
   border-width: 10px 0 10px 10px;
   border-top-color: transparent;
   border-right-color: transparent;
@@ -240,11 +242,17 @@
 }
 .aha-tooltip--popover .aha-tooltip__title {
   font-weight: bold;
-  padding-bottom: 10px;
+  padding: 10px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .aha-tooltip--popover .aha-tooltip__content:not(:empty) {
-  border-top: 1px solid;
-  margin-left: -10px;
-  margin-right: -10px;
-  padding: 10px 10px 0;
+  border-top: 1px solid #ddd;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background: #fafafa;
+  padding: 10px;
+}
+.aha-tooltip--popover .aha-tooltip__content:not(:empty) *:last-child {
+  margin-bottom: 0;
 }

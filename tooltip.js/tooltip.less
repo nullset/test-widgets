@@ -2,10 +2,11 @@
 @tooltipBg: fade(#000, 80%);
 @tootlipBorderColor: @tooltipBg;
 @tooltipPadding: 6px;
+@tooltipRadius: 4px;
 
 @popoverArrowSize: 10px;
-@popoverBg: red;
-@popoverBorderColor: green;
+@popoverBg: #fff;
+@popoverBorderColor: #ddd;
 @popoverPadding: 10px;
 
 
@@ -144,7 +145,7 @@
   color: #fff;
   font-size: 11px;
   max-width: 200px;
-  border-radius: 4px;
+  border-radius: @tooltipRadius;
   pointer-events: none;
   // box-shadow: 0 0 2px rgba(0,0,0,0.5);
   padding: @tooltipPadding;
@@ -165,22 +166,32 @@
   &--popover {
     background: @popoverBg;
     max-width: 40vw;
-    padding: @popoverPadding;
+    padding: 0;
     color: inherit;
     font-size: inherit;
     text-align: left;
-    .arrow(@popoverArrowSize, @popoverBg);
-    .placements(@popoverArrowSize, @popoverBorderColor);
-
+    border: 1px solid @popoverBorderColor;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+    .arrow(@popoverArrowSize, @popoverBorderColor);
+    .placements(@popoverArrowSize, @popoverBg);
     .aha-tooltip__title {
       font-weight: bold;
-      padding-bottom: @popoverPadding;
+      padding: @popoverPadding;
+      border-top-left-radius: @tooltipRadius;
+      border-top-right-radius: @tooltipRadius;
     }
     .aha-tooltip__content:not(:empty) {
-      border-top: 1px solid;
-      margin-left: -@popoverPadding;
-      margin-right: -@popoverPadding;
-      padding: @popoverPadding @popoverPadding 0;
+      border-top: 1px solid @popoverBorderColor;
+      border-bottom-left-radius: @tooltipRadius;
+      border-bottom-right-radius: @tooltipRadius;
+      background: #fafafa;
+      // margin-left: -@popoverPadding;
+      // margin-right: -@popoverPadding;
+      padding: @popoverPadding;
+      *:last-child {
+        margin-bottom: 0;
+      }
     }
 
   }
