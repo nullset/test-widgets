@@ -253,6 +253,9 @@
   background: #fafafa;
   padding: 10px;
 }
+.aha-tooltip--popover .aha-tooltip__content:not(:empty) *:first-child {
+  margin-top: 0;
+}
 .aha-tooltip--popover .aha-tooltip__content:not(:empty) *:last-child {
   margin-bottom: 0;
 }
