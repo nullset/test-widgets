@@ -2514,6 +2514,16 @@
 		"sC": 0,
 		"tS": 1
 		},
+	"\/tooltip.js\/custom-min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/tooltip.js\/custom-min-min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
 	"\/tooltip.js\/custom.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -2529,7 +2539,7 @@
 		"oAP": "\/tooltip.js\/custom-min.js",
 		"oF": 0,
 		"sC": 0,
-		"tS": 1
+		"tS": 0
 		},
 	"\/tooltip.js\/custom2.js": {
 		"ft": 64,
@@ -2568,6 +2578,16 @@
 		"oAP": "\/tooltip.js\/index.html",
 		"oF": 0
 		},
+	"\/tooltip.js\/popover-arrow.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/tooltip.js\/popover-arrow.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
 	"\/tooltip.js\/tooltip.css": {
 		"aP": 0,
 		"bl": 0,
@@ -2587,8 +2607,8 @@
 		"iI": 0,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/css\/tooltip.css",
-		"oF": 0,
+		"oAP": "\/tooltip.js\/tooltip.css",
+		"oF": 2,
 		"oS": 0,
 		"rU": 0,
 		"sI": 0,

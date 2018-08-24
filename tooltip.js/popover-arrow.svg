@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10">
+  <g fill="none" fill-rule="evenodd">
+    <polygon class="arrow-background" fill="#FFF" fill-rule="nonzero" points="10 0 20 10 0 10"/>
+    <polyline class="arrow-border" stroke="#DDD" stroke-linecap="square" points="0 10.7 10 .7 20 10.7"/>
+  </g>
+</svg>

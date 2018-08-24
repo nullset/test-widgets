@@ -1,25 +1,47 @@
-.tooltip {
+.aha-tooltip {
   position: absolute;
-  background: #FFC107;
-  color: black;
-  width: 150px;
-  border-radius: 3px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 11px;
+  max-width: 200px;
+  border-radius: 4px;
+  pointer-events: none;
+  padding: 6px;
   text-align: center;
+  opacity: 0;
+  transition: opacity 0.1s;
 }
-.tooltip .tooltip-arrow {
+.aha-tooltip[x-in] {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.aha-tooltip[x-out-of-boundaries] {
+  display: none;
+}
+.aha-tooltip[x-overlay] {
+  opacity: 0.5;
+}
+.aha-tooltip[x-overlay]:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: red;
+}
+.aha-tooltip .aha-tooltip__arrow {
   width: 0;
   height: 0;
   border-style: solid;
   position: absolute;
   margin: 5px;
-  border-color: #FFC107;
+  border-color: rgba(0, 0, 0, 0.8);
 }
-.tooltip[x-placement^="top"] {
+.aha-tooltip[x-placement^="top"] {
   margin-bottom: 5px;
 }
-.tooltip[x-placement^="top"] .tooltip-arrow {
+.aha-tooltip[x-placement^="top"] .aha-tooltip__arrow {
   border-width: 5px 5px 0 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -29,10 +51,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.tooltip[x-placement^="bottom"] {
+.aha-tooltip[x-placement^="bottom"] {
   margin-top: 5px;
 }
-.tooltip[x-placement^="bottom"] .tooltip-arrow {
+.aha-tooltip[x-placement^="bottom"] .aha-tooltip__arrow {
   border-width: 0 5px 5px 5px;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -42,10 +64,10 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-.tooltip[x-placement^="right"] {
+.aha-tooltip[x-placement^="right"] {
   margin-left: 5px;
 }
-.tooltip[x-placement^="right"] .tooltip-arrow {
+.aha-tooltip[x-placement^="right"] .aha-tooltip__arrow {
   border-width: 5px 5px 5px 0;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -55,10 +77,10 @@
   margin-left: 0;
   margin-right: 0;
 }
-.tooltip[x-placement^="left"] {
+.aha-tooltip[x-placement^="left"] {
   margin-right: 5px;
 }
-.tooltip[x-placement^="left"] .tooltip-arrow {
+.aha-tooltip[x-placement^="left"] .aha-tooltip__arrow {
   border-width: 5px 0 5px 5px;
   border-top-color: transparent;
   border-right-color: transparent;
@@ -68,73 +90,81 @@
   margin-left: 0;
   margin-right: 0;
 }
-.popover {
-  position: absolute;
-  background: #FFC107;
-  color: black;
-  width: 150px;
-  border-radius: 3px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+.aha-tooltip--popover {
+  background: red;
+  max-width: 40vw;
   padding: 10px;
-  text-align: center;
+  color: inherit;
+  font-size: inherit;
+  text-align: left;
 }
-.popover .tooltip-arrow {
+.aha-tooltip--popover .aha-tooltip__arrow {
   width: 0;
   height: 0;
   border-style: solid;
   position: absolute;
-  margin: 5px;
-  border-color: #FFC107;
+  margin: 10px;
+  border-color: red;
 }
-.popover[x-placement^="top"] {
-  margin-bottom: 5px;
+.aha-tooltip--popover[x-placement^="top"] {
+  margin-bottom: 10px;
 }
-.popover[x-placement^="top"] .popover-arrow {
-  border-width: 5px 5px 0 5px;
+.aha-tooltip--popover[x-placement^="top"] .aha-tooltip__arrow {
+  border-width: 10px 10px 0 10px;
   border-left-color: transparent;
   border-right-color: transparent;
   border-bottom-color: transparent;
-  bottom: -5px;
-  left: calc(45%);
+  bottom: -10px;
+  left: calc(40%);
   margin-top: 0;
   margin-bottom: 0;
 }
-.popover[x-placement^="bottom"] {
-  margin-top: 5px;
+.aha-tooltip--popover[x-placement^="bottom"] {
+  margin-top: 10px;
 }
-.popover[x-placement^="bottom"] .popover-arrow {
-  border-width: 0 5px 5px 5px;
+.aha-tooltip--popover[x-placement^="bottom"] .aha-tooltip__arrow {
+  border-width: 0 10px 10px 10px;
   border-left-color: transparent;
   border-right-color: transparent;
   border-top-color: transparent;
-  top: -5px;
-  left: calc(45%);
+  top: -10px;
+  left: calc(40%);
   margin-top: 0;
   margin-bottom: 0;
 }
-.popover[x-placement^="right"] {
-  margin-left: 5px;
+.aha-tooltip--popover[x-placement^="right"] {
+  margin-left: 10px;
 }
-.popover[x-placement^="right"] .popover-arrow {
-  border-width: 5px 5px 5px 0;
+.aha-tooltip--popover[x-placement^="right"] .aha-tooltip__arrow {
+  border-width: 10px 10px 10px 0;
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;
-  left: -5px;
-  top: calc(45%);
+  left: -10px;
+  top: calc(40%);
   margin-left: 0;
   margin-right: 0;
 }
-.popover[x-placement^="left"] {
-  margin-right: 5px;
+.aha-tooltip--popover[x-placement^="left"] {
+  margin-right: 10px;
 }
-.popover[x-placement^="left"] .popover-arrow {
-  border-width: 5px 0 5px 5px;
+.aha-tooltip--popover[x-placement^="left"] .aha-tooltip__arrow {
+  border-width: 10px 0 10px 10px;
   border-top-color: transparent;
   border-right-color: transparent;
   border-bottom-color: transparent;
-  right: -5px;
-  top: calc(45%);
+  right: -10px;
+  top: calc(40%);
   margin-left: 0;
   margin-right: 0;
+}
+.aha-tooltip--popover .aha-tooltip__title {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+.aha-tooltip--popover .aha-tooltip__content:not(:empty) {
+  border-top: 1px solid;
+  margin-left: -10px;
+  margin-right: -10px;
+  padding: 10px 10px 0;
 }

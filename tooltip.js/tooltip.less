@@ -1,25 +1,28 @@
 @tooltipArrowSize: 5px;
 @tooltipBg: fade(#000, 80%);
+@tootlipBorderColor: @tooltipBg;
 @tooltipPadding: 6px;
 
 @popoverArrowSize: 10px;
 @popoverBg: red;
+@popoverBorderColor: green;
 @popoverPadding: 10px;
 
 
 // ----- MIXINS -----
-.arrow(@size, @color: @tooltipBg) {
-  .aha-tooltip__arrow {
+.arrow(@size, @bgColor: @tooltipBg) {
+  .aha-tooltip__arrow, .aha-tooltip__arrow:after {
     width: 0;
     height: 0;
     border-style: solid;
     position: absolute;
     margin: @size;
-    border-color: @color;
+    border-color: @bgColor;
+    content: "";
   }
 }
 
-.topPlacement(@size) {
+.topPlacement(@size, @borderColor) {
   &[x-placement^="top"] {
     margin-bottom: @size;
     .aha-tooltip__arrow {
@@ -31,11 +34,22 @@
       left: calc(50% - @size);
       margin-top: 0;
       margin-bottom: 0;
+      &:after {
+        border-color: @borderColor;
+        border-width: @size @size 0 @size;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        bottom: 1px;
+        left: -@size * 2;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
     }
   }
 }
 
-.bottomPlacement(@size) {
+.bottomPlacement(@size, @borderColor) {
   &[x-placement^="bottom"] {
     margin-top: @size;
     .aha-tooltip__arrow {
@@ -47,10 +61,21 @@
       left: calc(50% - @size);
       margin-top: 0;
       margin-bottom: 0;
+      &:after {
+        border-color: @borderColor;
+        border-width: 0 @size @size @size;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        top: 1px;
+        left: -@size * 2;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
     }
   }
 }
-.rightPlacement(@size) {
+.rightPlacement(@size, @borderColor) {
   &[x-placement^="right"] {
     margin-left: @size;
     .aha-tooltip__arrow {
@@ -62,31 +87,53 @@
       top: calc(50% - @size);
       margin-left: 0;
       margin-right: 0;
+      &:after {
+        border-color: @borderColor;
+        border-width: @size @size @size 0;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        left: 1px;
+        top: -@size * 2;
+        margin-left: 0;
+        margin-right: 0;
+      }
     }
   }
 }
 
-.leftPlacement(@size) {
+.leftPlacement(@size, @borderColor) {
   &[x-placement^="left"] {
     margin-right: @size;
     .aha-tooltip__arrow {
+      border-width: @size 0 @size @size;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      right: -@size;
+      top: calc(50% - @size);
+      margin-left: 0;
+      margin-right: 0;
+      &:after {
+        border-color: @borderColor;
         border-width: @size 0 @size @size;
         border-top-color: transparent;
         border-right-color: transparent;
         border-bottom-color: transparent;
-        right: -@size;
-        top: calc(50% - @size);
+        right: 1px;
+        top: -@size * 2;
         margin-left: 0;
         margin-right: 0;
+      }
     }
   }
 }
 
-.placements(@size) {
-  .topPlacement(@size);
-  .bottomPlacement(@size);
-  .rightPlacement(@size);
-  .leftPlacement(@size);
+.placements(@size, @borderColor) {
+  .topPlacement(@size, @borderColor);
+  .bottomPlacement(@size, @borderColor);
+  .rightPlacement(@size, @borderColor);
+  .leftPlacement(@size, @borderColor);
 }
 
 
@@ -111,8 +158,8 @@
   &[x-out-of-boundaries] {
     display: none;
   }
-  .arrow(@tooltipArrowSize, @tooltipBg);
-  .placements(@tooltipArrowSize);
+  .arrow(@tooltipArrowSize, transparent);
+  .placements(@tooltipArrowSize, @tooltipBg);
 
   // ----- VARIANTS -----
   &--popover {
@@ -123,7 +170,7 @@
     font-size: inherit;
     text-align: left;
     .arrow(@popoverArrowSize, @popoverBg);
-    .placements(@popoverArrowSize);
+    .placements(@popoverArrowSize, @popoverBorderColor);
 
     .aha-tooltip__title {
       font-weight: bold;
