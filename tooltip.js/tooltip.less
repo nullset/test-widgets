@@ -141,15 +141,8 @@
 // ----- STYLES -----
 .aha-tooltip {
   position: absolute;
-  background: @tooltipBg;
-  color: #fff;
-  font-size: 11px;
-  max-width: 200px;
   border-radius: @tooltipRadius;
-  pointer-events: none;
-  // box-shadow: 0 0 2px rgba(0,0,0,0.5);
   padding: @tooltipPadding;
-  text-align: center;
   opacity: 0;
   transition: opacity 0.1s; // Controls how quickly transition occurs when going back to hidden state.
   &[x-in] {
@@ -163,13 +156,17 @@
   .placements(@tooltipArrowSize, @tooltipBg);
 
   // ----- VARIANTS -----
+  &--default {
+    background: @tooltipBg;
+    color: #fff;
+    font-size: 11px;
+    max-width: 200px;
+    text-align: center;
+  }
   &--popover {
     background: @popoverBg;
     max-width: 40vw;
     padding: 0;
-    color: inherit;
-    font-size: inherit;
-    text-align: left;
     border: 1px solid @popoverBorderColor;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.3);
     border: 1px solid #ddd;
@@ -186,8 +183,6 @@
       border-bottom-left-radius: @tooltipRadius;
       border-bottom-right-radius: @tooltipRadius;
       background: #fafafa;
-      // margin-left: -@popoverPadding;
-      // margin-right: -@popoverPadding;
       padding: @popoverPadding;
       *:first-child {
         margin-top: 0;

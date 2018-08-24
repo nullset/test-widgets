@@ -76,7 +76,7 @@
     function getTemplate(opts) {
       const $template = opts.template
         ? $(opts.template)
-        : $(`<div class="${['aha-tooltip', opts.type ? `aha-tooltip--${opts.type}` : ''].join(' ').trim()}" role="tooltip">
+        : $(`<div class="${['aha-tooltip', `aha-tooltip--${opts.type || 'default'}`].join(' ').trim()}" role="tooltip">
         <div class="aha-tooltip__arrow"></div>
         <div class="aha-tooltip__inner">
           <div class="aha-tooltip__title" x-title></div>

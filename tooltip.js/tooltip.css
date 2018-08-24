@@ -1,13 +1,7 @@
 .aha-tooltip {
   position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  font-size: 11px;
-  max-width: 200px;
   border-radius: 4px;
-  pointer-events: none;
   padding: 6px;
-  text-align: center;
   opacity: 0;
   transition: opacity 0.1s;
 }
@@ -124,13 +118,17 @@
   margin-left: 0;
   margin-right: 0;
 }
+.aha-tooltip--default {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 11px;
+  max-width: 200px;
+  text-align: center;
+}
 .aha-tooltip--popover {
   background: #fff;
   max-width: 40vw;
   padding: 0;
-  color: inherit;
-  font-size: inherit;
-  text-align: left;
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid #ddd;
 }
