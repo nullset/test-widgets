@@ -52,7 +52,7 @@
     }
 
     function updateTooltipContent(elem) {
-      const tooltip = getRef(elem);
+      const ref = getRef(elem);
       const title = elem.title || elem.dataset.title || elem.dataset.tooltip;
       const content = elem.dataset.content;
 
@@ -61,10 +61,10 @@
         elem.removeAttribute('title');
       }
 
-      const popper = tooltip.instance.popper;
+      const popper = ref.instance.popper;
       const titleElem = popper.querySelector('[x-title]');
       const contentElem = popper.querySelector('[x-content]');
-      if (tooltip.opts.html) {
+      if (ref.opts.html) {
         titleElem.innerHTML = cleanHTML(title) || '';
         contentElem.innerHTML = cleanHTML(content) || '';
       } else {
@@ -92,9 +92,9 @@
     }
 
     function repositionTooltip(triggerElem) {
-      const tooltip = getRef(triggerElem);
-      if (tooltip) {
-        tooltip.instance.update();
+      const ref = getRef(triggerElem);
+      if (ref) {
+        ref.instance.update();
       }
     }
 
@@ -106,60 +106,60 @@
     }
 
     function appendTooltip(triggerElem) {
-      const tooltip = getRef(triggerElem);
-      if (tooltip && tooltip.enabled) {
-        clearTimeout(tooltip.timeout);
-        tooltip.isVisible = true;
-        tooltip.timeout = setTimeout(() => {
+      const ref = getRef(triggerElem);
+      if (ref && ref.enabled) {
+        clearTimeout(ref.timeout);
+        ref.isVisible = true;
+        ref.timeout = setTimeout(() => {
           triggerElem.setAttribute('x-tooltip', '');
           repositionTooltip(triggerElem);
-          const container = tooltip.opts.container ? document.querySelector(tooltip.opts.container) : triggerElem;
-          container.appendChild(tooltip.instance.popper);
-          requestAnimationFrame(() => tooltip.instance.popper.setAttribute('x-in', ''));
-        }, tooltip.opts.delay.show);
+          const container = ref.opts.container ? document.querySelector(ref.opts.container) : triggerElem;
+          container.appendChild(ref.instance.popper);
+          requestAnimationFrame(() => ref.instance.popper.setAttribute('x-in', ''));
+        }, ref.opts.delay.show);
       }
     }
 
-    function fadeTooltipOut(tooltip) {
-      tooltip.instance.popper.removeEventListener('transitionend', tooltip.fadeOut);
-      tooltip.instance.popper.remove();
-      delete tooltip.fadeOut;
+    function fadeTooltipOut(ref) {
+      ref.instance.popper.removeEventListener('transitionend', ref.fadeOut);
+      ref.instance.popper.remove();
+      delete ref.fadeOut;
     }
 
     function closeTooltip(triggerElem, delayHide) {
       triggerElem.removeAttribute('x-tooltip');
-      const tooltip = getRef(triggerElem);
-      if (tooltip) {
-        clearTimeout(tooltip.timeout);
-        tooltip.isVisible = false;
-        tooltip.fadeOut = fadeTooltipOut(tooltip);
-        tooltip.timeout = setTimeout(() => {
-          tooltip.instance.popper.addEventListener('transitionend', tooltip.fade);
-          tooltip.instance.popper.removeAttribute('x-in');
-        }, typeof delayHide === 'undefined' ? tooltip.opts.delay.hide : delayHide);
+      const ref = getRef(triggerElem);
+      if (ref) {
+        clearTimeout(ref.timeout);
+        ref.isVisible = false;
+        ref.fadeOut = fadeTooltipOut(ref);
+        ref.timeout = setTimeout(() => {
+          ref.instance.popper.addEventListener('transitionend', ref.fadeOut);
+          ref.instance.popper.removeAttribute('x-in');
+        }, typeof delayHide === 'undefined' ? ref.opts.delay.hide : delayHide);
       }
     }
 
     function enableTooltip(triggerElem) {
-      const tooltip = getRef(triggerElem);
-      if (tooltip) {
-        tooltip.enabled = true;
+      const ref = getRef(triggerElem);
+      if (ref) {
+        ref.enabled = true;
       }
     }
 
     function disableTooltip(triggerElem) {
       closeTooltip(triggerElem, 0);
-      const tooltip = getRef(triggerElem);
-      if (tooltip) {
-        tooltip.enabled = false;
+      const ref = getRef(triggerElem);
+      if (ref) {
+        ref.enabled = false;
       }
     }
 
     function destroyTooltip(triggerElem) {
       closeTooltip(triggerElem, 0);
-      const tooltip = getRef(triggerElem);
-      if (tooltip) {
-        tooltip.instance.destroy();
+      const ref = getRef(triggerElem);
+      if (ref) {
+        ref.instance.destroy();
         refs.delete(triggerElem);
       }
     }
@@ -208,8 +208,8 @@
           });
         } else {
           $(context).on(onEvent, selector, (e) => {
-            const tooltip = getRef(e.currentTarget);
-            if (tooltip && tooltip.isVisible) {
+            const ref = getRef(e.currentTarget);
+            if (ref && ref.isVisible) {
               closeTooltip(e.currentTarget);
             } else {
               openTooltip(e.currentTarget, opts);
