@@ -138,7 +138,7 @@
 }
 
 
-// ----- STYLES -----
+// ----- BASE STYLES -----
 .aha-tooltip {
   position: absolute;
   border-radius: @tooltipRadius;
@@ -172,17 +172,19 @@
     border: 1px solid #ddd;
     .arrow(@popoverArrowSize, @popoverBorderColor);
     .placements(@popoverArrowSize, @popoverBg);
-    .aha-tooltip__title {
+    .aha-tooltip__title:not(:empty) {
       font-weight: bold;
       padding: @popoverPadding;
       border-top-left-radius: @tooltipRadius;
       border-top-right-radius: @tooltipRadius;
+      + .aha-tooltip__content:not(:empty) {
+        background: #fafafa;
+      }
     }
     .aha-tooltip__content:not(:empty) {
       border-top: 1px solid @popoverBorderColor;
       border-bottom-left-radius: @tooltipRadius;
       border-bottom-right-radius: @tooltipRadius;
-      background: #fafafa;
       padding: @popoverPadding;
       *:first-child {
         margin-top: 0;
@@ -191,6 +193,5 @@
         margin-bottom: 0;
       }
     }
-
   }
 }
