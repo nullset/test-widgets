@@ -192,11 +192,15 @@
       return opts.trigger.split(' ').map(x => x.trim());
     }
 
+    function setInlineOpts() {
+      // $(context).on('mouseenter focus', selector, function boo(e) {
+      //   $(context).off('mouseenter mouseleave focus', selector, boo);
+      //   console.log('---all events');
+
+      // });
+    }
+
     function bindEvents(context, selector, opts) {
-      $(context).on('mouseenter focus', selector, function boo(e) {
-        $(context).off('mouseenter mouseleave focus', selector, boo);
-        console.log('---all events')
-      });
 
       const events = getOnOffEvents(opts);
       events.forEach((event) => {
@@ -221,8 +225,24 @@
             //   bindEvents(context, selector, opts);
             // } else {
 
+              // -----------------
+              const inlineOpts = Object.assign({}, e.currentTarget.dataset);
+              Object.keys(inlineOpts).forEach(key => {
+                try {
+                  opts[key] = JSON.parse(inlineOpts[key]);
+                } catch {
+                  opts[key] = inlineOpts[key]
+                }
+                delete e.currentTarget.dataset[key];
+              });
               setRef(e.currentTarget, { opts });
-              openTooltip(e.currentTarget);
+              console.log('opts', opts)
+              if (inlineOpts.trigger) {
+                bindEvents(context, selector, opts);
+              } else {
+                openTooltip(e.currentTarget);
+              }
+              // ----------------
             // }
           }).on(offEvent, selector, function offHandler(e) {
             console.log('offEvent', offEvent);
