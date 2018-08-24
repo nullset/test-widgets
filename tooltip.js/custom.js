@@ -221,11 +221,23 @@
       return opts.trigger.split(' ').map(x => x.trim());
     }
 
+    function setInlineOpts(elem, opts) {
+      Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
+        if (key === 'placement') {
+          opts.popper[key] = elem.dataset[key];
+        } else {
+          opts[key] = elem.dataset[key];
+        }
+      });
+      return opts;
+    }
+
     function bindEvents(context, selector, opts) {
       getOnOffEvents(opts).forEach((event) => {
         const [ onEvent, offEvent ] = event;
         if (offEvent) {
           $(context).on(onEvent, selector, (e) => {
+            opts = setInlineOpts(e.currentTarget, opts);
             openTooltip(e.currentTarget, opts);
           }).on(offEvent, selector, (e) => {
             closeTooltip(e.currentTarget);
@@ -236,6 +248,7 @@
             if (ref && ref.isVisible) {
               closeTooltip(e.currentTarget);
             } else {
+              opts = setInlineOpts(e.currentTarget, opts);
               openTooltip(e.currentTarget, opts);
             }
           });
@@ -281,12 +294,12 @@
         },
       };
 
-      // Moving placement option to the popper object.
-      if (opts.placement) {
-        opts.popper = opts.popper || {};
-        opts.popper.placement = opts.placement;
-        delete opts.placement;
-      }
+      // // Moving placement option to the popper object.
+      // if (opts.placement) {
+      //   opts.popper = opts.popper || {};
+      //   opts.popper.placement = opts.placement;
+      //   delete opts.placement;
+      // }
 
       opts = deepmerge(ahaTooltipDefaults, opts);
 
