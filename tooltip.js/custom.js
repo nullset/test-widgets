@@ -165,9 +165,8 @@
     }
 
     function getOnOffEvents(opts) {
-      const triggers = opts.trigger.split(' ').map(x => x.trim());
       // TODO: Need to handle touch events.
-      return triggers.reduce((acc, trigger) => {
+      return triggers(opts).reduce((acc, trigger) => {
         if (trigger === 'click') {
           acc.push(['click']);
         } else if (trigger === 'focus') {
@@ -177,6 +176,10 @@
         }
         return acc;
       }, []);
+    }
+
+    function triggers(opts) {
+      return opts.trigger.split(' ').map(x => x.trim());
     }
 
     function bindEvents(context, selector, opts) {
