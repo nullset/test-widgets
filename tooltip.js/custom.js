@@ -4,7 +4,7 @@
   const refs = new WeakMap();
 
   $.fn.ahaTooltip = function(opts = {}) {
-    function getTooltip(elem) {
+    function getRef(elem) {
       return refs.get(elem);
     }
 
@@ -52,7 +52,7 @@
     }
 
     function updateTooltipContent(elem) {
-      const tooltip = getTooltip(elem);
+      const tooltip = getRef(elem);
       const title = elem.title || elem.dataset.title || elem.dataset.tooltip;
       const content = elem.dataset.content;
 
@@ -92,21 +92,21 @@
     }
 
     function repositionTooltip(triggerElem) {
-      const tooltip = getTooltip(triggerElem);
+      const tooltip = getRef(triggerElem);
       if (tooltip) {
         tooltip.instance.update();
       }
     }
 
     function openTooltip(triggerElem, opts) {
-      if (!getTooltip(triggerElem)) {
+      if (!getRef(triggerElem)) {
         createTooltip(triggerElem, opts);
       }
       appendTooltip(triggerElem);
     }
 
     function appendTooltip(triggerElem) {
-      const tooltip = getTooltip(triggerElem);
+      const tooltip = getRef(triggerElem);
       if (tooltip && tooltip.enabled) {
         clearTimeout(tooltip.timeout);
         tooltip.isVisible = true;
@@ -128,7 +128,7 @@
 
     function closeTooltip(triggerElem, delayHide) {
       triggerElem.removeAttribute('x-tooltip');
-      const tooltip = getTooltip(triggerElem);
+      const tooltip = getRef(triggerElem);
       if (tooltip) {
         clearTimeout(tooltip.timeout);
         tooltip.isVisible = false;
@@ -141,7 +141,7 @@
     }
 
     function enableTooltip(triggerElem) {
-      const tooltip = getTooltip(triggerElem);
+      const tooltip = getRef(triggerElem);
       if (tooltip) {
         tooltip.enabled = true;
       }
@@ -149,7 +149,7 @@
 
     function disableTooltip(triggerElem) {
       closeTooltip(triggerElem, 0);
-      const tooltip = getTooltip(triggerElem);
+      const tooltip = getRef(triggerElem);
       if (tooltip) {
         tooltip.enabled = false;
       }
@@ -157,7 +157,7 @@
 
     function destroyTooltip(triggerElem) {
       closeTooltip(triggerElem, 0);
-      const tooltip = getTooltip(triggerElem);
+      const tooltip = getRef(triggerElem);
       if (tooltip) {
         tooltip.instance.destroy();
         refs.delete(triggerElem);
@@ -208,7 +208,7 @@
           });
         } else {
           $(context).on(onEvent, selector, (e) => {
-            const tooltip = getTooltip(e.currentTarget);
+            const tooltip = getRef(e.currentTarget);
             if (tooltip && tooltip.isVisible) {
               closeTooltip(e.currentTarget);
             } else {
