@@ -28,7 +28,7 @@
       for (const node of elems) {
         // Strip any <script>/<iframe> tags as those can open us up to XSS.
         if (/^(script|iframe|style)$/i.test(node.nodeName)) {
-          node.remove();
+          node.parentNode.removeChild(node);
         } else {
           for (const attr of node.attributes) {
             // Strip any attribute with "javascript:" in the value.
@@ -135,7 +135,7 @@
 
     function fadeTooltipOut(ref) {
       ref.instance.popper.removeEventListener('transitionend', ref.fadeOut);
-      ref.instance.popper.remove();
+      ref.instance.popper.parentNode.removeChild(ref.instance.popper);
       delete ref.fadeOut;
     }
 

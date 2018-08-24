@@ -135,7 +135,8 @@
 
     function fadeTooltipOut(ref) {
       ref.instance.popper.removeEventListener('transitionend', ref.fadeOut);
-      ref.instance.popper.remove();
+      // ref.instance.popper.remove();
+      ref.instance.popper.parentNode.removeChild(ref.instance.popper);
       delete ref.fadeOut;
     }
 
