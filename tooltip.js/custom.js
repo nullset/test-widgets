@@ -5,7 +5,14 @@
 
   $.fn.ahaTooltip = function(opts = {}) {
     function getRef(elem) {
-      return refs.get(elem);
+      return refs.get(elem) || {};
+    }
+
+    function setRef(elem, data) {
+      const currentData = getRef(elem);
+      const mergedData = Object.assign(currentData, data);
+      refs.set(elem, mergedData);
+      return mergedData;
     }
 
     // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
@@ -73,11 +80,13 @@
       }
     }
 
-    function createTooltip(triggerElem, opts) {
-      const template = $(opts.template)[0];
-      const tooltip = new Popper(triggerElem, template, opts.popper);
-      const data = { instance: tooltip, enabled: true, opts };
-      refs.set(triggerElem, data);
+    function createTooltip(triggerElem) {
+      const ref = getRef(triggerElem);
+      const template = $(ref.opts.template)[0];
+      const tooltip = new Popper(triggerElem, template, ref.opts.popper);
+      // const data = { instance: tooltip, enabled: true, opts };
+      // refs.set(triggerElem, data);
+      setRef(triggerElem, { instance: tooltip, enabled: true })
       updateTooltipContent(triggerElem);
 
 
@@ -98,9 +107,10 @@
       }
     }
 
-    function openTooltip(triggerElem, opts) {
-      if (!getRef(triggerElem)) {
-        createTooltip(triggerElem, opts);
+    function openTooltip(triggerElem) {
+      const ref = getRef(triggerElem);
+      if (!ref.instance) {
+        createTooltip(triggerElem);
       }
       appendTooltip(triggerElem);
     }
@@ -129,7 +139,7 @@
     function closeTooltip(triggerElem, delayHide) {
       triggerElem.removeAttribute('x-tooltip');
       const ref = getRef(triggerElem);
-      if (ref) {
+      if (ref.instance) {
         clearTimeout(ref.timeout);
         ref.isVisible = false;
         ref.fadeOut = fadeTooltipOut(ref);
@@ -166,7 +176,7 @@
 
     function getOnOffEvents(opts) {
       // TODO: Need to handle touch events.
-      return triggers(opts).reduce((acc, trigger) => {
+      return triggerArr(opts).reduce((acc, trigger) => {
         if (trigger === 'click') {
           acc.push(['click']);
         } else if (trigger === 'focus') {
@@ -178,36 +188,52 @@
       }, []);
     }
 
-    function triggers(opts) {
+    function triggerArr(opts) {
       return opts.trigger.split(' ').map(x => x.trim());
     }
 
     function bindEvents(context, selector, opts) {
-      getOnOffEvents(opts).forEach((event) => {
+      $(context).on('mouseenter focus', selector, function boo(e) {
+        $(context).off('mouseenter mouseleave focus', selector, boo);
+        console.log('---all events')
+      });
+
+      const events = getOnOffEvents(opts);
+      events.forEach((event) => {
         const [ onEvent, offEvent] = event;
         if (offEvent) {
           $(context).on(onEvent, selector, function onHandler(e) {
             console.log('onEvent', onEvent);
-            const inlineOpts = e.currentTarget.dataset;
-            opts = deepmerge(opts, inlineOpts);
-            console.log(opts.trigger, inlineOpts.trigger)
-            if (inlineOpts.trigger && inlineOpts.trigger !== onEvent) {
-              delete inlineOpts.trigger;
-              $(context).off(onEvent, selector, onHandler);
-              bindEvents(context, selector, opts);
-            } else {
-              openTooltip(e.currentTarget, opts);
-            }
+            // const inlineOpts = e.currentTarget.dataset;
+            // opts = deepmerge(opts, inlineOpts);
+            // // console.log(opts.trigger, inlineOpts.trigger)
+            // // if (inlineOpts.trigger && inlineOpts.trigger !== onEvent) {
+            // //   delete inlineOpts.trigger;
+            // //   $(context).off(onEvent, selector, onHandler);
+            // //   bindEvents(context, selector, opts);
+
+            // if (inlineOpts.trigger) {
+            //   // const inlineTriggers = getOnOffEvents(inlineOpts);
+            //   // const unmatchedEvents = events.filter((evt) => !inlineTriggers.includes(evt));
+            //   // debugger
+            //   delete e.currentTarget.dataset.trigger;
+            //   $(context).off(onEvent, selector, onHandler);
+            //   bindEvents(context, selector, opts);
+            // } else {
+
+              setRef(e.currentTarget, { opts });
+              openTooltip(e.currentTarget);
+            // }
           }).on(offEvent, selector, function offHandler(e) {
             console.log('offEvent', offEvent);
-            const inlineOpts = e.currentTarget.dataset;
-            opts = deepmerge(opts, inlineOpts);
-            if (inlineOpts.trigger && inlineOpts.trigger !== onEvent) {
-              delete inlineOpts.trigger;
-              $(context).off(offEvent, selector, offHandler);
-            } else {
+            // const inlineOpts = e.currentTarget.dataset;
+            // opts = deepmerge(opts, inlineOpts);
+            // if (inlineOpts.trigger && inlineOpts.trigger !== onEvent) {
+            //   delete inlineOpts.trigger;
+            //   $(context).off(offEvent, selector, offHandler);
+            // } else {
               closeTooltip(e.currentTarget);
-            }
+            // }
           });
         } else {
           $(context).on(onEvent, selector, (e) => {
@@ -215,7 +241,8 @@
             if (ref && ref.isVisible) {
               closeTooltip(e.currentTarget);
             } else {
-              openTooltip(e.currentTarget, opts);
+              setRef(e.currentTarget, { opts });
+              openTooltip(e.currentTarget);
             }
           });
         }
