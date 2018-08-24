@@ -39,4 +39,15 @@ $(document).ready(function() {
 
     $('.btn5').ahaTooltip();
 
+    $('.btn6').ahaTooltip({
+      selector: '.btn4',
+      trigger: 'click',
+      container: 'body',
+      html: true,
+      placement: 'bottom',
+      type: 'popover',
+      url: 'http://localhost:7879/junk.html'
+      // url: 'aoeu'
+    });
+
 });

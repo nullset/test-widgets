@@ -1,5 +1,5 @@
 (function($) {
-  // WeakMap of DOM nodes to tooltip instance. Using WeakMap allows values to be garbage collected when
+  // WeakMap of DOM nodes to tooltip instances. Using WeakMap allows values to be garbage collected when
   // the element which forms the "key" is removed from the DOM.
   const refs = new WeakMap();
 
@@ -53,8 +53,8 @@
 
     function updateTooltipContent(elem) {
       const ref = getRef(elem);
-      const title = elem.title || elem.dataset.title || elem.dataset.tooltip;
-      const content = elem.dataset.content;
+      const title = ref.opts.title || elem.title || elem.dataset.title || elem.dataset.tooltip;
+      const content = ref.opts.content || elem.dataset.content;
 
       if (elem.title.length > 0) {
         elem.dataset.title = elem.title;
@@ -76,7 +76,7 @@
     function getTemplate(opts) {
       const $template = opts.template
         ? $(opts.template)
-        : $(`<div class="${['aha-tooltip', `aha-tooltip--${opts.type || 'default'}`].join(' ').trim()}" role="tooltip">
+        : $(`<div class="${['aha-tooltip', `aha-tooltip--${opts.type || 'default'}`, opts.class || ''].join(' ').trim()}" role="tooltip">
         <div class="aha-tooltip__arrow"></div>
         <div class="aha-tooltip__inner">
           <div class="aha-tooltip__title" x-title></div>
@@ -112,10 +112,36 @@
     }
 
     function openTooltip(triggerElem, opts) {
-      if (!getRef(triggerElem)) {
-        createTooltip(triggerElem, opts);
-      }
-      appendTooltip(triggerElem);
+      new Promise(function(resolve, reject) {
+        const ref = getRef(triggerElem);
+        if (!getRef(triggerElem)) {
+          if (opts.url) {
+            triggerElem.removeAttribute('x-loading-error');
+            triggerElem.setAttribute('x-loading', '');
+            $.ajax({
+              url: opts.url,
+              success: (data) => {
+                opts.content = data;
+                createTooltip(triggerElem, opts);
+                resolve();
+              },
+              error: (data) => {
+                triggerElem.setAttribute('x-loading-error', '');
+              },
+              complete: () => {
+                triggerElem.removeAttribute('x-loading');
+              }
+            })
+          } else {
+            createTooltip(triggerElem, opts);
+            resolve();
+          }
+        } else {
+          resolve();
+        }
+      }).then(() => {
+        appendTooltip(triggerElem);
+      })
     }
 
     function appendTooltip(triggerElem) {
@@ -231,7 +257,7 @@
         },
       },
       preventOverflow: {
-        boundariesElement: 'viewScroll',
+        boundariesElement: 'window',
       },
     };
 
