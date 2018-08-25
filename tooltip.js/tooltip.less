@@ -141,6 +141,7 @@
 // ----- BASE STYLES -----
 .aha-tooltip {
   position: absolute;
+  z-index: 1500;
   border-radius: @tooltipRadius;
   padding: @tooltipPadding;
   opacity: 0;
@@ -154,7 +155,7 @@
   }
 
   // ----- VARIANTS -----
-  &--default {
+  &--tooltip {
     background: @tooltipBg;
     color: #fff;
     font-size: 11px;
