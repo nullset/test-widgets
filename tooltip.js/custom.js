@@ -248,7 +248,7 @@
       if (ref) {
         clearTimeout(ref.timeout);
         ref.isVisible = false;
-        ref.fadeOut = fadeTooltipOut(ref);
+        ref.fadeOut = fadeTooltipOut.bind(null, ref);
         ref.timeout = setTimeout(() => {
           ref.instance.popper.addEventListener('transitionend', ref.fadeOut);
           ref.instance.popper.removeAttribute('x-in');

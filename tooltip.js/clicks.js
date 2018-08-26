@@ -16,10 +16,10 @@ $(document).ready(function() {
       html: true,
       container: 'body',
       placement: 'bottom',
-      // delay: {
-      //   show: 1000,
-      //   hide: 1000,
-      // }
+      delay: {
+        show: 1000,
+        hide: 1000,
+      }
     })
 
     $('.btn3').ahaTooltip({
