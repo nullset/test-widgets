@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('.btn2').ahaTooltip({
       trigger: 'hover',
       html: true,
-      // container: 'body',
+      container: 'body',
       placement: 'bottom',
       // delay: {
       //   show: 1000,

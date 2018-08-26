@@ -53,6 +53,11 @@
 .bottomPlacement(@size, @borderColor) {
   &[x-placement^="bottom"] {
     margin-top: @size;
+    &:before {
+      top: -@size;
+      bottom: 100%;
+      width: 100%;
+    }
     .aha-tooltip__arrow {
       border-width: 0 @size @size @size;
       border-left-color: transparent;
@@ -143,15 +148,24 @@
   position: absolute;
   z-index: 1500;
   border-radius: @tooltipRadius;
-  padding: @tooltipPadding;
   opacity: 0;
   transition: opacity 0.1s; // Controls how quickly transition occurs when going back to hidden state.
+  &:before {
+    content: "";
+    background: transparent;
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
   &[x-in] {
     opacity: 1;
     transition: opacity 0.3s; // Controls how quickly transition occurs when going to visible state.
   }
   &[x-out-of-boundaries] {
     display: none;
+  }
+  &__inner {
+    padding: @tooltipPadding;
   }
 
   // ----- VARIANTS -----

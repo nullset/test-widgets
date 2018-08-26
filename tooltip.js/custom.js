@@ -3,15 +3,67 @@
   // the element which forms the "key" is removed from the DOM.
   const refs = new WeakMap();
 
+  const popperDefaults = {
+    placement: 'auto',
+    positionFixed: false,
+    eventsEnabled: true,
+    removeOnDestroy: false,
+    modifiers: {
+      arrow: {
+        element: '.aha-tooltip__arrow',
+      },
+      offset: {
+        offset: 0,
+      },
+    },
+    preventOverflow: {
+      boundariesElement: 'window',
+    },
+  };
+
+  const ahaTooltipDefaults = {
+    popper: popperDefaults,
+    html: false,
+    trigger: 'hover focus',
+    type: 'tooltip',
+    delay: {
+      show: 0,
+      hide: 0,
+    },
+  };
+  
+
   $.fn.ahaTooltip = function(opts = {}) {
     function getRef(elem) {
-      return refs.get(elem);
+      return refs.get(elem) || {};
+    }
+
+    function getType(elem, type) {
+      const ref = getRef(elem);
+      return ref[type] || {};
+    }
+
+    function setRef(elem, newData) {
+      const currentData = getRef(elem) || {};
+      const mergedData = Object.assign(currentData, newData);
+      refs.set(elem, mergedData);
+      return mergedData;
+    }
+
+    function setType(elem, type, newTypeData) {
+      const allData = getRef(elem);
+      const currentTypeData = allData[type] || {};
+      const mergedTypeData = Object.assign(currentTypeData, newTypeData);
+      const typeData = {};
+      typeData[type] = mergedTypeData;
+      setRef(elem, typeData);
+      return mergedTypeData;
     }
 
     // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
-    function mutationCallback(tooltip, mutations, observer) {
+    function mutationCallback(tooltip, type, mutations, observer) {
       mutations.forEach((mutation) => {
-        updateTooltipContent(mutation.target);
+        updateTooltipContent(mutation.target, type);
         observer.takeRecords();
       });
     }
@@ -51,10 +103,10 @@
       return body.innerHTML;
     }
 
-    function updateTooltipContent(elem) {
-      const ref = getRef(elem);
-      const title = ref.opts.title || elem.title || elem.dataset.title || elem.dataset.tooltip;
-      const content = ref.opts.content || elem.dataset.content;
+    function updateTooltipContent(elem, type) {
+      const ref = getType(elem, type);
+      const title = ref.opts.title || elem.title || elem.dataset.tooltip;
+      const content = ref.opts.content;
 
       if (elem.title.length > 0) {
         elem.dataset.title = elem.title;
@@ -88,70 +140,93 @@
 
     function createTooltip(triggerElem, opts) {
       const template = getTemplate(opts);
+      const type = opts.type;
+      // TODO: need to handle placement again
+      if (opts.placement) {
+        opts.popper.placement = opts.placement;
+      }
+
       const tooltip = new Popper(triggerElem, template, opts.popper);
-      const data = { instance: tooltip, enabled: true, opts };
-      refs.set(triggerElem, data);
-      updateTooltipContent(triggerElem);
+      const typeData = { instance: tooltip, enabled: true, opts  };
+      // TODO: need to set type within overall data
+
+      setType(triggerElem, opts.type, typeData);
+      updateTooltipContent(triggerElem, opts.type);
 
 
       // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
       // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
       // and have those changes automatically reflected in the tooltip popup.
-      const observer = new MutationObserver(mutationCallback.bind(null, tooltip));
+      const observer = new MutationObserver(mutationCallback.bind(null, tooltip, opts.type));
       observer.observe(triggerElem, {
         attributes: true,
         attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
       });
     }
 
-    function repositionTooltip(triggerElem) {
-      const ref = getRef(triggerElem);
+    function repositionTooltip(triggerElem, type) {
+      const ref = getType(triggerElem, type);
       if (ref) {
         ref.instance.update();
       }
     }
 
     function openTooltip(triggerElem, opts) {
-      new Promise(function(resolve, reject) {
-        const ref = getRef(triggerElem);
-        if (!getRef(triggerElem)) {
-          if (opts.url) {
-            triggerElem.removeAttribute('x-loading-error');
-            triggerElem.setAttribute('x-loading', '');
-            $.ajax({
-              url: opts.url,
-              success: (data) => {
-                opts.content = data;
-                createTooltip(triggerElem, opts);
-                resolve();
-              },
-              error: (data) => {
-                triggerElem.setAttribute('x-loading-error', '');
-              },
-              complete: () => {
-                triggerElem.removeAttribute('x-loading');
-              }
-            })
-          } else {
-            createTooltip(triggerElem, opts);
-            resolve();
-          }
-        } else {
-          resolve();
-        }
-      }).then(() => {
-        appendTooltip(triggerElem);
-      })
+      // const ref = getRef(triggerElem);
+      const ref = getType(triggerElem, opts.type);
+      if (Object.keys(ref).length === 0) {
+        createTooltip(triggerElem, opts);
+      }
+      // refs.set(triggerElem, opts);
+
+      appendTooltip(triggerElem, opts.type);
+
+      // new Promise(function(resolve, reject) {
+      //   const ref = getRef(triggerElem);
+      //   if (!getRef(triggerElem)) {
+      //     const url = opts.type && typeof opts.url !== 'string' ? opts.url.type : opts.url;
+      //     debugger
+      //     if (url) {
+      //       triggerElem.removeAttribute('x-loading-error');
+      //       triggerElem.setAttribute('x-loading', '');
+      //       $.ajax({
+      //         url: url,
+      //         success: (data) => {
+      //           if (opts.type) {
+      //             opts.content
+      //           }
+      //           opts.content = data;
+      //           createTooltip(triggerElem, opts);
+      //           resolve();
+      //         },
+      //         error: (data) => {
+      //           triggerElem.setAttribute('x-loading-error', '');
+      //         },
+      //         complete: () => {
+      //           triggerElem.removeAttribute('x-loading');
+      //         }
+      //       })
+      //     } else {
+      //       createTooltip(triggerElem, opts);
+      //       resolve();
+      //     }
+      //   } else {
+      //     resolve();
+      //   }
+      // }).then(() => {
+      //   appendTooltip(triggerElem);
+      // })
     }
 
-    function appendTooltip(triggerElem) {
-      const ref = getRef(triggerElem);
+    function appendTooltip(triggerElem, type) {
+      const ref = getType(triggerElem, type);
       if (ref && ref.enabled) {
         clearTimeout(ref.timeout);
-        ref.isVisible = true;
+        ref.isVisible = ref.isVisible || {}
+        ref.isVisible[ref.opts.type] = true;
         ref.timeout = setTimeout(() => {
           triggerElem.setAttribute('x-tooltip', '');
-          repositionTooltip(triggerElem);
+          repositionTooltip(triggerElem, type);
           const container = ref.opts.container ? document.querySelector(ref.opts.container) : triggerElem;
           container.appendChild(ref.instance.popper);
           requestAnimationFrame(() => ref.instance.popper.setAttribute('x-in', ''));
@@ -161,13 +236,15 @@
 
     function fadeTooltipOut(ref) {
       ref.instance.popper.removeEventListener('transitionend', ref.fadeOut);
-      ref.instance.popper.parentNode.removeChild(ref.instance.popper);
-      delete ref.fadeOut;
+      if (ref.instance.popper.parentNode) {
+        ref.instance.popper.parentNode.removeChild(ref.instance.popper);
+        delete ref.fadeOut;
+      }
     }
 
-    function closeTooltip(triggerElem, delayHide) {
+    function closeTooltip(triggerElem, type, delayHide) {
       triggerElem.removeAttribute('x-tooltip');
-      const ref = getRef(triggerElem);
+      const ref = getType(triggerElem, type);
       if (ref) {
         clearTimeout(ref.timeout);
         ref.isVisible = false;
@@ -179,26 +256,27 @@
       }
     }
 
-    function enableTooltip(triggerElem) {
-      const ref = getRef(triggerElem);
+    function enableTooltip(triggerElem, type = 'tooltip') {
+      const ref = getType(triggerElem, type);
       if (ref) {
         ref.enabled = true;
       }
     }
 
-    function disableTooltip(triggerElem) {
-      closeTooltip(triggerElem, 0);
-      const ref = getRef(triggerElem);
+    function disableTooltip(triggerElem, type = 'tooltip') {
+      closeTooltip(triggerElem, type, 0);
+      const ref = getType(triggerElem, type);
       if (ref) {
         ref.enabled = false;
       }
     }
 
     function destroyTooltip(triggerElem) {
-      closeTooltip(triggerElem, 0);
-      const ref = getRef(triggerElem);
+      closeTooltip(triggerElem, type, 0);
+      const ref = getType(triggerElem, type);
       if (ref) {
         ref.instance.destroy();
+        // TODO: NEEDS A TYPE OPTION
         refs.delete(triggerElem);
       }
     }
@@ -211,7 +289,8 @@
         } else if (trigger === 'focus') {
           acc.push(['focus', 'blur']);
         } else if (trigger === 'hover') {
-          acc.push(['mouseenter', 'mouseleave']);
+          // acc.push(['mouseenter', 'mouseleave']);
+          acc.push(['mouseenter', 'mouseout']);
         }
         return acc;
       }, []);
@@ -221,58 +300,60 @@
       return opts.trigger.split(' ').map(x => x.trim());
     }
 
-    function setInlineOpts(elem, opts) {
+    function mergeInlineOpts(elem, opts = {}) {
       Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
-        if (key === 'placement') {
-          opts.popper[key] = elem.dataset[key];
-        } else {
-          opts[key] = elem.dataset[key];
+        let value = elem.dataset[key];
+        try {
+          value = JSON.parse(value.replace(/'/g, '"'));
+          if (Array.isArray(value) || key === 'delay') {
+            opts[key] = value;
+          } else {
+            if (value[opts.type]) {
+              opts[key] = value[opts.type];
+            }
+          }
+        } catch {
+          opts[key] = value;
         }
       });
       return opts;
     }
 
     function bindEvents(context, selector, opts) {
-      getOnOffEvents(opts).forEach((event) => {
+      const events = getOnOffEvents(opts);
+      events.forEach((event) => {
         const [ onEvent, offEvent ] = event;
         if (offEvent) {
           $(context).on(onEvent, selector, (e) => {
-            opts = setInlineOpts(e.currentTarget, opts);
+            opts = mergeInlineOpts(e.currentTarget, opts);
             openTooltip(e.currentTarget, opts);
           }).on(offEvent, selector, (e) => {
-            closeTooltip(e.currentTarget);
+            const elem = e.currentTarget;
+            opts = mergeInlineOpts(elem, opts);
+            const ref = getType(elem, opts.type);
+            // debugger
+            if (elem.contains(e.relatedTarget)) return;
+            if (offEvent === 'mouseout' && e.relatedTarget === ref.instance.popper) {
+              $(ref.instance.popper).on('mouseleave', (e) => {
+                closeTooltip(elem, opts.type);
+              });
+            } else {
+              closeTooltip(elem, opts.type);
+            }
           });
         } else {
           $(context).on(onEvent, selector, (e) => {
             const ref = getRef(e.currentTarget);
-            if (ref && ref.isVisible) {
-              closeTooltip(e.currentTarget);
+            opts = mergeInlineOpts(e.currentTarget, opts);
+            if (ref && ref[opts.type] && ref[opts.type].isVisible) {
+              closeTooltip(e.currentTarget, opts.type);
             } else {
-              opts = setInlineOpts(e.currentTarget, opts);
               openTooltip(e.currentTarget, opts);
             }
           });
         }
       });
     }
-
-    const popperDefaults = {
-      placement: 'auto',
-      positionFixed: false,
-      eventsEnabled: true,
-      removeOnDestroy: false,
-      modifiers: {
-        arrow: {
-          element: '.aha-tooltip__arrow',
-        },
-        offset: {
-          offset: 0,
-        },
-      },
-      preventOverflow: {
-        boundariesElement: 'window',
-      },
-    };
 
     if (typeof opts !== 'string') {
       // Set context and selector for event assignment.
@@ -284,51 +365,43 @@
         selector = opts.selector;
       }
 
-      const ahaTooltipDefaults = {
-        popper: popperDefaults,
-        html: false,
-        trigger: 'hover focus',
-        delay: {
-          show: 0,
-          hide: 0,
-        },
-      };
-
-      // // Moving placement option to the popper object.
-      // if (opts.placement) {
-      //   opts.popper = opts.popper || {};
-      //   opts.popper.placement = opts.placement;
-      //   delete opts.placement;
-      // }
 
       opts = deepmerge(ahaTooltipDefaults, opts);
 
       bindEvents(context, selector, opts);
     } else {
+      const defaultType = 'tooltip';
+      const defaultOpts = {opts: ahaTooltipDefaults};
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            appendTooltip(elem);
+            opts = mergeInlineOpts(elem, defaultOpts);
+            debugger
+            openTooltip(elem, opts.type || defaultType);
           });
           break;
         case 'hide':
           this.each((i, elem) => {
-            closeTooltip(elem, 0);
+            opts = mergeInlineOpts(elem, defaultOpts);
+            closeTooltip(elem, opts.type || defaultType, 0);
           });
           break;
         case 'enable':
           this.each((i, elem) => {
-            enableTooltip(elem);
+            opts = mergeInlineOpts(elem, defaultOpts);
+            enableTooltip(elem, opts.type || defaultType);
           });
           break;
         case 'disable':
           this.each((i, elem) => {
-            disableTooltip(elem);
+            opts = mergeInlineOpts(elem, defaultOpts);
+            disableTooltip(elem, opts.type || defaultType);
           });
           break;
         case 'dispose':
           this.each((i, elem) => {
-            destroyTooltip(elem);
+            opts = mergeInlineOpts(elem, defaultOpts);
+            destroyTooltip(elem, opts.type || defaultType);
           });
           break;
         default:
