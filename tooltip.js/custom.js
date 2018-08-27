@@ -59,6 +59,7 @@
     const triggerElem = this.triggerElem;
     const type = this.type;
 
+    console.log(this.enabled)
     if (this.enabled) {
       clearTimeout(this.timeout);
       this.isVisible = true;
@@ -587,7 +588,6 @@
           });
         } else {
           $(context).on(onEvent, selector, (e) => {
-
             const ref = getRef(e.currentTarget);
             let handleClickOutside;
             opts = mergeInlineOpts(e.currentTarget, opts);
@@ -595,14 +595,16 @@
 
             let closeOnClick;
             if (instance.isVisible) {
-              $(document).off(onEvent, handleClickOutside);
+              // $(document).off(onEvent, handleClickOutside);
               instance.closeTooltip();
             } else {
+              // debugger
               const elem = e.currentTarget;
               instance.openTooltip();
               const tooltip = instance.instance.popper;
               requestAnimationFrame(() => {
                 $(document).on(onEvent, function handleClickOutside(e2) {
+                  // debugger
                   if (!tooltip.contains(e2.target)) {
                     $(document).off(onEvent, handleClickOutside);
                     instance.closeTooltip();
