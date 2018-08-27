@@ -26,6 +26,11 @@
 .topPlacement(@size, @borderColor) {
   &[x-placement^="top"] {
     margin-bottom: @size;
+    &:before {
+      top: 100%;
+      bottom: -@size;
+      width: 100%;
+    }
     .aha-tooltip__arrow {
       border-width: @size @size 0 @size;
       border-left-color: transparent;
@@ -84,6 +89,12 @@
 .rightPlacement(@size, @borderColor) {
   &[x-placement^="right"] {
     margin-left: @size;
+    &:before {
+      left: -@size;
+      right: 100%;
+      top: 0;
+      bottom: 0;
+    }
     .aha-tooltip__arrow {
       border-width: @size @size @size 0;
       border-left-color: transparent;
@@ -111,6 +122,12 @@
 .leftPlacement(@size, @borderColor) {
   &[x-placement^="left"] {
     margin-right: @size;
+    &:before {
+      right: -@size;
+      left: 100%;
+      top: 0;
+      bottom: 0;
+    }
     .aha-tooltip__arrow {
       border-width: @size 0 @size @size;
       border-top-color: transparent;
@@ -164,6 +181,11 @@
   &[x-out-of-boundaries] {
     display: none;
   }
+  &[x-loading] {
+    .aha-tooltip__content {
+      text-align: center;
+    }
+  }
   &__inner {
     padding: @tooltipPadding;
   }
@@ -187,19 +209,37 @@
     border: 1px solid #ddd;
     .arrow(@popoverArrowSize, @popoverBorderColor);
     .placements(@popoverArrowSize, @popoverBg);
-    .aha-tooltip__title:not(:empty) {
-      font-weight: bold;
-      padding: @popoverPadding;
-      border-top-left-radius: @tooltipRadius;
-      border-top-right-radius: @tooltipRadius;
-      + .aha-tooltip__content:not(:empty) {
-        background: #fafafa;
+    .aha-tooltip__inner {
+      padding: 0;
+      > * {
+        padding: @popoverPadding;
       }
     }
+    .aha-tooltip__title {
+      font-weight: bold;
+      padding: @popoverPadding;
+      &:empty {
+        display: none;
+      }
+      &:not(:empty) {
+        + .aha-tooltip__content:not(:empty) {
+          border-top: 1px solid @popoverBorderColor;
+          background: #fafafa;
+        }
+      }
+    }
+    .aha-tooltip__title:not(:empty) {
+      // font-weight: bold;
+      // padding: @popoverPadding;
+      // border-top-left-radius: @tooltipRadius;
+      // border-top-right-radius: @tooltipRadius;
+      // + .aha-tooltip__content:not(:empty) {
+      //   background: #fafafa;
+      // }
+    }
     .aha-tooltip__content:not(:empty) {
-      border-top: 1px solid @popoverBorderColor;
-      border-bottom-left-radius: @tooltipRadius;
-      border-bottom-right-radius: @tooltipRadius;
+      // border-bottom-left-radius: @tooltipRadius;
+      // border-bottom-right-radius: @tooltipRadius;
       padding: @popoverPadding;
       *:first-child {
         margin-top: 0;

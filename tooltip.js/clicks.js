@@ -4,7 +4,7 @@ $(document).ready(function() {
       selector: '.btn',
       trigger: 'click',
       container: 'body',
-      placement: 'bottom',
+      placement: 'left',
       delay: {
         show: 1000,
         hide: 1000,
@@ -15,11 +15,11 @@ $(document).ready(function() {
       trigger: 'hover',
       html: true,
       container: 'body',
-      placement: 'bottom',
-      delay: {
-        show: 1000,
-        hide: 1000,
-      }
+      placement: 'left',
+      // delay: {
+      //   show: 1000,
+      //   hide: 1000,
+      // }
     })
 
     $('.btn3').ahaTooltip({
@@ -33,7 +33,7 @@ $(document).ready(function() {
       trigger: 'click',
       container: 'body',
       html: true,
-      placement: 'bottom',
+      placement: 'left',
       type: 'popover',
     });
 
