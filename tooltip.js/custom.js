@@ -141,7 +141,6 @@
     function createTooltip(triggerElem, opts) {
       const template = getTemplate(opts);
       const type = opts.type;
-      // TODO: need to handle placement again
       if (opts.placement) {
         opts.popper.placement = opts.placement;
       }
@@ -196,17 +195,19 @@
       const ref = getRef(triggerElem);
       const refType = getType(triggerElem, opts.type);
 
+      // Close any other type of tooltip that is open for this triggering element.
       Object.keys(ref).forEach((type) => {
         if (type !== opts.type) {
           closeTooltip(triggerElem, type, 0);
         }
       })
 
+      // If the triggering element does not have this type of tooltip, create it.
       if (Object.keys(refType).length === 0) {
         createTooltip(triggerElem, opts);
       }
-      // refs.set(triggerElem, opts);
 
+      // Append this type of tooltip to the page.
       appendTooltip(triggerElem, opts.type);
     }
 
@@ -214,10 +215,7 @@
       const ref = getType(triggerElem, type);
       if (ref && ref.enabled) {
         clearTimeout(ref.timeout);
-        // ref.isVisible = ref.isVisible || {}
-        // ref.isVisible[ref.opts.type] = true;
         ref.isVisible = true;
-        // console.log(ref)
         ref.timeout = setTimeout(() => {
           triggerElem.setAttribute('x-tooltip', '');
           repositionTooltip(triggerElem, type);
@@ -249,14 +247,14 @@
       }
     }
 
-    function enableTooltip(triggerElem, type = 'tooltip') {
+    function enableTooltip(triggerElem, type) {
       const ref = getType(triggerElem, type);
       if (ref) {
         ref.enabled = true;
       }
     }
 
-    function disableTooltip(triggerElem, type = 'tooltip') {
+    function disableTooltip(triggerElem, type) {
       closeTooltip(triggerElem, type, 0);
       const ref = getType(triggerElem, type);
       if (ref) {
@@ -264,25 +262,26 @@
       }
     }
 
-    function destroyTooltip(triggerElem) {
+    function destroyTooltip(triggerElem, type) {
       closeTooltip(triggerElem, type, 0);
-      const ref = getType(triggerElem, type);
-      if (ref) {
-        ref.instance.destroy();
-        // TODO: NEEDS A TYPE OPTION
-        refs.delete(triggerElem);
+      const ref = getRef(triggerElem);
+      if (ref[type]) {
+        ref[type].instance.destroy();
+        delete ref[type];
+        // If this is the last type of tooltip for the element, delete the WeakMap reference.
+        if (Object.keys(ref).length === 0) {
+          refs.delete(triggerElem);
+        }
       }
     }
 
     function getOnOffEvents(opts) {
-      // TODO: Need to handle touch events.
       return triggers(opts).reduce((acc, trigger) => {
         if (trigger === 'click') {
           acc.push(['click']);
         } else if (trigger === 'focus') {
           acc.push(['focus', 'blur']);
         } else if (trigger === 'hover') {
-          // acc.push(['mouseenter', 'mouseleave']);
           acc.push(['mouseenter', 'mouseout']);
         }
         return acc;
@@ -324,7 +323,6 @@
             const elem = e.currentTarget;
             opts = mergeInlineOpts(elem, opts);
             const ref = getType(elem, opts.type);
-            // debugger
             if (elem.contains(e.relatedTarget)) return;
             if (offEvent === 'mouseout' && e.relatedTarget === ref.instance.popper) {
               $(ref.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
