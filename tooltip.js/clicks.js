@@ -34,7 +34,7 @@ $(document).ready(function() {
       container: 'body',
       html: true,
       // placement: 'left',
-      type: 'popover',
+      // type: 'popover',
     });
 
     $('.btn5').ahaTooltip();
@@ -45,7 +45,7 @@ $(document).ready(function() {
       container: 'body',
       html: true,
       // placement: 'right',
-      type: 'popover',
+      // type: 'popover',
       url: 'http://localhost:7879/junk.html'
       // url: 'aoeu'
     });
@@ -58,7 +58,7 @@ $(document).ready(function() {
     }).ahaTooltip({
       trigger: 'click',
       container: 'body',
-      type: 'popover',
+      // type: 'popover',
     });
 
 });
