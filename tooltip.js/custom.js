@@ -361,10 +361,24 @@
           $(context).on(onEvent, selector, (e) => {
             const ref = getRef(e.currentTarget);
             opts = mergeInlineOpts(e.currentTarget, opts);
+            let closeOnClick;
             if (ref && ref[opts.type] && ref[opts.type].isVisible) {
               closeTooltip(e.currentTarget, opts.type);
             } else {
-              openTooltip(e.currentTarget, opts);
+              const elem = e.currentTarget;
+              openTooltip(elem, opts);
+              const ref = getType(elem, opts.type);
+              const tooltip = ref.instance.popper;
+              requestAnimationFrame(() => {
+                $(document).on(onEvent, function handleClickOutside(e2) {
+                  console.log('handleClik')
+                  if (!tooltip.contains(e2.target)) {
+                    closeTooltip(elem, opts.type);
+                    $(document).off(onEvent, handleClickOutside);
+                  }
+                })
+
+              })
             }
           });
         }
