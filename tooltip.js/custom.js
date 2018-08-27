@@ -235,8 +235,10 @@
       const ref = getType(triggerElem, type);
       if (ref && ref.enabled) {
         clearTimeout(ref.timeout);
-        ref.isVisible = ref.isVisible || {}
-        ref.isVisible[ref.opts.type] = true;
+        // ref.isVisible = ref.isVisible || {}
+        // ref.isVisible[ref.opts.type] = true;
+        ref.isVisible = true;
+        // console.log(ref)
         ref.timeout = setTimeout(() => {
           triggerElem.setAttribute('x-tooltip', '');
           repositionTooltip(triggerElem, type);
@@ -261,11 +263,21 @@
       if (ref) {
         clearTimeout(ref.timeout);
         ref.isVisible = false;
-        ref.fadeOut = fadeTooltipOut.bind(null, ref);
-        ref.timeout = setTimeout(() => {
-          ref.instance.popper.addEventListener('transitionend', ref.fadeOut);
-          ref.instance.popper.removeAttribute('x-in');
-        }, typeof delayHide === 'undefined' ? ref.opts.delay.hide : delayHide);
+        // ref.fadeOut = fadeTooltipOut.bind(null, ref);
+        if (ref.instance.popper.hasAttribute('x-in')) {
+          ref.timeout = setTimeout(() => {
+            // ref.instance.popper.addEventListener('transitionend', ref.fadeOut);
+            ref.instance.popper.addEventListener('transitionend', function fadeOut() {
+              ref.instance.popper.removeEventListener('transitionend', fadeOut);
+              if (ref.instance.popper.parentNode) {
+                ref.instance.popper.parentNode.removeChild(ref.instance.popper);
+                // delete ref.fadeOut;
+              }
+            });
+            ref.instance.popper.removeAttribute('x-in');
+          }, typeof delayHide === 'undefined' ? ref.opts.delay.hide : delayHide);
+
+        }
       }
     }
 
