@@ -231,13 +231,11 @@
       if (refType) {
         clearTimeout(refType.timeout);
         if (refType.isVisible) {
-          debugger
           triggerElem.removeAttribute('x-tooltip');
           refType.isVisible = false;
           refType.timeout = setTimeout(() => {
             refType.instance.popper.addEventListener('transitionend', function fadeOut() {
               refType.instance.popper.removeEventListener('transitionend', fadeOut);
-              debugger
               if (refType.instance.popper.parentNode) {
                 refType.instance.popper.parentNode.removeChild(refType.instance.popper);
               }
@@ -337,9 +335,11 @@
         } else {
           $(context).on(onEvent, selector, (e) => {
             const ref = getRef(e.currentTarget);
+            let handleClickOutside;
             opts = mergeInlineOpts(e.currentTarget, opts);
             let closeOnClick;
             if (ref && ref[opts.type] && ref[opts.type].isVisible) {
+              $(document).off(onEvent, handleClickOutside);
               closeTooltip(e.currentTarget, opts.type);
             } else {
               const elem = e.currentTarget;
@@ -349,8 +349,8 @@
               requestAnimationFrame(() => {
                 $(document).on(onEvent, function handleClickOutside(e2) {
                   if (!tooltip.contains(e2.target)) {
-                    closeTooltip(elem, opts.type);
                     $(document).off(onEvent, handleClickOutside);
+                    closeTooltip(elem, opts.type);
                   }
                 })
 
