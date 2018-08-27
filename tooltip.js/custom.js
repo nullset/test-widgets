@@ -326,7 +326,6 @@
             if (elem.contains(e.relatedTarget)) return;
             if (offEvent === 'mouseout' && e.relatedTarget === ref.instance.popper) {
               $(ref.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
-                console.log('leave')
                 closeTooltip(elem, opts.type);
                 $(ref.instance.popper).off('mouseleave', mouseLeaveHandler);
               });
@@ -348,7 +347,6 @@
               const tooltip = ref.instance.popper;
               requestAnimationFrame(() => {
                 $(document).on(onEvent, function handleClickOutside(e2) {
-                  console.log('handleClik')
                   if (!tooltip.contains(e2.target)) {
                     closeTooltip(elem, opts.type);
                     $(document).off(onEvent, handleClickOutside);
