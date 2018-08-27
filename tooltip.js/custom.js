@@ -148,62 +148,41 @@
 
       const tooltip = new Popper(triggerElem, template, opts.popper);
       const typeData = { instance: tooltip, enabled: true, opts  };
-      // TODO: need to set type within overall data
-
-
       setType(triggerElem, opts.type, typeData);
-
       const resolveURL = new Promise(function(resolve, reject) {
         if (typeData.opts.url) {
           typeData.instance.popper.removeAttribute('x-loading-error');
           typeData.instance.popper.setAttribute('x-loading', '');
           typeData.opts.content = '<i class="fa fa-spinner fa-spin"></i>';
           updateTooltipContent(triggerElem, type);
-          setTimeout(() => {
-            $.ajax({
-              url: typeData.opts.url,
-              success: (data) => {
-                typeData.opts.content = data;
-              },
-              error: (data) => {
-                typeData.instance.popper.setAttribute('x-loading-error', '');
-              },
-              complete: (data) => {
-                typeData.instance.popper.removeAttribute('x-loading');
-                resolve();
-                // resolve(typeData);
-                // setType(triggerElem, type, typeData);
-              }
-            })
-
-          }, 3000);
+          $.ajax({
+            url: typeData.opts.url,
+            success: (data) => {
+              typeData.opts.content = data;
+            },
+            error: (data) => {
+              typeData.instance.popper.setAttribute('x-loading-error', '');
+            },
+            complete: (data) => {
+              typeData.instance.popper.removeAttribute('x-loading');
+              resolve();
+            }
+          });
         } else {
           resolve();
         }
       }).then(() => {
-
         updateTooltipContent(triggerElem, type);
-
       });
-      
-      // resolveURL.then((typeData) => {
-      //   // debugger
 
-        // debugger
-        // setType(triggerElem, type, typeData);
-        // updateTooltipContent(triggerElem, type);
-      // });
-      
-
-
-      // // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
-      // // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
-      // // and have those changes automatically reflected in the tooltip popup.
-      // const observer = new MutationObserver(mutationCallback.bind(null, tooltip, opts.type));
-      // observer.observe(triggerElem, {
-      //   attributes: true,
-      //   attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
-      // });
+      // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
+      // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
+      // and have those changes automatically reflected in the tooltip popup.
+      const observer = new MutationObserver(mutationCallback.bind(null, tooltip, opts.type));
+      observer.observe(triggerElem, {
+        attributes: true,
+        attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
+      });
     }
 
     function repositionTooltip(triggerElem, type) {
