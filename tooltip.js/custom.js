@@ -249,29 +249,18 @@
       }
     }
 
-    function fadeTooltipOut(ref) {
-      ref.instance.popper.removeEventListener('transitionend', ref.fadeOut);
-      if (ref.instance.popper.parentNode) {
-        ref.instance.popper.parentNode.removeChild(ref.instance.popper);
-        delete ref.fadeOut;
-      }
-    }
-
     function closeTooltip(triggerElem, type, delayHide) {
       triggerElem.removeAttribute('x-tooltip');
       const ref = getType(triggerElem, type);
       if (ref) {
         clearTimeout(ref.timeout);
         ref.isVisible = false;
-        // ref.fadeOut = fadeTooltipOut.bind(null, ref);
         if (ref.instance.popper.hasAttribute('x-in')) {
           ref.timeout = setTimeout(() => {
-            // ref.instance.popper.addEventListener('transitionend', ref.fadeOut);
             ref.instance.popper.addEventListener('transitionend', function fadeOut() {
               ref.instance.popper.removeEventListener('transitionend', fadeOut);
               if (ref.instance.popper.parentNode) {
                 ref.instance.popper.parentNode.removeChild(ref.instance.popper);
-                // delete ref.fadeOut;
               }
             });
             ref.instance.popper.removeAttribute('x-in');
