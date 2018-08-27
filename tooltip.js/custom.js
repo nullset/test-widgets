@@ -103,26 +103,26 @@
     }
 
     function updateTooltipContent(elem, type) {
-      const ref = getType(elem, type);
-      const title = ref.opts.title || elem.title || elem.dataset.title || elem.dataset.tooltip;
-      const content = ref.opts.content;
+      const refType = getType(elem, type);
+      const title = refType.opts.title || elem.title || elem.dataset.title || elem.dataset.tooltip;
+      const content = refType.opts.content;
 
       if (elem.title.length > 0) {
         elem.dataset.title = elem.title;
         elem.removeAttribute('title');
       }
 
-      const popper = ref.instance.popper;
+      const popper = refType.instance.popper;
       const titleElem = popper.querySelector('[x-title]');
       const contentElem = popper.querySelector('[x-content]');
-      if (ref.opts.html) {
+      if (refType.opts.html) {
         titleElem.innerHTML = cleanHTML(title) || '';
         contentElem.innerHTML = cleanHTML(content) || '';
       } else {
         titleElem.textContent = title || '';
         contentElem.textContent = content || '';
       }
-      ref.instance.update();
+      refType.instance.update();
     }
 
     function getTemplate(opts) {
@@ -185,9 +185,9 @@
     }
 
     function repositionTooltip(triggerElem, type) {
-      const ref = getType(triggerElem, type);
-      if (ref) {
-        ref.instance.update();
+      const refType = getType(triggerElem, type);
+      if (refType) {
+        refType.instance.update();
       }
     }
 
@@ -212,54 +212,54 @@
     }
 
     function appendTooltip(triggerElem, type) {
-      const ref = getType(triggerElem, type);
-      if (ref && ref.enabled) {
-        clearTimeout(ref.timeout);
-        ref.isVisible = true;
-        ref.timeout = setTimeout(() => {
+      const refType = getType(triggerElem, type);
+      if (refType && refType.enabled) {
+        clearTimeout(refType.timeout);
+        refType.isVisible = true;
+        refType.timeout = setTimeout(() => {
           triggerElem.setAttribute('x-tooltip', '');
           repositionTooltip(triggerElem, type);
-          const container = ref.opts.container ? document.querySelector(ref.opts.container) : triggerElem;
-          container.appendChild(ref.instance.popper);
-          requestAnimationFrame(() => ref.instance.popper.setAttribute('x-in', ''));
-        }, ref.opts.delay.show);
+          const container = refType.opts.container ? document.querySelector(refType.opts.container) : triggerElem;
+          container.appendChild(refType.instance.popper);
+          requestAnimationFrame(() => refType.instance.popper.setAttribute('x-in', ''));
+        }, refType.opts.delay.show);
       }
     }
 
     function closeTooltip(triggerElem, type, delayHide) {
-      triggerElem.removeAttribute('x-tooltip');
-      const ref = getType(triggerElem, type);
-      if (ref) {
-        clearTimeout(ref.timeout);
-        // if (ref.instance.popper.hasAttribute('x-in')) {
-        if (ref.isVisible) {
-          ref.isVisible = false;
-          ref.timeout = setTimeout(() => {
-            ref.instance.popper.addEventListener('transitionend', function fadeOut() {
-              ref.instance.popper.removeEventListener('transitionend', fadeOut);
-              if (ref.instance.popper.parentNode) {
-                ref.instance.popper.parentNode.removeChild(ref.instance.popper);
+      const refType = getType(triggerElem, type);
+      if (refType) {
+        clearTimeout(refType.timeout);
+        if (refType.isVisible) {
+          debugger
+          triggerElem.removeAttribute('x-tooltip');
+          refType.isVisible = false;
+          refType.timeout = setTimeout(() => {
+            refType.instance.popper.addEventListener('transitionend', function fadeOut() {
+              refType.instance.popper.removeEventListener('transitionend', fadeOut);
+              debugger
+              if (refType.instance.popper.parentNode) {
+                refType.instance.popper.parentNode.removeChild(refType.instance.popper);
               }
             });
-            ref.instance.popper.removeAttribute('x-in');
-          }, typeof delayHide === 'undefined' ? ref.opts.delay.hide : delayHide);
-
+          }, typeof delayHide === 'undefined' ? refType.opts.delay.hide : delayHide);
+          refType.instance.popper.removeAttribute('x-in');
         }
       }
     }
 
     function enableTooltip(triggerElem, type) {
-      const ref = getType(triggerElem, type);
-      if (ref) {
-        ref.enabled = true;
+      const refType = getType(triggerElem, type);
+      if (refType) {
+        refType.enabled = true;
       }
     }
 
     function disableTooltip(triggerElem, type) {
       closeTooltip(triggerElem, type, 0);
-      const ref = getType(triggerElem, type);
-      if (ref) {
-        ref.enabled = false;
+      const refType = getType(triggerElem, type);
+      if (refType) {
+        refType.enabled = false;
       }
     }
 
@@ -323,12 +323,12 @@
           }).on(offEvent, selector, (e) => {
             const elem = e.currentTarget;
             opts = mergeInlineOpts(elem, opts);
-            const ref = getType(elem, opts.type);
+            const refType = getType(elem, opts.type);
             if (elem.contains(e.relatedTarget)) return;
-            if (offEvent === 'mouseout' && e.relatedTarget === ref.instance.popper) {
-              $(ref.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
+            if (offEvent === 'mouseout' && e.relatedTarget === refType.instance.popper) {
+              $(refType.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
                 closeTooltip(elem, opts.type);
-                $(ref.instance.popper).off('mouseleave', mouseLeaveHandler);
+                $(refType.instance.popper).off('mouseleave', mouseLeaveHandler);
               });
             } else {
               closeTooltip(elem, opts.type);
@@ -344,8 +344,8 @@
             } else {
               const elem = e.currentTarget;
               openTooltip(elem, opts);
-              const ref = getType(elem, opts.type);
-              const tooltip = ref.instance.popper;
+              const refType = getType(elem, opts.type);
+              const tooltip = refType.instance.popper;
               requestAnimationFrame(() => {
                 $(document).on(onEvent, function handleClickOutside(e2) {
                   if (!tooltip.contains(e2.target)) {
