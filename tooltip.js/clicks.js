@@ -4,7 +4,7 @@ $(document).ready(function() {
       selector: '.btn',
       // trigger: 'click',
       container: 'body',
-      placement: 'left',
+      // placement: 'left',
       // delay: {
       //   show: 1000,
       //   hide: 1000,
@@ -15,7 +15,7 @@ $(document).ready(function() {
       // trigger: 'hover',
       html: true,
       container: 'body',
-      placement: 'left',
+      // placement: 'left',
       // delay: {
       //   show: 1000,
       //   hide: 1000,
@@ -33,7 +33,7 @@ $(document).ready(function() {
       trigger: 'click',
       container: 'body',
       html: true,
-      placement: 'left',
+      // placement: 'left',
       type: 'popover',
     });
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
       trigger: 'click',
       container: 'body',
       html: true,
-      placement: 'right',
+      // placement: 'right',
       type: 'popover',
       url: 'http://localhost:7879/junk.html'
       // url: 'aoeu'
