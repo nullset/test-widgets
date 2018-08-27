@@ -231,8 +231,9 @@
       const ref = getType(triggerElem, type);
       if (ref) {
         clearTimeout(ref.timeout);
-        ref.isVisible = false;
-        if (ref.instance.popper.hasAttribute('x-in')) {
+        // if (ref.instance.popper.hasAttribute('x-in')) {
+        if (ref.isVisible) {
+          ref.isVisible = false;
           ref.timeout = setTimeout(() => {
             ref.instance.popper.addEventListener('transitionend', function fadeOut() {
               ref.instance.popper.removeEventListener('transitionend', fadeOut);

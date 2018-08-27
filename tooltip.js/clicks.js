@@ -2,17 +2,17 @@ $(document).ready(function() {
 
     $(document).ahaTooltip({
       selector: '.btn',
-      trigger: 'click',
+      // trigger: 'click',
       container: 'body',
       placement: 'left',
-      delay: {
-        show: 1000,
-        hide: 1000,
-      }
+      // delay: {
+      //   show: 1000,
+      //   hide: 1000,
+      // }
     })
 
     $('.btn2').ahaTooltip({
-      trigger: 'hover',
+      // trigger: 'hover',
       html: true,
       container: 'body',
       placement: 'left',
