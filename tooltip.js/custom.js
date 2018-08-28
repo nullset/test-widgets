@@ -339,7 +339,7 @@
             opts = mergeInlineOpts(e.currentTarget, opts);
             let closeOnClick;
             if (ref && ref[opts.type] && ref[opts.type].isVisible) {
-              $(document).off(onEvent, handleClickOutside);
+              // $(document).off(onEvent, handleClickOutside);
               closeTooltip(e.currentTarget, opts.type);
             } else {
               const elem = e.currentTarget;
@@ -353,7 +353,6 @@
                     closeTooltip(elem, opts.type);
                   }
                 })
-
               })
             }
           });
