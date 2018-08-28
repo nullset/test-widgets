@@ -234,6 +234,7 @@
           triggerElem.removeAttribute('x-tooltip');
           refType.isVisible = false;
           refType.timeout = setTimeout(() => {
+            alert(2)
             refType.instance.popper.addEventListener('transitionend', function fadeOut() {
               refType.instance.popper.removeEventListener('transitionend', fadeOut);
               if (refType.instance.popper.parentNode) {
@@ -346,14 +347,14 @@
               openTooltip(elem, opts);
               const refType = getType(elem, opts.type);
               const tooltip = refType.instance.popper;
-              requestAnimationFrame(() => {
-                $(document).on(onEvent, function handleClickOutside(e2) {
-                  if (!tooltip.contains(e2.target)) {
-                    $(document).off(onEvent, handleClickOutside);
-                    closeTooltip(elem, opts.type);
-                  }
-                })
-              })
+              // requestAnimationFrame(() => {
+              //   $(document).on(onEvent, function handleClickOutside(e2) {
+              //     if (!tooltip.contains(e2.target)) {
+              //       $(document).off(onEvent, handleClickOutside);
+              //       closeTooltip(elem, opts.type);
+              //     }
+              //   })
+              // })
             }
           });
         }
