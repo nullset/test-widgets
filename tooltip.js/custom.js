@@ -5,11 +5,10 @@
 
   class Tooltip  {
     constructor( triggerElem, opts ) {
-      const type = 'tooltip';
-      this.type = type;
+      this.type = opts.type;
       this.triggerElem = triggerElem;
       const instance = {};
-      instance[type] = {opts};
+      instance[this.typetype] = {opts};
       // this.ref = refs.set(triggerElem, instance);
       this.opts = opts;
       this.enabled = true;
@@ -17,7 +16,7 @@
       // this.refType = this.ref[type] || {opts};
 
       const refData = {};
-      refData[type] = this;
+      refData[this.type] = this;
       refs.set(triggerElem, refData);
       // this.openTooltip();
     }
@@ -248,7 +247,117 @@
       }
     }
   }
+
+  Tooltip.prototype.getOnOffEvents = function(opts) {
+    return this.triggers(opts).reduce((acc, trigger) => {
+      if (trigger === 'click') {
+        acc.push(['click']);
+      } else if (trigger === 'focus') {
+        acc.push(['focus', 'blur']);
+      } else if (trigger === 'hover') {
+        acc.push(['mouseenter', 'mouseout']);
+      }
+      return acc;
+    }, []);
+  }
+
+  Tooltip.prototype.triggers = function(opts) {
+    return opts.trigger.split(' ').map(x => x.trim());
+  }
+
+  Tooltip.prototype.mergeInlineOpts = function(elem, opts = {}) {
+    Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
+      let value = elem.dataset[key];
+      try {
+        value = JSON.parse(value.replace(/'/g, '"'));
+        if (Array.isArray(value) || key === 'delay') {
+          opts[key] = value;
+        } else {
+          if (value[opts.type]) {
+            opts[key] = value[opts.type];
+          }
+        }
+      } catch {
+        opts[key] = value;
+      }
+    });
+    return opts;
+  }
+
+  Tooltip.prototype.bindEvents = function(context, selector, opts) {
+    const events = getOnOffEvents(opts);
+    events.forEach((event) => {
+      const [ onEvent, offEvent ] = event;
+      if (offEvent) {
+        $(context).on(onEvent, selector, (e) => {
+          opts = mergeInlineOpts(e.currentTarget, opts);
+          const ref = getRef(e.currentTarget);
+          const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+          // openTooltip(e.currentTarget, opts);
+          instance.openTooltip();
+        }).on(offEvent, selector, (e) => {
+          const elem = e.currentTarget;
+          if (elem.contains(e.relatedTarget)) return;
+
+          opts = mergeInlineOpts(elem, opts);
+          const ref = getRef(e.currentTarget);
+          const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+          // const refType = getType(elem, opts.type);
+          if (offEvent === 'mouseout' && e.relatedTarget === instance.instance.popper) {
+            $(instance.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
+              instance.closeTooltip();
+              $(instance.instance.popper).off('mouseleave', mouseLeaveHandler);
+            });
+          } else {
+            instance.closeTooltip();
+          }
+        });
+      } else {
+        $(context).on(onEvent, selector, (e) => {
+          const ref = getRef(e.currentTarget);
+          let handleClickOutside;
+          opts = mergeInlineOpts(e.currentTarget, opts);
+          let instance;
+          if (opts.type === 'tooltip') {
+            instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+          } else {
+            instance = ref[opts.type] ? ref[opts.type] : new Popover(e.currentTarget, opts);
+          }
+
+
+          let closeOnClick;
+          if (instance.isVisible) {
+            // $(document).off(onEvent, handleClickOutside);
+            instance.closeTooltip();
+          } else {
+            // debugger
+            const elem = e.currentTarget;
+            instance.openTooltip();
+            const tooltip = instance.instance.popper;
+            // requestAnimationFrame(() => {
+            //   $(document).on(onEvent, function handleClickOutside(e2) {
+            //     // debugger
+            //     if (!tooltip.contains(e2.target)) {
+            //       $(document).off(onEvent, handleClickOutside);
+            //       instance.closeTooltip();
+            //     }
+            //   })
+            // })
+          }
+        });
+      }
+    });
+  }
+
   //---------------------------------------
+
+  class Popover extends Tooltip {
+    constructor(triggerElem, opts) {
+      opts.type = 'popover'
+      super(triggerElem, opts);
+      // this.type = 'popover';
+    }
+  }
 
 
   const popperDefaults = {
@@ -522,100 +631,106 @@
     //   }
     // }
 
-    function getOnOffEvents(opts) {
-      return triggers(opts).reduce((acc, trigger) => {
-        if (trigger === 'click') {
-          acc.push(['click']);
-        } else if (trigger === 'focus') {
-          acc.push(['focus', 'blur']);
-        } else if (trigger === 'hover') {
-          acc.push(['mouseenter', 'mouseout']);
-        }
-        return acc;
-      }, []);
-    }
+    // function getOnOffEvents(opts) {
+    //   return triggers(opts).reduce((acc, trigger) => {
+    //     if (trigger === 'click') {
+    //       acc.push(['click']);
+    //     } else if (trigger === 'focus') {
+    //       acc.push(['focus', 'blur']);
+    //     } else if (trigger === 'hover') {
+    //       acc.push(['mouseenter', 'mouseout']);
+    //     }
+    //     return acc;
+    //   }, []);
+    // }
 
-    function triggers(opts) {
-      return opts.trigger.split(' ').map(x => x.trim());
-    }
+    // function triggers(opts) {
+    //   return opts.trigger.split(' ').map(x => x.trim());
+    // }
 
-    function mergeInlineOpts(elem, opts = {}) {
-      Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
-        let value = elem.dataset[key];
-        try {
-          value = JSON.parse(value.replace(/'/g, '"'));
-          if (Array.isArray(value) || key === 'delay') {
-            opts[key] = value;
-          } else {
-            if (value[opts.type]) {
-              opts[key] = value[opts.type];
-            }
-          }
-        } catch {
-          opts[key] = value;
-        }
-      });
-      return opts;
-    }
+    // function mergeInlineOpts(elem, opts = {}) {
+    //   Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
+    //     let value = elem.dataset[key];
+    //     try {
+    //       value = JSON.parse(value.replace(/'/g, '"'));
+    //       if (Array.isArray(value) || key === 'delay') {
+    //         opts[key] = value;
+    //       } else {
+    //         if (value[opts.type]) {
+    //           opts[key] = value[opts.type];
+    //         }
+    //       }
+    //     } catch {
+    //       opts[key] = value;
+    //     }
+    //   });
+    //   return opts;
+    // }
 
-    function bindEvents(context, selector, opts) {
-      const events = getOnOffEvents(opts);
-      events.forEach((event) => {
-        const [ onEvent, offEvent ] = event;
-        if (offEvent) {
-          $(context).on(onEvent, selector, (e) => {
-            opts = mergeInlineOpts(e.currentTarget, opts);
-            const ref = getRef(e.currentTarget);
-            const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
-            // openTooltip(e.currentTarget, opts);
-            instance.openTooltip();
-          }).on(offEvent, selector, (e) => {
-            const elem = e.currentTarget;
-            if (elem.contains(e.relatedTarget)) return;
+    // function bindEvents(context, selector, opts) {
+    //   const events = getOnOffEvents(opts);
+    //   events.forEach((event) => {
+    //     const [ onEvent, offEvent ] = event;
+    //     if (offEvent) {
+    //       $(context).on(onEvent, selector, (e) => {
+    //         opts = mergeInlineOpts(e.currentTarget, opts);
+    //         const ref = getRef(e.currentTarget);
+    //         const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+    //         // openTooltip(e.currentTarget, opts);
+    //         instance.openTooltip();
+    //       }).on(offEvent, selector, (e) => {
+    //         const elem = e.currentTarget;
+    //         if (elem.contains(e.relatedTarget)) return;
 
-            opts = mergeInlineOpts(elem, opts);
-            const ref = getRef(e.currentTarget);
-            const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
-            // const refType = getType(elem, opts.type);
-            if (offEvent === 'mouseout' && e.relatedTarget === instance.instance.popper) {
-              $(instance.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
-                instance.closeTooltip();
-                $(instance.instance.popper).off('mouseleave', mouseLeaveHandler);
-              });
-            } else {
-              instance.closeTooltip();
-            }
-          });
-        } else {
-          $(context).on(onEvent, selector, (e) => {
-            const ref = getRef(e.currentTarget);
-            let handleClickOutside;
-            opts = mergeInlineOpts(e.currentTarget, opts);
-            const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+    //         opts = mergeInlineOpts(elem, opts);
+    //         const ref = getRef(e.currentTarget);
+    //         const instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+    //         // const refType = getType(elem, opts.type);
+    //         if (offEvent === 'mouseout' && e.relatedTarget === instance.instance.popper) {
+    //           $(instance.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
+    //             instance.closeTooltip();
+    //             $(instance.instance.popper).off('mouseleave', mouseLeaveHandler);
+    //           });
+    //         } else {
+    //           instance.closeTooltip();
+    //         }
+    //       });
+    //     } else {
+    //       $(context).on(onEvent, selector, (e) => {
+    //         const ref = getRef(e.currentTarget);
+    //         let handleClickOutside;
+    //         opts = mergeInlineOpts(e.currentTarget, opts);
+    //         let instance;
+    //         if (opts.type === 'tooltip') {
+    //           instance = ref[opts.type] ? ref[opts.type] : new Tooltip(e.currentTarget, opts);
+    //         } else {
+    //           instance = ref[opts.type] ? ref[opts.type] : new Popover(e.currentTarget, opts);
+    //         }
 
-            let closeOnClick;
-            if (instance.isVisible) {
-              // $(document).off(onEvent, handleClickOutside);
-              instance.closeTooltip();
-            } else {
-              // debugger
-              const elem = e.currentTarget;
-              instance.openTooltip();
-              const tooltip = instance.instance.popper;
-              requestAnimationFrame(() => {
-                $(document).on(onEvent, function handleClickOutside(e2) {
-                  // debugger
-                  if (!tooltip.contains(e2.target)) {
-                    $(document).off(onEvent, handleClickOutside);
-                    instance.closeTooltip();
-                  }
-                })
-              })
-            }
-          });
-        }
-      });
-    }
+
+    //         let closeOnClick;
+    //         if (instance.isVisible) {
+    //           // $(document).off(onEvent, handleClickOutside);
+    //           instance.closeTooltip();
+    //         } else {
+    //           // debugger
+    //           const elem = e.currentTarget;
+    //           instance.openTooltip();
+    //           const tooltip = instance.instance.popper;
+    //           // requestAnimationFrame(() => {
+    //           //   $(document).on(onEvent, function handleClickOutside(e2) {
+    //           //     // debugger
+    //           //     if (!tooltip.contains(e2.target)) {
+    //           //       $(document).off(onEvent, handleClickOutside);
+    //           //       instance.closeTooltip();
+    //           //     }
+    //           //   })
+    //           // })
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
 
     if (typeof opts !== 'string') {
       // Set context and selector for event assignment.

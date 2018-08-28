@@ -34,12 +34,12 @@ $(document).ready(function() {
       container: 'body',
       html: true,
       // placement: 'left',
-      // type: 'popover',
+      type: 'popover',
     });
 
     $('.btn5').ahaTooltip();
 
-    $('.btn6').ahaTooltip({
+    $('.btn6').popover({
       selector: '.btn4',
       trigger: 'click',
       container: 'body',
