@@ -39,7 +39,7 @@ $(document).ready(function() {
 
     $('.btn5').ahaTooltip();
 
-    $('.btn6').ahaTooltip({
+    $('.btn6').popover({
       selector: '.btn4',
       trigger: 'click',
       container: 'body',
@@ -55,7 +55,7 @@ $(document).ready(function() {
       container: 'body',
       html: true,
       // url: 'aoeu'
-    }).ahaTooltip({
+    }).popover({
       trigger: 'click',
       container: 'body',
       type: 'popover',
