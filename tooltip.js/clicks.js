@@ -37,7 +37,7 @@ $(document).ready(function() {
       type: 'popover',
     });
 
-    $('.btn5').ahaTooltip({
+    $('.btn5').popover({
       trigger: 'manual',
     });
 

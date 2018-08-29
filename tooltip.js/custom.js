@@ -300,6 +300,7 @@
     }
 
     Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
+      if (key === 'type') return;
       let value = elem.dataset[key];
       try {
         value = JSON.parse(value.replace(/'/g, '"'));
@@ -382,11 +383,18 @@
     });
   }
 
-  function manualTypeMutationCallback(mutations) {
-    debugger;
+  function createManualTooltips(context, selector, opts) {
+    $(`${context} ${selector ? selector : ''}`).each((i, elem) => {
+      getOrCreateTooltip(elem, opts);
+    });
+  }
+
+  function manualTypeMutationCallback(context, selector, opts, mutations) {
+    createManualTooltips(context, selector, opts)
   }
 
   function setup(opts) {
+    // Set context and selector for event assignment.
     let context, selector;
     if (this.selector) {
       context = this.selector;
@@ -396,26 +404,20 @@
     }
 
     if (typeof opts !== 'string') {
-      // Set context and selector for event assignment.
-
       opts = deepmerge(ahaTooltipDefaults, opts);
 
-      debugger
-      if (opts.type === 'manual') {
-        debugger
-        const observer = new MutationObserver(manualTypeMutationCallback);
+      if (opts.trigger === 'manual') {
+        // This type of tooltip will only ever be controlled by manual show/hide controls.
+        const observer = new MutationObserver(manualTypeMutationCallback.bind(this, context, selector, opts));
         observer.observe(document.querySelector('body'), {
           childList: true,
           subtree: true,
         });
-        // getOrCreateTooltip(e.currentTarget, opts);
+        createManualTooltips(context, selector, opts);
       } else {
         bindEvents(context, selector, opts);
       }
     } else {
-      // const defaultType = 'tooltip';
-      // debugger
-      // const defaultOpts = {opts: ahaTooltipDefaults};
       switch (opts) {
         case 'show':
           this.each((i, elem) => {

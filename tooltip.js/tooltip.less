@@ -237,15 +237,20 @@
       //   background: #fafafa;
       // }
     }
-    .aha-tooltip__content:not(:empty) {
-      // border-bottom-left-radius: @tooltipRadius;
-      // border-bottom-right-radius: @tooltipRadius;
-      padding: @popoverPadding;
-      *:first-child {
-        margin-top: 0;
+    .aha-tooltip__content {
+      &:empty {
+        display: none;
       }
-      *:last-child {
-        margin-bottom: 0;
+      &:not(:empty) {
+        border-bottom-left-radius: @tooltipRadius;
+        border-bottom-right-radius: @tooltipRadius;
+        padding: @popoverPadding;
+        *:first-child {
+          margin-top: 0;
+        }
+        *:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }
