@@ -164,6 +164,10 @@
         tooltip[type].tooltip.opts.content = newValue;
       } else {
         tooltip[type].tooltip.opts.title = newValue;
+        if (mutation.attributeName === 'title') {
+          mutation.target.dataset.title = newValue;
+          mutation.target.removeAttribute('title');
+        }
       }
       this.updateTooltipContent(mutation.target, type);
       observer.takeRecords();
@@ -172,11 +176,6 @@
 
   Tooltip.prototype.updateTooltipContent = function() {
     const elem = this.triggerElem;
-
-    if (elem.title.length > 0) {
-      elem.dataset.title = elem.title;
-      elem.removeAttribute('title');
-    }
 
     const {title, content} = this.opts;
     const titleElem = this.popper.popper.querySelector('[x-title]');
@@ -536,7 +535,16 @@
   }
 
   function mergeInlineOpts(elem, opts = {}) {
-    opts.title = elem.title;
+    // Move legacy data-tooltip, title attributes to data-title.
+    if (elem.dataset.tooltip) {
+      elem.dataset.title = elem.dataset.tooltip;
+      delete elem.dataset.tooltip;
+    }
+    if (elem.title) {
+      elem.dataset.title = elem.title;
+      elem.removeAttribute('title');
+    }
+
     Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
       let value = elem.dataset[key];
       try {

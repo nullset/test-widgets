@@ -23,7 +23,7 @@ $(document).ready(function() {
     })
 
     $('.btn3').ahaTooltip({
-      trigger: 'click',
+      // trigger: 'click',
       html: true,
       container: 'body',
     })
