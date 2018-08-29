@@ -129,7 +129,7 @@
     // $(this.triggerElem).data().namespace = 
     // data.popper = this.popper = popper;
     // data.tooltip = this;
-    $(this.triggerElem).data(namespace, data);
+    $(this.triggerElem).data(namespace, Object.assign(getData(this.triggerElem), data));
 
     const self = this;
     const resolveURL = new Promise(function(resolve, reject) {
@@ -178,11 +178,14 @@
   
   Tooltip.prototype.updateTooltipContent = function() {
     const elem = this.triggerElem;
-    const title = elem.title || elem.dataset.title || elem.dataset.tooltip || this.opts.title;
-    const content = elem.dataset.content || this.opts.content;
+    // const title = elem.title || elem.dataset.title || elem.dataset.tooltip || this.opts.title;
+    // const content = elem.dataset.content || this.opts.content;
+
+    const {title, content} = this.opts;
 
     if (elem.title.length > 0) {
-      elem.dataset.title = elem.title;
+      this.opts.title = elem.title;
+      // elem.dataset.title = elem.title;
       elem.removeAttribute('title');
     }
 
@@ -550,7 +553,7 @@
         if (Array.isArray(value) || key === 'delay') {
           opts[key] = value;
         } else {
-          if (value[opts.type]) {
+          if (typeof value[opts.type] !== 'undefined') {
             opts[key] = value[opts.type];
           }
         }
