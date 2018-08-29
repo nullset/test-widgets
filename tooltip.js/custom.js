@@ -37,24 +37,13 @@
 
   // -----------------------------------------
   class Tooltip  {
-    constructor( triggerElem, opts ) {
+    constructor(triggerElem, opts) {
       this.type = opts.type;
       this.triggerElem = triggerElem;
-      // const instance = {};
-      // instance[type] = {opts};
-      // this.ref = refs.set(triggerElem, instance);
       this.opts = opts;
       this.enabled = true;
       this.isVisible = false;
-      // this.refType = this.ref[type] || {opts};
-
-      // const refData = {};
-      // refData[type] = this;
-      // refs.set(triggerElem, refData);
-      // this.openTooltip();
-
       this.createTooltip(triggerElem, opts);
-      // this.openTooltip();
     }
   }
 
@@ -68,8 +57,7 @@
     // Close any other type of tooltip that is open for this triggering element.
     Object.keys(data).forEach(function(type) {
       if (type !== opts.type && type !== 'popper') {
-        // TODO:
-        // type.closeTooltip(0);
+        data[type].tooltip.closeTooltip(0);
       }
     })
 
