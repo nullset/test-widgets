@@ -34,7 +34,6 @@
   };
 
 
-
   // -----------------------------------------
   class Tooltip  {
     constructor(triggerElem, opts) {
@@ -50,7 +49,7 @@
 
   Tooltip.prototype.openTooltip = function() {
     const triggerElem = this.triggerElem;
-    const opts = this.opts;
+    const opts = this.opts || ahaDefaults;
     const data = $(triggerElem).data(namespace);
     // debugger
 
@@ -82,7 +81,7 @@
             this.popper.popper.setAttribute('x-in', '');
           }
         });
-      }, this.opts.delay && this.ops.delay.show || 0);
+      }, this.opts.delay.show || 0);
     }
   }
 
@@ -325,11 +324,17 @@
     return data
   }
 
-  function getTooltip(triggerElem, opts) {
+  function getTooltip(triggerElem, type) {
+    const data = getData(triggerElem);
+    return data[type] && data[type].tooltip;
+  }
+
+  function getOrCreateTooltip(triggerElem, opts) {
     const data = getData(triggerElem);
     opts = mergeInlineOpts(triggerElem, opts);
     return data[opts.type] ? data[opts.type].tooltip : new Tooltip(triggerElem, opts);
   }
+
 
   function bindEvents(context, selector, opts) {
     const events = getOnOffEvents(opts);
@@ -337,10 +342,10 @@
       const [ onEvent, offEvent ] = event;
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
-          const tooltip = getTooltip(e.currentTarget, opts);
+          const tooltip = getOrCreateTooltip(e.currentTarget, opts);
           tooltip.openTooltip();
         }).on(offEvent, selector, (e) => {
-          const tooltip = getTooltip(e.currentTarget, opts);
+          const tooltip = getOrCreateTooltip(e.currentTarget, opts);
           const triggerElem = e.currentTarget
 
           if (triggerElem.contains(e.relatedTarget)) return;
@@ -357,7 +362,7 @@
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
-          const tooltip = getTooltip(e.currentTarget, opts);
+          const tooltip = getOrCreateTooltip(e.currentTarget, opts);
           let handleClickOutside;
           if (tooltip.isVisible) {
             tooltip.closeTooltip();
@@ -377,53 +382,69 @@
     });
   }
 
+  function manualTypeMutationCallback(mutations) {
+    debugger;
+  }
+
   function setup(opts) {
+    let context, selector;
+    if (this.selector) {
+      context = this.selector;
+    } else {
+      context = document;
+      selector = opts.selector;
+    }
+
     if (typeof opts !== 'string') {
       // Set context and selector for event assignment.
-      let context, selector;
-      if (this.selector) {
-        context = this.selector;
-      } else {
-        context = document;
-        selector = opts.selector;
-      }
-
 
       opts = deepmerge(ahaTooltipDefaults, opts);
 
-      bindEvents(context, selector, opts);
+      debugger
+      if (opts.type === 'manual') {
+        debugger
+        const observer = new MutationObserver(manualTypeMutationCallback);
+        observer.observe(document.querySelector('body'), {
+          childList: true,
+          subtree: true,
+        });
+        // getOrCreateTooltip(e.currentTarget, opts);
+      } else {
+        bindEvents(context, selector, opts);
+      }
     } else {
-      const defaultType = 'tooltip';
-      const defaultOpts = {opts: ahaTooltipDefaults};
+      // const defaultType = 'tooltip';
+      // debugger
+      // const defaultOpts = {opts: ahaTooltipDefaults};
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, opts);
-            tooltip.openTooltip();
+            const tooltip = getTooltip(elem, this.type);
+            if (tooltip) tooltip.openTooltip();
           });
           break;
         case 'hide':
           this.each((i, elem) => {
-            opts = mergeInlineOpts(elem, defaultOpts);
-            closeTooltip(elem, opts.type || defaultType, 0);
+            const tooltip = getTooltip(elem, this.type);
+            if (tooltip) tooltip.closeTooltip(0);
           });
           break;
         case 'enable':
           this.each((i, elem) => {
-            opts = mergeInlineOpts(elem, defaultOpts);
-            enableTooltip(elem, opts.type || defaultType);
+            const tooltip = getTooltip(elem, this.type);
+            if (tooltip) tooltip.enableTooltip();
           });
           break;
         case 'disable':
           this.each((i, elem) => {
-            opts = mergeInlineOpts(elem, defaultOpts);
-            disableTooltip(elem, opts.type || defaultType);
+            const tooltip = getTooltip(elem, this.type);
+            if (tooltip) tooltip.disableTooltip();
           });
           break;
         case 'dispose':
           this.each((i, elem) => {
-            opts = mergeInlineOpts(elem, defaultOpts);
-            destroyTooltip(elem, opts.type || defaultType);
+            const tooltip = getTooltip(elem, this.type);
+            if (tooltip) tooltip.destroyTooltip();
           });
           break;
         default:
@@ -434,13 +455,13 @@
   //-----------------
 
   $.fn.ahaTooltip = function(opts = {}) {
-    opts.type = 'tooltip';
+    this.type = opts.type = 'tooltip';
     setup.call(this, opts);
     return this;
   };
 
   $.fn.popover = function(opts = {}) {
-    opts.type = 'popover';
+    this.type = opts.type = 'popover';
     setup.call(this, opts);
     return this;
   };
