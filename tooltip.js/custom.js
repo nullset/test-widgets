@@ -589,9 +589,11 @@
 
           if (triggerElem.contains(e.relatedTarget)) return;
           if (offEvent === 'mouseout' && e.relatedTarget === tooltip.popper.popper) {
-            $(tooltip.popper.popper).on('mouseleave', function mouseLeaveHandler(e) {
-              tooltip.closeTooltip();
-              $(tooltip.popper.popper).off('mouseleave', mouseLeaveHandler);
+            $(tooltip.popper.popper).on('mouseout', function mouseLeaveHandler(e2) {
+              if (!tooltip.popper.popper.contains(e2.relatedTarget) && !triggerElem.contains(e2.relatedTarget)) {
+                tooltip.closeTooltip();
+                $(tooltip.popper.popper).off('mouseleave', mouseLeaveHandler);
+              }
             });
           } else {
             tooltip.closeTooltip();
@@ -600,28 +602,20 @@
       } else {
         $(context).on(onEvent, selector, (e) => {
           const tooltip = getTooltip(e.currentTarget, opts);
-          // const ref = getRef(e.currentTarget);
-          // let handleClickOutside;
-          // opts = mergeInlineOpts(e.currentTarget, opts);
-          // let closeOnClick;
-          // if (ref && ref[opts.type] && ref[opts.type].isVisible) {
+          let handleClickOutside;
           if (tooltip.isVisible) {
             // $(document).off(onEvent, handleClickOutside);
             tooltip.closeTooltip();
           } else {
             tooltip.openTooltip();
-            // const elem = e.currentTarget;
-            // openTooltip(elem, opts);
-            // const refType = getType(elem, opts.type);
-            // const tooltip = refType.instance.popper;
-            // requestAnimationFrame(() => {
-            //   $(document).on(onEvent, function handleClickOutside(e2) {
-            //     if (!tooltip.contains(e2.target)) {
-            //       $(document).off(onEvent, handleClickOutside);
-            //       closeTooltip(elem, opts.type);
-            //     }
-            //   })
-            // })
+            requestAnimationFrame(() => {
+              $(document).on(onEvent, function handleClickOutside(e2) {
+                if (!tooltip.popper.popper.contains(e2.target)) {
+                  $(document).off(onEvent, handleClickOutside);
+                  tooltip.closeTooltip();
+                }
+              })
+            })
           }
         });
       }
