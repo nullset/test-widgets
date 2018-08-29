@@ -77,7 +77,11 @@
         this.repositionTooltip(triggerElem, type);
         const container = this.opts.container ? document.querySelector(this.opts.container) : triggerElem;
         container.appendChild(this.popper.popper);
-        requestAnimationFrame(() => this.popper.popper.setAttribute('x-in', ''));
+        requestAnimationFrame(() => {
+          if (!this.popper.popper.hasAttribute('x-in')) {
+            this.popper.popper.setAttribute('x-in', '');
+          }
+        });
       }, this.opts.delay.show);
     }
   }
@@ -584,10 +588,10 @@
           const { tooltip } = getData(triggerElem)[opts.type];
 
           if (triggerElem.contains(e.relatedTarget)) return;
-          if (offEvent === 'mouseout' && e.relatedTarget === tooltip.popper) {
-            $(tooltip.popper).on('mouseleave', function mouseLeaveHandler(e) {
+          if (offEvent === 'mouseout' && e.relatedTarget === tooltip.popper.popper) {
+            $(tooltip.popper.popper).on('mouseleave', function mouseLeaveHandler(e) {
               tooltip.closeTooltip();
-              $(tooltip.popper).off('mouseleave', mouseLeaveHandler);
+              $(tooltip.popper.popper).off('mouseleave', mouseLeaveHandler);
             });
           } else {
             tooltip.closeTooltip();
