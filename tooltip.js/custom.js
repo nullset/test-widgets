@@ -134,8 +134,8 @@
     const self = this;
     const resolveURL = new Promise(function(resolve, reject) {
       if (self.opts.url) {
-        popper.removeAttribute('x-loading-error');
-        popper.setAttribute('x-loading', '');
+        self.popper.popper.removeAttribute('x-loading-error');
+        self.popper.popper.setAttribute('x-loading', '');
         self.opts.content = '<i class="fa fa-spinner fa-spin"></i>';
         self.updateTooltipContent(self.triggerElem, self.type);
         $.ajax({
@@ -144,10 +144,10 @@
             self.opts.content = data;
           },
           error: (data) => {
-            popper.setAttribute('x-loading-error', '');
+            self.popper.popper.setAttribute('x-loading-error', '');
           },
           complete: (data) => {
-            popper.removeAttribute('x-loading');
+            self.popper.popper.removeAttribute('x-loading');
             resolve();
           }
         });
@@ -568,16 +568,19 @@
     return data
   }
 
+  function getTooltip(triggerElem, opts) {
+    const data = getData(triggerElem);
+    opts = mergeInlineOpts(triggerElem, opts);
+    return data[opts.type] ? data[opts.type].tooltip : new Tooltip(triggerElem, opts);
+  }
+
   function bindEvents(context, selector, opts) {
     const events = getOnOffEvents(opts);
     events.forEach((event) => {
       const [ onEvent, offEvent ] = event;
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
-          const triggerElem = e.currentTarget;
-          const data = getData(triggerElem);
-          opts = mergeInlineOpts(triggerElem, opts);
-          const tooltip = data[opts.type] ? data[opts.type].tooltip : new Tooltip(triggerElem, opts);
+          const tooltip = getTooltip(e.currentTarget, opts);
           tooltip.openTooltip();
         }).on(offEvent, selector, (e) => {
           const triggerElem = e.currentTarget
@@ -597,18 +600,21 @@
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
-          const ref = getRef(e.currentTarget);
-          let handleClickOutside;
-          opts = mergeInlineOpts(e.currentTarget, opts);
-          let closeOnClick;
-          if (ref && ref[opts.type] && ref[opts.type].isVisible) {
+          const tooltip = getTooltip(e.currentTarget, opts);
+          // const ref = getRef(e.currentTarget);
+          // let handleClickOutside;
+          // opts = mergeInlineOpts(e.currentTarget, opts);
+          // let closeOnClick;
+          // if (ref && ref[opts.type] && ref[opts.type].isVisible) {
+          if (tooltip.isVisible) {
             // $(document).off(onEvent, handleClickOutside);
-            closeTooltip(e.currentTarget, opts.type);
+            tooltip.closeTooltip();
           } else {
-            const elem = e.currentTarget;
-            openTooltip(elem, opts);
-            const refType = getType(elem, opts.type);
-            const tooltip = refType.instance.popper;
+            tooltip.openTooltip();
+            // const elem = e.currentTarget;
+            // openTooltip(elem, opts);
+            // const refType = getType(elem, opts.type);
+            // const tooltip = refType.instance.popper;
             // requestAnimationFrame(() => {
             //   $(document).on(onEvent, function handleClickOutside(e2) {
             //     if (!tooltip.contains(e2.target)) {
