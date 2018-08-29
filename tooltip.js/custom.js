@@ -1,7 +1,8 @@
 (function($) {
+  const namespace = 'ahaTooltips';
   // WeakMap of DOM nodes to tooltip instances. Using WeakMap allows values to be garbage collected when
   // the element which forms the "key" is removed from the DOM.
-  const refs = new WeakMap();
+  // const refs = new WeakMap();
 
   const popperDefaults = {
     placement: 'auto',
@@ -33,45 +34,175 @@
   };
 
 
-  // ---------------
-  function getRef(elem) {
-    return refs.get(elem) || {};
+
+  // -----------------------------------------
+  class Tooltip  {
+    constructor( triggerElem, opts ) {
+      this.type = opts.type;
+      this.triggerElem = triggerElem;
+      // const instance = {};
+      // instance[type] = {opts};
+      // this.ref = refs.set(triggerElem, instance);
+      this.opts = opts;
+      this.enabled = true;
+      this.isVisible = false;
+      // this.refType = this.ref[type] || {opts};
+
+      // const refData = {};
+      // refData[type] = this;
+      // refs.set(triggerElem, refData);
+      // this.openTooltip();
+
+      this.createTooltip(triggerElem, opts);
+      // this.openTooltip();
+    }
   }
 
-  function getType(elem, type) {
-    const ref = getRef(elem);
-    return ref[type] || {};
+
+  Tooltip.prototype.openTooltip = function() {
+    const triggerElem = this.triggerElem;
+    const opts = this.opts;
+    const data = $(triggerElem).data(namespace);
+    // debugger
+
+    // Close any other type of tooltip that is open for this triggering element.
+    Object.keys(data).forEach(function(type) {
+      if (type !== opts.type && type !== 'popper') {
+        // TODO:
+        // type.closeTooltip(0);
+      }
+    })
+
+    // Append this type of tooltip to the page.
+    this.appendTooltip();
   }
 
-  function setRef(elem, newData) {
-    const currentData = getRef(elem) || {};
-    const mergedData = Object.assign(currentData, newData);
-    refs.set(elem, mergedData);
-    return mergedData;
+  Tooltip.prototype.appendTooltip = function() {
+    // const refType = this.refType;
+    const triggerElem = this.triggerElem;
+    const type = this.type;
+
+    if (this.enabled) {
+      clearTimeout(this.timeout);
+      this.isVisible = true;
+      this.timeout = setTimeout(() => {
+        triggerElem.setAttribute('x-tooltip', '');
+        this.repositionTooltip(triggerElem, type);
+        const container = this.opts.container ? document.querySelector(this.opts.container) : triggerElem;
+        container.appendChild(this.popper.popper);
+        requestAnimationFrame(() => this.popper.popper.setAttribute('x-in', ''));
+      }, this.opts.delay.show);
+    }
   }
 
-  function setType(elem, type, newTypeData) {
-    const allData = getRef(elem);
-    const currentTypeData = allData[type] || {};
-    const mergedTypeData = Object.assign(currentTypeData, newTypeData);
-    const typeData = {};
-    typeData[type] = mergedTypeData;
-    setRef(elem, typeData);
-    return mergedTypeData;
+  Tooltip.prototype.getTemplate = function() {
+    const $template = this.opts.template
+      ? $(this.opts.template)
+      : $(`<div class="${['aha-tooltip', `aha-tooltip--${this.type || 'default'}`, this.opts.class || ''].join(' ').trim()}" role="tooltip">
+      <div class="aha-tooltip__arrow"></div>
+      <div class="aha-tooltip__inner">
+        <div class="aha-tooltip__title" x-title></div>
+        <div class="aha-tooltip__content" x-content></div>
+      </div>
+    </div>`);
+    return $template[0];
+  }
+
+  Tooltip.prototype.createTooltip = function() {
+    const template = this.getTemplate();
+    const type = this.type;
+    const opts = this.opts;
+    if (opts.placement) {
+      opts.popper.placement = opts.placement;
+    }
+
+    this.popper = new Popper(this.triggerElem, template, opts.popper);
+    // const typeData = { instance: tooltip, enabled: true, opts  };
+    // setType(triggerElem, opts.type, typeData);
+
+    // Set data.
+    const data = {}
+    data[this.type] = {
+      tooltip: this,
+      popper: this.popper,
+    }
+    // $(this.triggerElem).data().namespace = 
+    // data.popper = this.popper = popper;
+    // data.tooltip = this;
+    $(this.triggerElem).data(namespace, data);
+
+    const self = this;
+    const resolveURL = new Promise(function(resolve, reject) {
+      if (self.opts.url) {
+        popper.removeAttribute('x-loading-error');
+        popper.setAttribute('x-loading', '');
+        self.opts.content = '<i class="fa fa-spinner fa-spin"></i>';
+        self.updateTooltipContent(self.triggerElem, self.type);
+        $.ajax({
+          url: self.opts.url,
+          success: (data) => {
+            self.opts.content = data;
+          },
+          error: (data) => {
+            popper.setAttribute('x-loading-error', '');
+          },
+          complete: (data) => {
+            popper.removeAttribute('x-loading');
+            resolve();
+          }
+        });
+      } else {
+        resolve();
+      }
+    }).then(() => {
+      self.updateTooltipContent(self.triggerElem, type);
+    });
+
+    // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
+    // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
+    // and have those changes automatically reflected in the tooltip popup.
+    const observer = new MutationObserver(this.mutationCallback.bind(this, data, opts.type));
+    observer.observe(this.triggerElem, {
+      attributes: true,
+      attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
+    });
   }
 
   // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
-  function mutationCallback(tooltip, type, mutations, observer) {
+  Tooltip.prototype.mutationCallback = function(tooltip, type, mutations, observer) {
     mutations.forEach((mutation) => {
-      updateTooltipContent(mutation.target, type);
+      this.updateTooltipContent(mutation.target, type);
       observer.takeRecords();
     });
+  }
+  
+  Tooltip.prototype.updateTooltipContent = function() {
+    const elem = this.triggerElem;
+    const title = elem.title || elem.dataset.title || elem.dataset.tooltip || this.opts.title;
+    const content = elem.dataset.content || this.opts.content;
+
+    if (elem.title.length > 0) {
+      elem.dataset.title = elem.title;
+      elem.removeAttribute('title');
+    }
+
+    const popper = this.popper.popper;
+    const titleElem = popper.querySelector('[x-title]');
+    const contentElem = popper.querySelector('[x-content]');
+    if (this.opts.html) {
+      titleElem.innerHTML = this.cleanHTML(title) || '';
+      contentElem.innerHTML = this.cleanHTML(content) || '';
+    } else {
+      titleElem.textContent = title || '';
+      contentElem.textContent = content || '';
+    }
+    this.popper.update();
   }
 
   // Escaping dangerous HTML content **SHOULD** be done server-side, however, people occasionally forget to do this.
   // `cleanHTML` serves as a measure of last resort, removing explicitly dangerous tags, removing any non-whitelisted attributes,
   // and ensuring that any references to external files point to actual external references (not inline JS).
-  function cleanHTML(str) {
+  Tooltip.prototype.cleanHTML = function(str) {
     if (!str) return;
     const dom = new DOMParser().parseFromString(str, 'text/html');
     const body = dom.body;
@@ -103,177 +234,296 @@
     return body.innerHTML;
   }
 
-  function updateTooltipContent(elem, type) {
-    const refType = getType(elem, type);
-    const title = refType.opts.title || elem.title || elem.dataset.title || elem.dataset.tooltip;
-    const content = refType.opts.content;
 
-    if (elem.title.length > 0) {
-      elem.dataset.title = elem.title;
-      elem.removeAttribute('title');
-    }
 
-    const popper = refType.instance.popper;
-    const titleElem = popper.querySelector('[x-title]');
-    const contentElem = popper.querySelector('[x-content]');
-    if (refType.opts.html) {
-      titleElem.innerHTML = cleanHTML(title) || '';
-      contentElem.innerHTML = cleanHTML(content) || '';
-    } else {
-      titleElem.textContent = title || '';
-      contentElem.textContent = content || '';
-    }
-    refType.instance.update();
+  Tooltip.prototype.repositionTooltip = function() {
+    this.popper.update();
   }
 
-  function getTemplate(opts) {
-    const $template = opts.template
-      ? $(opts.template)
-      : $(`<div class="${['aha-tooltip', `aha-tooltip--${opts.type || 'default'}`, opts.class || ''].join(' ').trim()}" role="tooltip">
-      <div class="aha-tooltip__arrow"></div>
-      <div class="aha-tooltip__inner">
-        <div class="aha-tooltip__title" x-title></div>
-        <div class="aha-tooltip__content" x-content></div>
-      </div>
-    </div>`);
-    return $template[0];
-  }
-
-  function createTooltip(triggerElem, opts) {
-    const template = getTemplate(opts);
-    const type = opts.type;
-    if (opts.placement) {
-      opts.popper.placement = opts.placement;
-    }
-
-    const tooltip = new Popper(triggerElem, template, opts.popper);
-    const typeData = { instance: tooltip, enabled: true, opts  };
-    setType(triggerElem, opts.type, typeData);
-    const resolveURL = new Promise(function(resolve, reject) {
-      if (typeData.opts.url) {
-        typeData.instance.popper.removeAttribute('x-loading-error');
-        typeData.instance.popper.setAttribute('x-loading', '');
-        typeData.opts.content = '<i class="fa fa-spinner fa-spin"></i>';
-        updateTooltipContent(triggerElem, type);
-        $.ajax({
-          url: typeData.opts.url,
-          success: (data) => {
-            typeData.opts.content = data;
-          },
-          error: (data) => {
-            typeData.instance.popper.setAttribute('x-loading-error', '');
-          },
-          complete: (data) => {
-            typeData.instance.popper.removeAttribute('x-loading');
-            resolve();
-          }
-        });
-      } else {
-        resolve();
-      }
-    }).then(() => {
-      updateTooltipContent(triggerElem, type);
-    });
-
-    // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
-    // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
-    // and have those changes automatically reflected in the tooltip popup.
-    const observer = new MutationObserver(mutationCallback.bind(null, tooltip, opts.type));
-    observer.observe(triggerElem, {
-      attributes: true,
-      attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
-    });
-  }
-
-  function repositionTooltip(triggerElem, type) {
-    const refType = getType(triggerElem, type);
-    if (refType) {
-      refType.instance.update();
-    }
-  }
-
-  function openTooltip(triggerElem, opts) {
-    const ref = getRef(triggerElem);
-    const refType = getType(triggerElem, opts.type);
-
-    // Close any other type of tooltip that is open for this triggering element.
-    Object.keys(ref).forEach((type) => {
-      if (type !== opts.type) {
-        closeTooltip(triggerElem, type, 0);
-      }
-    })
-
-    // If the triggering element does not have this type of tooltip, create it.
-    if (Object.keys(refType).length === 0) {
-      createTooltip(triggerElem, opts);
-    }
-
-    // Append this type of tooltip to the page.
-    appendTooltip(triggerElem, opts.type);
-  }
-
-  function appendTooltip(triggerElem, type) {
-    const refType = getType(triggerElem, type);
-    if (refType && refType.enabled) {
-      clearTimeout(refType.timeout);
-      refType.isVisible = true;
-      refType.timeout = setTimeout(() => {
-        triggerElem.setAttribute('x-tooltip', '');
-        repositionTooltip(triggerElem, type);
-        const container = refType.opts.container ? document.querySelector(refType.opts.container) : triggerElem;
-        container.appendChild(refType.instance.popper);
-        requestAnimationFrame(() => refType.instance.popper.setAttribute('x-in', ''));
-      }, refType.opts.delay.show);
-    }
-  }
-
-  function closeTooltip(triggerElem, type, delayHide) {
-    const refType = getType(triggerElem, type);
-    if (refType) {
-      clearTimeout(refType.timeout);
-      if (refType.isVisible) {
-        triggerElem.removeAttribute('x-tooltip');
-        refType.isVisible = false;
-        refType.timeout = setTimeout(() => {
-          refType.instance.popper.addEventListener('transitionend', function fadeOut() {
-            refType.instance.popper.removeEventListener('transitionend', fadeOut);
-            if (refType.instance.popper.parentNode) {
-              refType.instance.popper.parentNode.removeChild(refType.instance.popper);
+  Tooltip.prototype.closeTooltip = function(delayHide) {
+    const self = this;
+    if (self.popper) {
+      clearTimeout(self.timeout);
+      if (self.isVisible) {
+        self.triggerElem.removeAttribute('x-tooltip');
+        self.isVisible = false;
+        self.timeout = setTimeout(() => {
+          self.popper.popper.addEventListener('transitionend', function fadeOut() {
+            self.popper.popper.removeEventListener('transitionend', fadeOut);
+            if (self.popper.popper.parentNode) {
+              self.popper.popper.parentNode.removeChild(self.popper.popper);
             }
           });
-        }, typeof delayHide === 'undefined' ? refType.opts.delay.hide : delayHide);
-        refType.instance.popper.removeAttribute('x-in');
+        }, typeof delayHide === 'undefined' ? self.opts.delay.hide : delayHide);
+        self.popper.popper.removeAttribute('x-in');
       }
     }
   }
 
-  function enableTooltip(triggerElem, type) {
-    const refType = getType(triggerElem, type);
-    if (refType) {
-      refType.enabled = true;
-    }
+  Tooltip.prototype.enableTooltip = function() {
+    this.enabled = true;
   }
 
-  function disableTooltip(triggerElem, type) {
-    closeTooltip(triggerElem, type, 0);
-    const refType = getType(triggerElem, type);
-    if (refType) {
-      refType.enabled = false;
-    }
+  Tooltip.prototype.disableTooltip = function() {
+    this.closeTooltip(0);
+    this.enabled = false;
   }
 
-  function destroyTooltip(triggerElem, type) {
-    closeTooltip(triggerElem, type, 0);
-    const ref = getRef(triggerElem);
-    if (ref[type]) {
-      ref[type].instance.destroy();
-      delete ref[type];
+  Tooltip.prototype.destroyTooltip = function() {
+    this.closeTooltip(0);
+    const ref = getRef(this.triggerElem);
+    if (ref[this.type]) {
+      ref[this.type].instance.destroy();
+      delete ref[this.type];
       // If this is the last type of tooltip for the element, delete the WeakMap reference.
       if (Object.keys(ref).length === 0) {
-        refs.delete(triggerElem);
+        // TODO:
+        refs.delete(this.triggerElem);
       }
     }
   }
+  // ------------------------------------------
+  // ---------------
+  // function getRef(elem) {
+  //   return refs.get(elem) || {};
+  // }
+
+  // function getType(elem, type) {
+  //   const ref = getRef(elem);
+  //   return ref[type] || {};
+  // }
+
+  // function setRef(elem, newData) {
+  //   const currentData = getRef(elem) || {};
+  //   const mergedData = Object.assign(currentData, newData);
+  //   refs.set(elem, mergedData);
+  //   return mergedData;
+  // }
+
+  // function setType(elem, type, newTypeData) {
+  //   const allData = getRef(elem);
+  //   const currentTypeData = allData[type] || {};
+  //   const mergedTypeData = Object.assign(currentTypeData, newTypeData);
+  //   const typeData = {};
+  //   typeData[type] = mergedTypeData;
+  //   setRef(elem, typeData);
+  //   return mergedTypeData;
+  // }
+
+  // // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
+  // function mutationCallback(tooltip, type, mutations, observer) {
+  //   mutations.forEach((mutation) => {
+  //     updateTooltipContent(mutation.target, type);
+  //     observer.takeRecords();
+  //   });
+  // }
+
+  // // Escaping dangerous HTML content **SHOULD** be done server-side, however, people occasionally forget to do this.
+  // // `cleanHTML` serves as a measure of last resort, removing explicitly dangerous tags, removing any non-whitelisted attributes,
+  // // and ensuring that any references to external files point to actual external references (not inline JS).
+  // function cleanHTML(str) {
+  //   if (!str) return;
+  //   const dom = new DOMParser().parseFromString(str, 'text/html');
+  //   const body = dom.body;
+  //   const elems = dom.body.querySelectorAll('*');
+
+  //   for (const node of elems) {
+  //     // Strip any <script>/<iframe> tags as those can open us up to XSS.
+  //     if (/^(script|iframe|style)$/i.test(node.nodeName)) {
+  //       node.parentNode.removeChild(node);
+  //     } else {
+  //       for (const attr of node.attributes) {
+  //         // Strip any attribute with "javascript:" in the value.
+  //         if (/(j|&#106;|&#74;)avascript:/i.test(attr.value)) {
+  //           node.removeAttribute(attr.name);
+  //         } else if (/href|src|srcset/i.test(attr.name)) {
+  //           // Strip any href, src, srcset attribute that does not start with `http://` or `https://`.
+  //           if (!/^https?:\/\//i.test(attr.value)) {
+  //             node.removeAttribute(attr.name);
+  //           }
+  //         } else {
+  //           // Strip any attributes that are not class, id, title, alt, width, or height.
+  //           if (!/class|id|title|alt|width|height/i.test(attr.name)) {
+  //             node.removeAttribute(attr.name);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return body.innerHTML;
+  // }
+
+  // function updateTooltipContent(elem, type) {
+  //   const refType = getType(elem, type);
+  //   const title = refType.opts.title || elem.title || elem.dataset.title || elem.dataset.tooltip;
+  //   const content = refType.opts.content;
+
+  //   if (elem.title.length > 0) {
+  //     elem.dataset.title = elem.title;
+  //     elem.removeAttribute('title');
+  //   }
+
+  //   const popper = refType.instance.popper;
+  //   const titleElem = popper.querySelector('[x-title]');
+  //   const contentElem = popper.querySelector('[x-content]');
+  //   if (refType.opts.html) {
+  //     titleElem.innerHTML = cleanHTML(title) || '';
+  //     contentElem.innerHTML = cleanHTML(content) || '';
+  //   } else {
+  //     titleElem.textContent = title || '';
+  //     contentElem.textContent = content || '';
+  //   }
+  //   refType.instance.update();
+  // }
+
+  // function getTemplate(opts) {
+  //   const $template = opts.template
+  //     ? $(opts.template)
+  //     : $(`<div class="${['aha-tooltip', `aha-tooltip--${opts.type || 'default'}`, opts.class || ''].join(' ').trim()}" role="tooltip">
+  //     <div class="aha-tooltip__arrow"></div>
+  //     <div class="aha-tooltip__inner">
+  //       <div class="aha-tooltip__title" x-title></div>
+  //       <div class="aha-tooltip__content" x-content></div>
+  //     </div>
+  //   </div>`);
+  //   return $template[0];
+  // }
+
+  // function createTooltip(triggerElem, opts) {
+  //   const template = getTemplate(opts);
+  //   const type = opts.type;
+  //   if (opts.placement) {
+  //     opts.popper.placement = opts.placement;
+  //   }
+
+  //   const tooltip = new Popper(triggerElem, template, opts.popper);
+  //   const typeData = { instance: tooltip, enabled: true, opts  };
+  //   setType(triggerElem, opts.type, typeData);
+  //   const resolveURL = new Promise(function(resolve, reject) {
+  //     if (typeData.opts.url) {
+  //       typeData.instance.popper.removeAttribute('x-loading-error');
+  //       typeData.instance.popper.setAttribute('x-loading', '');
+  //       typeData.opts.content = '<i class="fa fa-spinner fa-spin"></i>';
+  //       updateTooltipContent(triggerElem, type);
+  //       $.ajax({
+  //         url: typeData.opts.url,
+  //         success: (data) => {
+  //           typeData.opts.content = data;
+  //         },
+  //         error: (data) => {
+  //           typeData.instance.popper.setAttribute('x-loading-error', '');
+  //         },
+  //         complete: (data) => {
+  //           typeData.instance.popper.removeAttribute('x-loading');
+  //           resolve();
+  //         }
+  //       });
+  //     } else {
+  //       resolve();
+  //     }
+  //   }).then(() => {
+  //     updateTooltipContent(triggerElem, type);
+  //   });
+
+  //   // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
+  //   // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
+  //   // and have those changes automatically reflected in the tooltip popup.
+  //   const observer = new MutationObserver(mutationCallback.bind(null, tooltip, opts.type));
+  //   observer.observe(triggerElem, {
+  //     attributes: true,
+  //     attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
+  //   });
+  // }
+
+  // function repositionTooltip(triggerElem, type) {
+  //   const refType = getType(triggerElem, type);
+  //   if (refType) {
+  //     refType.instance.update();
+  //   }
+  // }
+
+  // function openTooltip(triggerElem, opts) {
+  //   const ref = getRef(triggerElem);
+  //   const refType = getType(triggerElem, opts.type);
+
+  //   // Close any other type of tooltip that is open for this triggering element.
+  //   Object.keys(ref).forEach((type) => {
+  //     if (type !== opts.type) {
+  //       closeTooltip(triggerElem, type, 0);
+  //     }
+  //   })
+
+  //   // If the triggering element does not have this type of tooltip, create it.
+  //   if (Object.keys(refType).length === 0) {
+  //     createTooltip(triggerElem, opts);
+  //   }
+
+  //   // Append this type of tooltip to the page.
+  //   appendTooltip(triggerElem, opts.type);
+  // }
+
+  // function appendTooltip(triggerElem, type) {
+  //   const refType = getType(triggerElem, type);
+  //   if (refType && refType.enabled) {
+  //     clearTimeout(refType.timeout);
+  //     refType.isVisible = true;
+  //     refType.timeout = setTimeout(() => {
+  //       triggerElem.setAttribute('x-tooltip', '');
+  //       repositionTooltip(triggerElem, type);
+  //       const container = refType.opts.container ? document.querySelector(refType.opts.container) : triggerElem;
+  //       container.appendChild(refType.instance.popper);
+  //       requestAnimationFrame(() => refType.instance.popper.setAttribute('x-in', ''));
+  //     }, refType.opts.delay.show);
+  //   }
+  // }
+
+  // function closeTooltip(triggerElem, type, delayHide) {
+  //   const refType = getType(triggerElem, type);
+  //   if (refType) {
+  //     clearTimeout(refType.timeout);
+  //     if (refType.isVisible) {
+  //       triggerElem.removeAttribute('x-tooltip');
+  //       refType.isVisible = false;
+  //       refType.timeout = setTimeout(() => {
+  //         refType.instance.popper.addEventListener('transitionend', function fadeOut() {
+  //           refType.instance.popper.removeEventListener('transitionend', fadeOut);
+  //           if (refType.instance.popper.parentNode) {
+  //             refType.instance.popper.parentNode.removeChild(refType.instance.popper);
+  //           }
+  //         });
+  //       }, typeof delayHide === 'undefined' ? refType.opts.delay.hide : delayHide);
+  //       refType.instance.popper.removeAttribute('x-in');
+  //     }
+  //   }
+  // }
+
+  // function enableTooltip(triggerElem, type) {
+  //   const refType = getType(triggerElem, type);
+  //   if (refType) {
+  //     refType.enabled = true;
+  //   }
+  // }
+
+  // function disableTooltip(triggerElem, type) {
+  //   closeTooltip(triggerElem, type, 0);
+  //   const refType = getType(triggerElem, type);
+  //   if (refType) {
+  //     refType.enabled = false;
+  //   }
+  // }
+
+  // function destroyTooltip(triggerElem, type) {
+  //   closeTooltip(triggerElem, type, 0);
+  //   const ref = getRef(triggerElem);
+  //   if (ref[type]) {
+  //     ref[type].instance.destroy();
+  //     delete ref[type];
+  //     // If this is the last type of tooltip for the element, delete the WeakMap reference.
+  //     if (Object.keys(ref).length === 0) {
+  //       refs.delete(triggerElem);
+  //     }
+  //   }
+  // }
 
   function getOnOffEvents(opts) {
     return triggers(opts).reduce((acc, trigger) => {
@@ -311,26 +561,38 @@
     return opts;
   }
 
+  function getData(elem) {
+    const $elem = elem.nodeType ? $(elem) : elem;
+    let data = $.data(elem)[namespace]  || {};
+    // NOTE: Returns a live object. Mutations to this object are immediately reflected in the data structure.
+    return data
+  }
+
   function bindEvents(context, selector, opts) {
     const events = getOnOffEvents(opts);
     events.forEach((event) => {
       const [ onEvent, offEvent ] = event;
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
-          opts = mergeInlineOpts(e.currentTarget, opts);
-          openTooltip(e.currentTarget, opts);
+          const triggerElem = e.currentTarget;
+          const data = getData(triggerElem);
+          opts = mergeInlineOpts(triggerElem, opts);
+          const tooltip = data[opts.type] ? data[opts.type].tooltip : new Tooltip(triggerElem, opts);
+          tooltip.openTooltip();
         }).on(offEvent, selector, (e) => {
-          const elem = e.currentTarget;
-          opts = mergeInlineOpts(elem, opts);
-          const refType = getType(elem, opts.type);
-          if (elem.contains(e.relatedTarget)) return;
-          if (offEvent === 'mouseout' && e.relatedTarget === refType.instance.popper) {
-            $(refType.instance.popper).on('mouseleave', function mouseLeaveHandler(e) {
-              closeTooltip(elem, opts.type);
-              $(refType.instance.popper).off('mouseleave', mouseLeaveHandler);
+          const triggerElem = e.currentTarget
+          opts = mergeInlineOpts(triggerElem, opts);
+
+          const { tooltip } = getData(triggerElem)[opts.type];
+
+          if (triggerElem.contains(e.relatedTarget)) return;
+          if (offEvent === 'mouseout' && e.relatedTarget === tooltip.popper) {
+            $(tooltip.popper).on('mouseleave', function mouseLeaveHandler(e) {
+              tooltip.closeTooltip();
+              $(tooltip.popper).off('mouseleave', mouseLeaveHandler);
             });
           } else {
-            closeTooltip(elem, opts.type);
+            tooltip.closeTooltip();
           }
         });
       } else {
