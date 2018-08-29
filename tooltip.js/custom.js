@@ -159,27 +159,29 @@
   // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
   Tooltip.prototype.mutationCallback = function(tooltip, type, mutations, observer) {
     mutations.forEach((mutation) => {
+      const newValue = mutation.target.getAttribute(mutation.attributeName);
+      if (mutation.attributeName === 'data-content') {
+        tooltip[type].tooltip.opts.content = newValue;
+      } else {
+        tooltip[type].tooltip.opts.title = newValue;
+      }
       this.updateTooltipContent(mutation.target, type);
       observer.takeRecords();
     });
   }
-  
+
   Tooltip.prototype.updateTooltipContent = function() {
     const elem = this.triggerElem;
-    // const title = elem.title || elem.dataset.title || elem.dataset.tooltip || this.opts.title;
-    // const content = elem.dataset.content || this.opts.content;
-
-    const {title, content} = this.opts;
 
     if (elem.title.length > 0) {
-      this.opts.title = elem.title;
-      // elem.dataset.title = elem.title;
+      elem.dataset.title = elem.title;
       elem.removeAttribute('title');
     }
 
-    const popper = this.popper.popper;
-    const titleElem = popper.querySelector('[x-title]');
-    const contentElem = popper.querySelector('[x-content]');
+    const {title, content} = this.opts;
+    const titleElem = this.popper.popper.querySelector('[x-title]');
+    const contentElem = this.popper.popper.querySelector('[x-content]');
+
     if (this.opts.html) {
       titleElem.innerHTML = this.cleanHTML(title) || '';
       contentElem.innerHTML = this.cleanHTML(content) || '';
@@ -534,6 +536,7 @@
   }
 
   function mergeInlineOpts(elem, opts = {}) {
+    opts.title = elem.title;
     Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
       let value = elem.dataset[key];
       try {
