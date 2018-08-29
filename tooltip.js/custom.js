@@ -82,7 +82,7 @@
             this.popper.popper.setAttribute('x-in', '');
           }
         });
-      }, this.opts.delay.show);
+      }, this.opts.delay && this.ops.delay.show || 0);
     }
   }
 
@@ -398,8 +398,8 @@
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            opts = mergeInlineOpts(elem, defaultOpts);
-            openTooltip(elem, opts.type || defaultType);
+            const tooltip = getTooltip(elem, opts);
+            tooltip.openTooltip();
           });
           break;
         case 'hide':
