@@ -121,7 +121,7 @@
     // setType(triggerElem, opts.type, typeData);
 
     // Set data.
-    const data = {}
+    const data = getData(this.triggerElem);
     data[this.type] = {
       tooltip: this,
       popper: this.popper,
@@ -129,7 +129,7 @@
     // $(this.triggerElem).data().namespace = 
     // data.popper = this.popper = popper;
     // data.tooltip = this;
-    $(this.triggerElem).data(namespace, Object.assign(getData(this.triggerElem), data));
+    $(this.triggerElem).data(namespace, data);
 
     const self = this;
     const resolveURL = new Promise(function(resolve, reject) {
