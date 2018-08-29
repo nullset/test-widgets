@@ -66,7 +66,6 @@
   }
 
   Tooltip.prototype.appendTooltip = function() {
-    // const refType = this.refType;
     const triggerElem = this.triggerElem;
     const type = this.type;
 
@@ -105,18 +104,12 @@
     }
 
     this.popper = new Popper(this.triggerElem, template, opts.popper);
-    // const typeData = { instance: tooltip, enabled: true, opts  };
-    // setType(triggerElem, opts.type, typeData);
 
-    // Set data.
     const data = getData(this.triggerElem);
     data[this.type] = {
       tooltip: this,
       popper: this.popper,
     }
-    // $(this.triggerElem).data().namespace = 
-    // data.popper = this.popper = popper;
-    // data.tooltip = this;
     $(this.triggerElem).data(namespace, data);
 
     const self = this;
