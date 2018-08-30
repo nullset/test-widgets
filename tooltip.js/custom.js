@@ -14,9 +14,12 @@
       offset: {
         offset: 0,
       },
+      hide: {
+        enabled: true,
+      }
     },
     preventOverflow: {
-      boundariesElement: 'window',
+      boundariesElement: 'scrollView',
     },
   };
 
