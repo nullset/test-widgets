@@ -231,6 +231,7 @@
     const self = this;
     if (self.popper) {
       clearTimeout(self.timeout);
+      // TODO: debugger
       if (self.isVisible) {
         self.triggerElem.removeAttribute('x-tooltip');
         self.isVisible = false;
@@ -258,16 +259,8 @@
 
   Tooltip.prototype.destroyTooltip = function() {
     this.closeTooltip(0);
-    const ref = getRef(this.triggerElem);
-    if (ref[this.type]) {
-      ref[this.type].instance.destroy();
-      delete ref[this.type];
-      // If this is the last type of tooltip for the element, delete the WeakMap reference.
-      if (Object.keys(ref).length === 0) {
-        // TODO:
-        refs.delete(this.triggerElem);
-      }
-    }
+    const data = getData(this.triggerElem);
+    delete data[this.type];
   }
 
   // ---------- METHODS SPECIFIC TO THE tooltip/popover plugins ----------
