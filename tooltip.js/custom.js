@@ -1,7 +1,7 @@
 (function($) {
   const namespace = 'ahaTooltips';
-  console.error('🤬 hovering over right most button and then over 2nd right most button sometimes causes the tooltip of #1 not to hide')
 
+  // ---------- DEFAULT SETTINGS ----------
   const popperDefaults = {
     placement: 'auto',
     positionFixed: false,
@@ -35,7 +35,7 @@
   };
 
 
-  // -----------------------------------------
+  // ---------- TOOLTIP CLASS ----------
   class Tooltip  {
     constructor(triggerElem, opts) {
       this.type = opts.type;
@@ -52,16 +52,14 @@
     const triggerElem = this.triggerElem;
     const opts = this.opts || ahaDefaults;
     const data = $(triggerElem).data(namespace);
-    // debugger
 
     // Close any other type of tooltip that is open for this triggering element.
     Object.keys(data).forEach(function(type) {
       if (type !== opts.type && type !== 'popper') {
         data[type].tooltip.closeTooltip(0);
       }
-    })
+    });
 
-    // Append this type of tooltip to the page.
     this.appendTooltip();
   }
 
@@ -272,6 +270,8 @@
     }
   }
 
+  // ---------- METHODS SPECIFIC TO THE tooltip/popover plugins ----------
+  // Cannot be class methods as they are called on elements which do not yet have an associated TOOLTIP class.
   function getOnOffEvents(opts) {
     return triggers(opts).reduce((acc, trigger) => {
       if (trigger === 'click') {
@@ -300,6 +300,7 @@
       elem.removeAttribute('title');
     }
 
+    // Assign all daata-* attributes to our options object.
     Object.keys(Object.assign({}, elem.dataset)).forEach((key) => {
       if (key === 'type') return;
       let value = elem.dataset[key];
@@ -331,11 +332,9 @@
   }
 
   function getOrCreateTooltip(triggerElem, opts) {
-    const data = getData(triggerElem);
     opts = mergeInlineOpts(triggerElem, opts);
-    return data[opts.type] ? data[opts.type].tooltip : new Tooltip(triggerElem, opts);
+    return getTooltip(triggerElem, opts.type) || new Tooltip(triggerElem, opts);
   }
-
 
   function bindEvents(context, selector, opts) {
     const events = getOnOffEvents(opts);
