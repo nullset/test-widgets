@@ -403,13 +403,16 @@
       opts.type = type;
       opts = deepmerge(ahaTooltipDefaults, opts);
 
+      // This type of tooltip will only ever be controlled by manual show/hide controls.
       if (opts.trigger === 'manual') {
-        // This type of tooltip will only ever be controlled by manual show/hide controls.
-        const observer = new MutationObserver(manualTypeMutationCallback.bind(this, context, selector, opts));
-        observer.observe(document.querySelector('body'), {
-          childList: true,
-          subtree: true,
-        });
+        if (selector) {
+          // If a selector is specified, watch for any additional triggers added to the page.
+          const observer = new MutationObserver(manualTypeMutationCallback.bind(this, context, selector, opts));
+          observer.observe(document.querySelector('body'), {
+            childList: true,
+            subtree: true,
+          });
+        }
         createManualTooltips(context, selector, opts);
       } else {
         bindEvents(context, selector, opts);
