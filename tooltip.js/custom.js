@@ -35,27 +35,23 @@
   };
 
 
-  // ---------- TOOLTIP CLASS ----------
-  class Tooltip  {
-    constructor(triggerElem, opts) {
-      this.type = opts.type;
-      this.triggerElem = triggerElem;
-      this.opts = opts;
-      this.enabled = true;
-      this.isVisible = false;
-      this.createTooltip(triggerElem, opts);
-    }
+  // ---------- TOOLTIP FACTORY ----------
+  const TooltipFactory = function(triggerElem, opts) {
+    this.type = opts.type;
+    this.triggerElem = triggerElem;
+    this.opts = opts;
+    this.enabled = true;
+    this.isVisible = false;
+    this.createTooltip(triggerElem, opts);
   }
 
-
-  Tooltip.prototype.openTooltip = function() {
-    const triggerElem = this.triggerElem;
-    const opts = this.opts || ahaDefaults;
-    const data = $(triggerElem).data(namespace);
+  TooltipFactory.prototype.openTooltip = function() {
+    const data = getData(this.triggerElem);
+    const self = this;
 
     // Close any other type of tooltip that is open for this triggering element.
     Object.keys(data).forEach(function(type) {
-      if (type !== opts.type && type !== 'popper') {
+      if (type !== self.opts.type && type !== 'popper') {
         data[type].tooltip.closeTooltip(0);
       }
     });
@@ -63,17 +59,14 @@
     this.appendTooltip();
   }
 
-  Tooltip.prototype.appendTooltip = function() {
-    const triggerElem = this.triggerElem;
-    const type = this.type;
-
+  TooltipFactory.prototype.appendTooltip = function() {
     if (this.enabled) {
       clearTimeout(this.timeout);
       this.isVisible = true;
       this.timeout = setTimeout(() => {
-        triggerElem.setAttribute('x-tooltip', '');
-        this.repositionTooltip(triggerElem, type);
-        const container = this.opts.container ? document.querySelector(this.opts.container) : triggerElem;
+        this.triggerElem.setAttribute('x-tooltip', '');
+        this.repositionTooltip(this.triggerElem, this.type);
+        const container = this.opts.container ? document.querySelector(this.opts.container) : this.triggerElem;
         container.appendChild(this.popper.popper);
         requestAnimationFrame(() => {
           if (!this.popper.popper.hasAttribute('x-in')) {
@@ -84,7 +77,7 @@
     }
   }
 
-  Tooltip.prototype.getTemplate = function() {
+  TooltipFactory.prototype.getTemplate = function() {
     const $template = this.opts.template
       ? $(this.opts.template)
       : $(`<div class="${['aha-tooltip', `aha-tooltip--${this.type || 'default'}`, this.opts.class || ''].join(' ').trim()}" role="tooltip">
@@ -97,15 +90,14 @@
     return $template[0];
   }
 
-  Tooltip.prototype.createTooltip = function() {
+  TooltipFactory.prototype.createTooltip = function() {
     const template = this.getTemplate();
-    const type = this.type;
-    const opts = this.opts;
-    if (opts.placement) {
-      opts.popper.placement = opts.placement;
+
+    if (this.opts.placement) {
+      this.opts.popper.placement = this.opts.placement;
     }
 
-    this.popper = new Popper(this.triggerElem, template, opts.popper);
+    this.popper = new Popper(this.triggerElem, template, this.opts.popper);
 
     const data = getData(this.triggerElem);
     data[this.type] = {
@@ -138,21 +130,21 @@
         resolve();
       }
     }).then(() => {
-      self.updateTooltipContent(self.triggerElem, type);
+      self.updateTooltipContent(self.triggerElem, self.type);
     });
 
     // Watch for changes to title, data-title, data-tooltip, data-content and update the tooltip contents accordingly.
     // This enables us to change the title/data-title/data-tooltip/data-content of the tooltip triggering element
     // and have those changes automatically reflected in the tooltip popup.
-    const observer = new MutationObserver(this.mutationCallback.bind(this, data, opts.type));
-    observer.observe(this.triggerElem, {
+    this.titleContentMutationObserver = new MutationObserver(this.titleContentMutationCallback.bind(this, data, this.opts.type));
+    this.titleContentMutationObserver.observe(this.triggerElem, {
       attributes: true,
       attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
     });
   }
 
   // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
-  Tooltip.prototype.mutationCallback = function(tooltip, type, mutations, observer) {
+  TooltipFactory.prototype.titleContentMutationCallback = function(tooltip, type, mutations, observer) {
     mutations.forEach((mutation) => {
       const newValue = mutation.target.getAttribute(mutation.attributeName);
       if (mutation.attributeName === 'data-content') {
@@ -169,9 +161,7 @@
     });
   }
 
-  Tooltip.prototype.updateTooltipContent = function() {
-    const elem = this.triggerElem;
-
+  TooltipFactory.prototype.updateTooltipContent = function() {
     const {title, content} = this.opts;
     const titleElem = this.popper.popper.querySelector('[x-title]');
     const contentElem = this.popper.popper.querySelector('[x-content]');
@@ -189,7 +179,7 @@
   // Escaping dangerous HTML content **SHOULD** be done server-side, however, people occasionally forget to do this.
   // `cleanHTML` serves as a measure of last resort, removing explicitly dangerous tags, removing any non-whitelisted attributes,
   // and ensuring that any references to external files point to actual external references (not inline JS).
-  Tooltip.prototype.cleanHTML = function(str) {
+  TooltipFactory.prototype.cleanHTML = function(str) {
     if (!str) return;
     const dom = new DOMParser().parseFromString(str, 'text/html');
     const body = dom.body;
@@ -223,11 +213,11 @@
 
 
 
-  Tooltip.prototype.repositionTooltip = function() {
+  TooltipFactory.prototype.repositionTooltip = function() {
     this.popper.update();
   }
 
-  Tooltip.prototype.closeTooltip = function(delayHide) {
+  TooltipFactory.prototype.closeTooltip = function(delayHide) {
     const self = this;
     if (self.popper) {
       clearTimeout(self.timeout);
@@ -247,16 +237,16 @@
     }
   }
 
-  Tooltip.prototype.enableTooltip = function() {
+  TooltipFactory.prototype.enableTooltip = function() {
     this.enabled = true;
   }
 
-  Tooltip.prototype.disableTooltip = function() {
+  TooltipFactory.prototype.disableTooltip = function() {
     this.closeTooltip(0);
     this.enabled = false;
   }
 
-  Tooltip.prototype.destroyTooltip = function() {
+  TooltipFactory.prototype.destroyTooltip = function() {
     this.closeTooltip(0);
     const data = getData(this.triggerElem);
     delete data[this.type];
@@ -325,7 +315,7 @@
 
   function getOrCreateTooltip(triggerElem, opts) {
     opts = mergeInlineOpts(triggerElem, opts);
-    return getTooltip(triggerElem, opts.type) || new Tooltip(triggerElem, opts);
+    return getTooltip(triggerElem, opts.type) || new TooltipFactory(triggerElem, opts);
   }
 
   function bindEvents(context, selector, opts) {
