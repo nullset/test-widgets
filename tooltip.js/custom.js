@@ -321,7 +321,6 @@
   function getData(elem) {
     const $elem = elem.nodeType ? $(elem) : elem;
     let data = $.data(elem)[namespace]  || {};
-    // NOTE: Returns a live object. Mutations to this object are immediately reflected in the data structure.
     return data
   }
 
@@ -393,7 +392,7 @@
     createManualTooltips(context, selector, opts)
   }
 
-  function setup(opts) {
+  function setup(opts, type) {
     // Set context and selector for event assignment.
     let context, selector;
     if (this.selector) {
@@ -404,6 +403,7 @@
     }
 
     if (typeof opts !== 'string') {
+      opts.type = type;
       opts = deepmerge(ahaTooltipDefaults, opts);
 
       if (opts.trigger === 'manual') {
@@ -421,31 +421,31 @@
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, this.type);
+            const tooltip = getTooltip(elem, type);
             if (tooltip) tooltip.openTooltip();
           });
           break;
         case 'hide':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, this.type);
+            const tooltip = getTooltip(elem, type);
             if (tooltip) tooltip.closeTooltip(0);
           });
           break;
         case 'enable':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, this.type);
+            const tooltip = getTooltip(elem, type);
             if (tooltip) tooltip.enableTooltip();
           });
           break;
         case 'disable':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, this.type);
+            const tooltip = getTooltip(elem, type);
             if (tooltip) tooltip.disableTooltip();
           });
           break;
         case 'dispose':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, this.type);
+            const tooltip = getTooltip(elem, type);
             if (tooltip) tooltip.destroyTooltip();
           });
           break;
@@ -457,14 +457,14 @@
   //-----------------
 
   $.fn.ahaTooltip = function(opts = {}) {
-    this.type = opts.type = 'tooltip';
-    setup.call(this, opts);
+    const type = 'tooltip';
+    setup.call(this, opts, type);
     return this;
   };
 
   $.fn.popover = function(opts = {}) {
-    this.type = opts.type = 'popover';
-    setup.call(this, opts);
+    const type = 'popover';
+    setup.call(this, opts, type);
     return this;
   };
 }(jQuery));
