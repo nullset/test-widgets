@@ -1,5 +1,5 @@
 (function($) {
-  const namespace = 'AhaTooltip';
+  const namespace = 'aha-tooltip';
 
   // ---------- DEFAULT SETTINGS ----------
   const popperDefaults = {
