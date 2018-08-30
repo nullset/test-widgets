@@ -231,7 +231,6 @@
     const self = this;
     if (self.popper) {
       clearTimeout(self.timeout);
-      // TODO: debugger
       if (self.isVisible) {
         self.triggerElem.removeAttribute('x-tooltip');
         self.isVisible = false;
@@ -363,9 +362,13 @@
             tooltip.openTooltip();
             requestAnimationFrame(() => {
               $(document).on(onEvent, function handleClickOutside(e2) {
-                if (!tooltip.popper.popper.contains(e2.target)) {
+                if (e.currentTarget === e2.target) {
                   $(document).off(onEvent, handleClickOutside);
-                  tooltip.closeTooltip();
+                } else {
+                  if (!tooltip.popper.popper.contains(e2.target)) {
+                    $(document).off(onEvent, handleClickOutside);
+                    tooltip.closeTooltip();
+                  }
                 }
               })
             })
