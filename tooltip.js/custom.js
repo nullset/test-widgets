@@ -36,7 +36,7 @@
 
 
   // ---------- TOOLTIP FACTORY ----------
-  const TooltipFactory = function(triggerElem, opts) {
+  const AhaTooltip = function(triggerElem, opts) {
     this.type = opts.type;
     this.triggerElem = triggerElem;
     this.opts = opts;
@@ -45,8 +45,8 @@
     this.createTooltip(triggerElem, opts);
   }
 
-  TooltipFactory.prototype.openTooltip = function() {
-    const data = getData(this.triggerElem);
+  AhaTooltip.prototype.openTooltip = function() {
+    const data = AhaTooltip.prototype.getData(this.triggerElem);
     const self = this;
 
     // Close any other type of tooltip that is open for this triggering element.
@@ -59,7 +59,7 @@
     this.appendTooltip();
   }
 
-  TooltipFactory.prototype.appendTooltip = function() {
+  AhaTooltip.prototype.appendTooltip = function() {
     if (this.enabled) {
       clearTimeout(this.timeout);
       this.isVisible = true;
@@ -77,7 +77,7 @@
     }
   }
 
-  TooltipFactory.prototype.getTemplate = function() {
+  AhaTooltip.prototype.getTemplate = function() {
     const $template = this.opts.template
       ? $(this.opts.template)
       : $(`<div class="${['aha-tooltip', `aha-tooltip--${this.type || 'default'}`, this.opts.class || ''].join(' ').trim()}" role="tooltip">
@@ -90,7 +90,7 @@
     return $template[0];
   }
 
-  TooltipFactory.prototype.createTooltip = function() {
+  AhaTooltip.prototype.createTooltip = function() {
     const template = this.getTemplate();
 
     if (this.opts.placement) {
@@ -99,7 +99,7 @@
 
     this.popper = new Popper(this.triggerElem, template, this.opts.popper);
 
-    const data = getData(this.triggerElem);
+    const data = AhaTooltip.prototype.getData(this.triggerElem);
     data[this.type] = {
       tooltip: this,
       popper: this.popper,
@@ -144,7 +144,7 @@
   }
 
   // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
-  TooltipFactory.prototype.titleContentMutationCallback = function(tooltip, type, mutations, observer) {
+  AhaTooltip.prototype.titleContentMutationCallback = function(tooltip, type, mutations, observer) {
     mutations.forEach((mutation) => {
       const newValue = mutation.target.getAttribute(mutation.attributeName);
       if (mutation.attributeName === 'data-content') {
@@ -161,7 +161,7 @@
     });
   }
 
-  TooltipFactory.prototype.updateTooltipContent = function() {
+  AhaTooltip.prototype.updateTooltipContent = function() {
     const {title, content} = this.opts;
     const titleElem = this.popper.popper.querySelector('[x-title]');
     const contentElem = this.popper.popper.querySelector('[x-content]');
@@ -179,7 +179,7 @@
   // Escaping dangerous HTML content **SHOULD** be done server-side, however, people occasionally forget to do this.
   // `cleanHTML` serves as a measure of last resort, removing explicitly dangerous tags, removing any non-whitelisted attributes,
   // and ensuring that any references to external files point to actual external references (not inline JS).
-  TooltipFactory.prototype.cleanHTML = function(str) {
+  AhaTooltip.prototype.cleanHTML = function(str) {
     if (!str) return;
     const dom = new DOMParser().parseFromString(str, 'text/html');
     const body = dom.body;
@@ -213,11 +213,11 @@
 
 
 
-  TooltipFactory.prototype.repositionTooltip = function() {
+  AhaTooltip.prototype.repositionTooltip = function() {
     this.popper.update();
   }
 
-  TooltipFactory.prototype.closeTooltip = function(delayHide) {
+  AhaTooltip.prototype.closeTooltip = function(delayHide) {
     const self = this;
     if (self.popper) {
       clearTimeout(self.timeout);
@@ -237,25 +237,25 @@
     }
   }
 
-  TooltipFactory.prototype.enableTooltip = function() {
+  AhaTooltip.prototype.enableTooltip = function() {
     this.enabled = true;
   }
 
-  TooltipFactory.prototype.disableTooltip = function() {
+  AhaTooltip.prototype.disableTooltip = function() {
     this.closeTooltip(0);
     this.enabled = false;
   }
 
-  TooltipFactory.prototype.destroyTooltip = function() {
+  AhaTooltip.prototype.destroyTooltip = function() {
     this.closeTooltip(0);
-    const data = getData(this.triggerElem);
+    const data = AhaTooltip.prototype.getData(this.triggerElem);
     delete data[this.type];
   }
 
   // ---------- METHODS SPECIFIC TO THE tooltip/popover plugins ----------
   // Cannot be class methods as they are called on elements which do not yet have an associated TOOLTIP class.
-  function getOnOffEvents(opts) {
-    return triggers(opts).reduce((acc, trigger) => {
+  AhaTooltip.prototype.getOnOffEvents = function(opts) {
+    return AhaTooltip.prototype.triggers(opts).reduce((acc, trigger) => {
       if (trigger === 'click') {
         acc.push(['click']);
       } else if (trigger === 'focus') {
@@ -267,11 +267,11 @@
     }, []);
   }
 
-  function triggers(opts) {
+  AhaTooltip.prototype.triggers = function(opts) {
     return opts.trigger.split(' ').map(x => x.trim());
   }
 
-  function mergeInlineOpts(elem, opts = {}) {
+  AhaTooltip.prototype.mergeInlineOpts = function(elem, opts = {}) {
     // Move legacy data-tooltip, title attributes to data-title.
     if (elem.dataset.tooltip) {
       elem.dataset.title = elem.dataset.tooltip;
@@ -302,32 +302,32 @@
     return opts;
   }
 
-  function getData(elem) {
+  AhaTooltip.prototype.getData = function(elem) {
     const $elem = elem.nodeType ? $(elem) : elem;
     let data = $.data(elem)[namespace]  || {};
     return data
   }
 
-  function getTooltip(triggerElem, type) {
-    const data = getData(triggerElem);
+  AhaTooltip.prototype.getTooltip = function(triggerElem, type) {
+    const data = AhaTooltip.prototype.getData(triggerElem);
     return data[type] && data[type].tooltip;
   }
 
-  function getOrCreateTooltip(triggerElem, opts) {
-    opts = mergeInlineOpts(triggerElem, opts);
-    return getTooltip(triggerElem, opts.type) || new TooltipFactory(triggerElem, opts);
+  AhaTooltip.prototype.getOrCreateTooltip = function(triggerElem, opts) {
+    opts = AhaTooltip.prototype.mergeInlineOpts(triggerElem, opts);
+    return AhaTooltip.prototype.getTooltip(triggerElem, opts.type) || new AhaTooltip(triggerElem, opts);
   }
 
-  function bindEvents(context, selector, opts) {
-    const events = getOnOffEvents(opts);
+  AhaTooltip.prototype.bindEvents = function(context, selector, opts) {
+    const events = AhaTooltip.prototype.getOnOffEvents(opts);
     events.forEach((event) => {
       const [ onEvent, offEvent ] = event;
       if (offEvent) {
         $(context).on(onEvent, selector, (e) => {
-          const tooltip = getOrCreateTooltip(e.currentTarget, opts);
+          const tooltip = AhaTooltip.prototype.getOrCreateTooltip(e.currentTarget, opts);
           tooltip.openTooltip();
         }).on(offEvent, selector, (e) => {
-          const tooltip = getOrCreateTooltip(e.currentTarget, opts);
+          const tooltip = AhaTooltip.prototype.getOrCreateTooltip(e.currentTarget, opts);
           const triggerElem = e.currentTarget
 
           if (triggerElem.contains(e.relatedTarget)) return;
@@ -345,7 +345,7 @@
       } else {
         $(context).on(onEvent, selector, (e) => {
           const triggerElem = e.currentTarget;
-          const tooltip = getOrCreateTooltip(triggerElem, opts);
+          const tooltip = AhaTooltip.prototype.getOrCreateTooltip(triggerElem, opts);
           let handleClickOutside;
           if (tooltip.isVisible) {
             tooltip.closeTooltip();
@@ -369,17 +369,17 @@
     });
   }
 
-  function createManualTooltips(context, selector, opts) {
+  AhaTooltip.prototype.createManualTooltips = function(context, selector, opts) {
     $(`${context} ${selector ? selector : ''}`).each((i, elem) => {
-      getOrCreateTooltip(elem, opts);
+      AhaTooltip.prototype.getOrCreateTooltip(elem, opts);
     });
   }
 
-  function manualTypeMutationCallback(context, selector, opts, mutations) {
-    createManualTooltips(context, selector, opts)
+  AhaTooltip.prototype.manualTypeMutationCallback = function(context, selector, opts, mutations) {
+    AhaTooltip.prototype.createManualTooltips(context, selector, opts)
   }
 
-  function setup(opts, type) {
+  AhaTooltip.prototype.setup = function(opts, type) {
     // Set context and selector for event assignment.
     let context, selector;
     if (this.selector) {
@@ -397,45 +397,45 @@
       if (opts.trigger === 'manual') {
         if (selector) {
           // If a selector is specified, watch for any additional triggers added to the page.
-          const observer = new MutationObserver(manualTypeMutationCallback.bind(this, context, selector, opts));
+          const observer = new MutationObserver(AhaTooltip.prototype.manualTypeMutationCallback.bind(this, context, selector, opts));
           observer.observe(document.querySelector('body'), {
             childList: true,
             subtree: true,
           });
         }
-        createManualTooltips(context, selector, opts);
+        AhaTooltip.prototype.createManualTooltips(context, selector, opts);
       } else {
-        bindEvents(context, selector, opts);
+        AhaTooltip.prototype.bindEvents(context, selector, opts);
       }
     } else {
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
             if (tooltip) tooltip.openTooltip();
           });
           break;
         case 'hide':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
             if (tooltip) tooltip.closeTooltip(0);
           });
           break;
         case 'enable':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
             if (tooltip) tooltip.enableTooltip();
           });
           break;
         case 'disable':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
             if (tooltip) tooltip.disableTooltip();
           });
           break;
         case 'dispose':
           this.each((i, elem) => {
-            const tooltip = getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
             if (tooltip) tooltip.destroyTooltip();
           });
           break;
@@ -447,14 +447,12 @@
   //-----------------
 
   $.fn.tooltip = function(opts = {}) {
-    const type = 'tooltip';
-    setup.call(this, opts, type);
+    AhaTooltip.prototype.setup.call(this, opts, 'tooltip');
     return this;
   };
 
   $.fn.popover = function(opts = {}) {
-    const type = 'popover';
-    setup.call(this, opts, type);
+    AhaTooltip.prototype.setup.call(this, opts, 'popover');
     return this;
   };
 }(jQuery));
