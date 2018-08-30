@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $(document).ahaTooltip({
+    $(document).tooltip({
       selector: '.btn',
       // trigger: 'click',
       container: 'body',
@@ -11,10 +11,10 @@ $(document).ready(function() {
       // }
     })
 
-    $('.btn2').ahaTooltip({
-      // trigger: 'hover',
+    $('.btn2').tooltip({
       html: true,
       container: 'body',
+
       // placement: 'left',
       // delay: {
       //   show: 1000,
@@ -22,13 +22,13 @@ $(document).ready(function() {
       // }
     })
 
-    $('.btn3').ahaTooltip({
+    $('.btn3').tooltip({
       // trigger: 'click',
       html: true,
       container: 'body',
     })
 
-    $(document).ahaTooltip({
+    $(document).tooltip({
       selector: '.btn4',
       trigger: 'click',
       container: 'body',
@@ -52,7 +52,7 @@ $(document).ready(function() {
       // url: 'aoeu'
     });
 
-    $('.btn7').ahaTooltip({
+    $('.btn7').tooltip({
       trigger: 'hover',
       container: 'body',
       html: true,

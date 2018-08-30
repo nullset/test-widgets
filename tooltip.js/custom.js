@@ -1,8 +1,6 @@
 (function($) {
   const namespace = 'ahaTooltips';
-  // WeakMap of DOM nodes to tooltip instances. Using WeakMap allows values to be garbage collected when
-  // the element which forms the "key" is removed from the DOM.
-  // const refs = new WeakMap();
+  console.error('🤬 hovering over right most button and then over 2nd right most button sometimes causes the tooltip of #1 not to hide')
 
   const popperDefaults = {
     placement: 'auto',
@@ -456,7 +454,7 @@
   }
   //-----------------
 
-  $.fn.ahaTooltip = function(opts = {}) {
+  $.fn.tooltip = function(opts = {}) {
     const type = 'tooltip';
     setup.call(this, opts, type);
     return this;

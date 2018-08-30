@@ -165,6 +165,7 @@
   position: absolute;
   z-index: 1500;
   border-radius: @tooltipRadius;
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.1s; // Controls how quickly transition occurs when going back to hidden state.
   &:before {
@@ -175,6 +176,7 @@
     z-index: 1;
   }
   &[x-in] {
+    pointer-events: all;
     opacity: 1;
     transition: opacity 0.3s; // Controls how quickly transition occurs when going to visible state.
   }
