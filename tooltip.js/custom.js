@@ -347,7 +347,7 @@
       let value;
       const dataKey = `${opts.type}${AhaTooltip.prototype.capitalizeFirstLetter(key)}`;
       if (key === 'title') {
-        value = elem.dataset[dataKey] || elem.dataset.tooltip || elem.getAttribute(key) || opts[key];
+        value = elem.dataset[dataKey] || elem.dataset[key] || (elem.dataset.tooltip !== 'true' && elem.dataset.tooltip) || elem.getAttribute(key) || opts[key];
       } else {
         value = elem.dataset[dataKey] || opts[key];
       }
