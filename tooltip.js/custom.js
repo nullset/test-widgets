@@ -331,7 +331,7 @@
 
   AhaTooltip.prototype.capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+  };
 
   AhaTooltip.prototype.parseValue = function(value) {
     try {
@@ -339,7 +339,7 @@
     } catch(e) {
       return value;
     }
-  }
+  };
 
   AhaTooltip.prototype.mergeInlineOpts = function(elem, opts = {}) {
     Object.keys(defaultSettings).forEach((key) => {
