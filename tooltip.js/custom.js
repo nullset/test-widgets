@@ -53,8 +53,6 @@
     this.createTooltip(triggerElem, opts);
   };
 
-  AhaTooltip.prototype.types = new Map();
-
   AhaTooltip.prototype.openTooltip = function() {
     const data = AhaTooltip.prototype.getData(this.triggerElem);
     const self = this;
@@ -447,9 +445,6 @@
   };
 
   AhaTooltip.prototype.setup = function(opts, type) {
-    // Save "type" of tooltip so we know what acceptable types are when building out inline options.
-    AhaTooltip.prototype.types.set(type, true);
-
     // Set context and selector for event assignment.
     let context, selector;
     if (this.selector) {
