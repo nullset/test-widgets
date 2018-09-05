@@ -305,8 +305,8 @@
     delete data[this.type];
   };
 
-  AhaTooltip.prototype.getOnOffEvents = function(opts) {
-    return AhaTooltip.prototype.triggers(opts).reduce((acc, trigger) => {
+  function getOnOffEvents(opts) {
+    return triggers(opts).reduce((acc, trigger) => {
       if (trigger === 'click') {
         acc.push(['click']);
       } else if (trigger === 'focus') {
@@ -318,11 +318,11 @@
     }, []);
   };
 
-  AhaTooltip.prototype.triggers = function(opts) {
+  function triggers(opts) {
     return opts.trigger.split(' ').map(x => x.trim());
   };
 
-  AhaTooltip.prototype.mergeInlineOpts = function(elem, opts = {}) {
+  function mergeInlineOpts(elem, opts = {}) {
     // Move legacy data-tooltip, title attributes to data-title.
     // debugger
     // Handle bootstrap legacy way of sometimes setting a title for a tooltip.
@@ -368,43 +368,45 @@
     return data[type] && data[type].tooltip;
   };
 
-  AhaTooltip.prototype.getOrCreateTooltip = function(triggerElem, opts) {
-    opts = AhaTooltip.prototype.mergeInlineOpts(triggerElem, opts);
+  function getOrCreateTooltip(triggerElem, opts) {
+    debugger
+    opts = mergeInlineOpts(triggerElem, opts);
+    debugger
     return AhaTooltip.prototype.getTooltip(triggerElem, opts.type) || new AhaTooltip(triggerElem, opts);
   };
 
-  AhaTooltip.prototype.bindEvents = function(context, selector, opts) {
-    const events = AhaTooltip.prototype.getOnOffEvents(opts);
+  function bindEvents(context, selector, opts) {
+    const events = getOnOffEvents(opts);
     events.forEach((event) => {
       const [ onEvent, offEvent ] = event;
       if (offEvent) {
-        $(context).on(onEvent, selector, (e) => {
-          const tooltip = AhaTooltip.prototype.getOrCreateTooltip(e.currentTarget, opts);
-          if (!tooltip.data.preventEventExcept || tooltip.data.preventEventExcept === onEvent) {
-            tooltip.openTooltip();
-          }
-        }).on(offEvent, selector, (e) => {
-          const tooltip = AhaTooltip.prototype.getOrCreateTooltip(e.currentTarget, opts);
-          if (!tooltip.data.preventEventExcept || tooltip.data.preventEventExcept === offEvent) {
-            const triggerElem = e.currentTarget;
+        // $(context).on(onEvent, selector, (e) => {
+        //   const tooltip = getOrCreateTooltip(e.currentTarget, opts);
+        //   if (!tooltip.data.preventEventExcept || tooltip.data.preventEventExcept === onEvent) {
+        //     tooltip.openTooltip();
+        //   }
+        // }).on(offEvent, selector, (e) => {
+        //   const tooltip = getOrCreateTooltip(e.currentTarget, opts);
+        //   if (!tooltip.data.preventEventExcept || tooltip.data.preventEventExcept === offEvent) {
+        //     const triggerElem = e.currentTarget;
 
-            if (triggerElem.contains(e.relatedTarget)) return;
-            if (offEvent === 'mouseout' && e.relatedTarget === tooltip.popper.popper) {
-              $(tooltip.popper.popper).on('mouseout', function mouseLeaveHandler(mouseoutEvent) {
-                if (!tooltip.popper.popper.contains(mouseoutEvent.relatedTarget) && !triggerElem.contains(mouseoutEvent.relatedTarget)) {
-                  tooltip.closeTooltip();
-                  $(tooltip.popper.popper).off('mouseleave', mouseLeaveHandler);
-                }
-              });
-            } else {
-              tooltip.closeTooltip();
-            }
-          }
+        //     if (triggerElem.contains(e.relatedTarget)) return;
+        //     if (offEvent === 'mouseout' && e.relatedTarget === tooltip.popper.popper) {
+        //       $(tooltip.popper.popper).on('mouseout', function mouseLeaveHandler(mouseoutEvent) {
+        //         if (!tooltip.popper.popper.contains(mouseoutEvent.relatedTarget) && !triggerElem.contains(mouseoutEvent.relatedTarget)) {
+        //           tooltip.closeTooltip();
+        //           $(tooltip.popper.popper).off('mouseleave', mouseLeaveHandler);
+        //         }
+        //       });
+        //     } else {
+        //       tooltip.closeTooltip();
+        //     }
+        //   }
         });
       } else {
         $(context).on(onEvent, selector, (e) => {
           const triggerElem = e.currentTarget;
-          const tooltip = AhaTooltip.prototype.getOrCreateTooltip(triggerElem, opts);
+          const tooltip = getOrCreateTooltip(triggerElem, opts);
           if (!tooltip.data.preventEventExcept || tooltip.data.preventEventExcept === onEvent) {
             if (tooltip.isVisible) {
               tooltip.closeTooltip();
@@ -443,11 +445,11 @@
     AhaTooltip.prototype.createManualTooltips(context, selector, opts);
   };
 
-  AhaTooltip.prototype.setup = function(opts, type) {
+  function setup(opts, type, context, selector) {
     // Set context and selector for event assignment.
-    let context, selector;
-    if (this.selector) {
-      context = this.selector;
+    if (selector) {
+      context = selector;
+      selector = undefined;
     } else {
       context = document;
       selector = opts.selector;
@@ -469,7 +471,7 @@
         }
         AhaTooltip.prototype.createManualTooltips(context, selector, opts);
       } else {
-        AhaTooltip.prototype.bindEvents(context, selector, opts);
+        bindEvents(context, selector, opts);
       }
     } else {
       switch (opts) {
@@ -510,12 +512,12 @@
   };
 
   $.fn.tooltip = function(opts = {}) {
-    AhaTooltip.prototype.setup.call(this, opts, 'tooltip');
+    setup(opts, 'tooltip', this.context, this.selector);
     return this;
   };
 
   $.fn.popover = function(opts = {}) {
-    AhaTooltip.prototype.setup.call(this, opts, 'popover');
+    setup(opts, 'popover', this.context, this.selector);
     return this;
   };
 }(jQuery));
