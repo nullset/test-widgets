@@ -16,7 +16,6 @@
     placement: undefined,
     popper: {
       placement: 'auto',
-      positionFixed: false,
       eventsEnabled: true,
       removeOnDestroy: false,
       modifiers: {
@@ -29,9 +28,10 @@
         hide: {
           enabled: true,
         },
-      },
-      preventOverflow: {
-        boundariesElement: 'scrollView',
+        preventOverflow: {
+          enabled: true,
+          boundariesElement: 'scrollParent',
+        },
       },
     },
     selector: undefined,
@@ -107,6 +107,9 @@
     if (this.opts.placement) {
       this.opts.popper.placement = this.opts.placement;
     }
+    if (this.opts.container === 'body') {
+      this.opts.popper.modifiers.preventOverflow.boundariesElement = 'viewport';
+    }
 
     this.popper = new Popper(this.triggerElem, template, this.opts.popper);
 
@@ -124,7 +127,7 @@
     this.titleContentMutationObserver = new MutationObserver(this.titleContentMutationCallback.bind(this, data, this.opts.type));
     this.titleContentMutationObserver.observe(this.triggerElem, {
       attributes: true,
-      attributeFilter: ['title', 'data-tooltip', 'data-title', 'data-content'],
+      attributeFilter: ['title', 'data-title', 'data-content', `data-${this.opts.type}-title`, `data-${this.opts.type}-content`],
     });
 
     this.triggerElemMutationObserver = new MutationObserver(this.triggerElemMutationCallback.bind(this, this.triggerElem));
@@ -178,24 +181,20 @@
   // Watch for changes to title, data-title, data-tooltip, and update the tooltip contents accordingly.
   AhaTooltip.prototype.titleContentMutationCallback = function(tooltip, type, mutations, observer) {
     mutations.forEach((mutation) => {
-      let newValue = mutation.target.getAttribute(mutation.attributeName);
-      let value;
-      try {
-        newValue = JSON.parse(newValue);
-        value = typeof newValue === 'object' ? newValue[type] : newValue;
-      } catch (e) {
-        value = newValue;
-      }
+      // If title/content or data-title/data-content updates and there is already
+      // a data-[type]-title/data-[type]-content set then do nothing, as a typed
+      // title/content value is more specific than a generic title/content or
+      // data-title/data-content.
+      if (/^(data-)?title$/.test(mutation.attributeName) && mutation.target.dataset[`${type}Title`]) return;
 
-      if (mutation.attributeName === 'data-content') {
-        tooltip[type].tooltip.opts.content = value;
-      } else {
-        tooltip[type].tooltip.opts.title = value;
-        if (mutation.attributeName === 'title') {
-          mutation.target.dataset.title = value;
-          mutation.target.removeAttribute('title');
-        }
+      const key = /title$/.test(mutation.attributeName) ? 'title' : 'content';
+      const value = mutation.target.getAttribute(mutation.attributeName);
+
+      if (mutation.attributeName === 'title') {
+        mutation.target.dataset.title = value;
+        mutation.target.removeAttribute('title');
       }
+      this.opts[key] = value;
       this.updateTooltipContent(mutation.target, type);
       observer.takeRecords();
     });
@@ -231,7 +230,7 @@
       titleElem.textContent = title || '';
       contentElem.textContent = content || '';
     }
-    this.popper.update();
+    this.popper.scheduleUpdate();
   };
 
   // Escaping dangerous HTML content **SHOULD** be done server-side, however, people occasionally forget to do this.
@@ -272,7 +271,7 @@
 
 
   AhaTooltip.prototype.repositionTooltip = function() {
-    this.popper.update();
+    this.popper.scheduleUpdate();
   };
 
   AhaTooltip.prototype.closeTooltip = function(delayHide) {
@@ -290,9 +289,9 @@
                 self.popper.popper.parentNode.removeChild(self.popper.popper);
               }
             });
+            self.popper.popper.removeAttribute('x-in');
           }
         }, typeof delayHide === 'undefined' ? self.opts.delay.hide : delayHide);
-        self.popper.popper.removeAttribute('x-in');
       }
     }
   };
@@ -348,8 +347,14 @@
       const dataKey = `${opts.type}${AhaTooltip.prototype.capitalizeFirstLetter(key)}`;
       if (key === 'title') {
         value = elem.dataset[dataKey] || elem.dataset[key] || (elem.dataset.tooltip !== 'true' && elem.dataset.tooltip) || elem.getAttribute(key) || opts[key];
+
+        // Remove elem.title attribute to prevent standard browser behavior of showing title attribute in native tooltip.
+        if (elem.title) {
+          elem.dataset.title = elem.title;
+          elem.removeAttribute('title');
+        }
       } else {
-        value = elem.dataset[dataKey] || opts[key];
+        value = elem.dataset[dataKey] || elem.dataset[key] || opts[key];
       }
       opts[key] = AhaTooltip.prototype.parseValue(value);
     });
