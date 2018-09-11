@@ -495,28 +495,29 @@
         AhaTooltip.prototype.bindEvents(context, selector, opts);
       }
     } else {
+      const settings = Object.assign(defaultSettings, { type });
       switch (opts) {
         case 'show':
           this.each((i, elem) => {
-            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getOrCreateTooltip(elem, settings);
             if (tooltip) tooltip.openTooltip();
           });
           break;
         case 'hide':
           this.each((i, elem) => {
-            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getOrCreateTooltip(elem, settings);
             if (tooltip) tooltip.closeTooltip(0);
           });
           break;
         case 'enable':
           this.each((i, elem) => {
-            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getOrCreateTooltip(elem, settings);
             if (tooltip) tooltip.enableTooltip();
           });
           break;
         case 'disable':
           this.each((i, elem) => {
-            const tooltip = AhaTooltip.prototype.getTooltip(elem, type);
+            const tooltip = AhaTooltip.prototype.getOrCreateTooltip(elem, settings);
             if (tooltip) tooltip.disableTooltip();
           });
           break;
