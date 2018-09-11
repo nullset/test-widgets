@@ -6,7 +6,7 @@
     allowUnsafe: false,
     cache: false,
     class: undefined,
-    container: undefined,
+    container: 'body',
     content: undefined,
     delay: {
       show: 0,
@@ -74,9 +74,8 @@
       this.isVisible = true;
       this.timeout = setTimeout(() => {
         if (this.isVisible) {
-          this.triggerElem.setAttribute('x-tooltip', '');
           this.repositionTooltip(this.triggerElem, this.type);
-          const container = this.opts.container ? document.querySelector(this.opts.container) : this.triggerElem;
+          const container = this.opts.container === 'self' ? this.triggerElem : document.querySelector(this.opts.container);
           container.appendChild(this.popper.popper);
           requestAnimationFrame(() => {
             if (!this.popper.popper.hasAttribute('x-in')) {
@@ -243,8 +242,8 @@
     const elems = dom.body.querySelectorAll('*');
 
     for (const node of elems) {
-      // Strip any <script>/<iframe> tags as those can open us up to XSS.
-      if (/^(script|iframe|style)$/i.test(node.nodeName)) {
+      // Strip any <script>/<iframe>/style/link tags as those can open us up to XSS.
+      if (/^(script|iframe|style|link)$/i.test(node.nodeName)) {
         node.parentNode.removeChild(node);
       } else {
         for (const attr of node.attributes) {
@@ -252,8 +251,9 @@
           if (/(j|&#106;|&#74;)avascript:/i.test(attr.value)) {
             node.removeAttribute(attr.name);
           } else if (/href|src|srcset/i.test(attr.name)) {
-            // Strip any href, src, srcset attribute that does not start with `http://` or `https://`.
-            if (!/^https?:\/\//i.test(attr.value)) {
+            // Strip any href, src, srcset attribute that does not start with `http://`, `https://`, or `/`.
+            // Should prevent injection of `javascript:` code.
+            if (!/^\/|https?:\/\//i.test(attr.value)) {
               node.removeAttribute(attr.name);
             }
           } else {
@@ -276,22 +276,28 @@
 
   AhaTooltip.prototype.closeTooltip = function(delayHide) {
     const self = this;
-    if (self.popper) {
-      clearTimeout(self.timeout);
-      if (self.isVisible) {
-        self.triggerElem.removeAttribute('x-tooltip');
-        self.isVisible = false;
-        self.timeout = setTimeout(() => {
-          if (!self.isVisible) {
-            self.popper.popper.addEventListener('transitionend', function fadeOut() {
-              self.popper.popper.removeEventListener('transitionend', fadeOut);
-              if (self.popper.popper.parentNode && !self.isVisible) {
-                self.popper.popper.parentNode.removeChild(self.popper.popper);
-              }
-            });
-            self.popper.popper.removeAttribute('x-in');
+    if (self.enabled) {
+      if (self.popper) {
+        clearTimeout(self.timeout);
+        if (self.isVisible) {
+          self.isVisible = false;
+          self.timeout = setTimeout(() => {
+            if (!self.isVisible) {
+              self.popper.popper.addEventListener('transitionend', function fadeOut() {
+                self.popper.popper.removeEventListener('transitionend', fadeOut);
+                if (self.popper.popper.parentNode && !self.isVisible) {
+                  self.popper.popper.parentNode.removeChild(self.popper.popper);
+                }
+              });
+              self.popper.popper.removeAttribute('x-in');
+            }
+          }, typeof delayHide === 'undefined' ? self.opts.delay.hide : delayHide);
+        } else {
+          if (self.popper.popper.parentNode && !self.isVisible) {
+            self.popper.popper.parentNode.removeChild(self.popper.popper);
           }
-        }, typeof delayHide === 'undefined' ? self.opts.delay.hide : delayHide);
+          self.popper.popper.removeAttribute('x-in');
+        }
       }
     }
   };
@@ -301,7 +307,6 @@
   };
 
   AhaTooltip.prototype.disableTooltip = function() {
-    this.closeTooltip(0);
     this.enabled = false;
   };
 
@@ -353,8 +358,20 @@
           elem.dataset.title = elem.title;
           elem.removeAttribute('title');
         }
+      } else if (typeof defaultSettings[key] === 'boolean') {
+        try {
+          const tempValue = [elem.dataset[dataKey], elem.dataset[key], opts[key]].find((x) => typeof x !== 'undefined');
+          value = JSON.parse(tempValue);
+        } catch(e) {
+          value = true;
+        }
       } else {
         value = elem.dataset[dataKey] || elem.dataset[key] || opts[key];
+
+        if (key === 'delay') {
+          // The delay value may appear as a strigified JSON object. Ensure that it can be parsed correctly.
+          value = typeof value === 'string' ? value.replace(/'|&#22;|&quot;/g, '"') : value;
+        }
       }
       opts[key] = AhaTooltip.prototype.parseValue(value);
     });
