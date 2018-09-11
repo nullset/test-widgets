@@ -217,8 +217,11 @@
     if (this.opts.html) {
       if (this.opts.allowUnsafe) {
         // Pass any HTML through without modification.
-        titleElem.innerHTML = title || '';
-        contentElem.innerHTML = content || '';
+        const titleFragment = document.createRange().createContextualFragment(title || '');
+        titleElem.appendChild(titleFragment);
+
+        const contentFragment = document.createRange().createContextualFragment(content || '');
+        contentElem.appendChild(contentFragment);
       } else {
         // Remove any suspect tags/attributes/attribute values.
         titleElem.innerHTML = this.cleanHTML(title) || '';
